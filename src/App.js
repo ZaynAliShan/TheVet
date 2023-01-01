@@ -1,4 +1,5 @@
 import './App.css';
+import Appointments from './components/Appointments';
 import Doctors from './components/Doctors';
 import Navbar from './components/Navbar';
 
