@@ -145,7 +145,7 @@ function Services() {
                 role="tabpanel"
                 aria-labelledby="home-tab"
               >
-                {/* <!-- single_content  --> */}
+                {/* <!-- Dentistery Content  --> */}
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
@@ -177,16 +177,13 @@ function Services() {
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
-                      <h3>
-                        Dentist with surgical mask holding <br /> scaler near
-                        patient
-                      </h3>
+                      <h3>Taking Care of Your Pet's Heart Health</h3>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Quis ipsum suspendisse ultrices gravida.
-                        Risus commodo viverra maecenas accumsan lacus vel
-                        facilisis.{" "}
+                        "Heart disease, much like cancer, is primarily a disease
+                        of old age and, until recently, it was not a common
+                        cause of death in pets. However, veterinary medicine has
+                        made great strides in recent times, which has enabled us
+                        to provide our pets with longer and healthier lives."
                       </p>
                       <a href="/" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
