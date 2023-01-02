@@ -9,6 +9,9 @@ import endocrinologyIcon from "../assets/img/Services-Imgs/Services-Endocrine.pn
 import dentisteryImage from "../assets/img/Services-Imgs/Services-Pet-Dentistery.jpg";
 import cardiologyImage from "../assets/img/Services-Imgs/Services-Pet-Cardiology.jpg";
 import allergyImage from "../assets/img/Services-Imgs/Service-Pet-Allergy.jpg";
+import dermatologyImage from "../assets/img/Services-Imgs/Service-Pet-Dermatology.jpg";
+import diagnosticImage from "../assets/img/Services-Imgs/Service-Pet-Diagnostis.jpg";
+import endocrineImage from "../assets/img/Services-Imgs/Services-Pet-EndocrineI.jpg";
 
 function Services() {
   return (
@@ -151,7 +154,7 @@ function Services() {
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
-                      <h3>A healthy pet starts with a healthy mouth</h3>
+                      <h3>A Healthy Pet Starts With a Healthy Mouth</h3>
                       <p>
                         "Even if your pet dose'nt have stained teeth, bacteria
                         can still be present below the gum line."
@@ -241,20 +244,15 @@ function Services() {
                 role="tabpanel"
                 aria-labelledby="Astrology-tab"
               >
-                {/* <!-- single_content  --> */}
+                {/* <!-- DERMATOLOGY  --> */}
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
-                      <h3>
-                        Dentist with surgical mask holding <br /> scaler near
-                        patient
-                      </h3>
+                      <h3>Diagnosing & Treating Pet Skin Problems</h3>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Quis ipsum suspendisse ultrices gravida.
-                        Risus commodo viverra maecenas accumsan lacus vel
-                        facilisis.{" "}
+                        "Periodic pet wellness visits, beginning when you first
+                        bring your new pet home, are a good way to help ensure
+                        that any health problems will be diagnosed early."
                       </p>
                       <a href="/" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
@@ -263,7 +261,7 @@ function Services() {
                   </div>
                   <div className="col-lg-5">
                     <div className="dept_thumb">
-                      <img src="assets/img/gallery/department_man.png" alt="" />
+                      <img src={dermatologyImage} alt="" />
                     </div>
                   </div>
                 </div>
@@ -275,20 +273,16 @@ function Services() {
                 role="tabpanel"
                 aria-labelledby="Neuroanatomy-tab"
               >
-                {/* <!-- single_content  --> */}
+                {/* <!-- DIAGNOSTOCS CONTENT  --> */}
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
-                      <h3>
-                        Dentist with surgical mask holding <br /> scaler near
-                        patient
-                      </h3>
+                      <h3>Diagnosing Your Pet's Medical Problems</h3>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Quis ipsum suspendisse ultrices gravida.
-                        Risus commodo viverra maecenas accumsan lacus vel
-                        facilisis.{" "}
+                        "With the veterinary diagnostic tools available today,
+                        and new ones that are being developed, veterinarians are
+                        in a good position to help your pet enjoy a long and
+                        healthy life with you."
                       </p>
                       <a href="/" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
@@ -297,7 +291,7 @@ function Services() {
                   </div>
                   <div className="col-lg-5">
                     <div className="dept_thumb">
-                      <img src="assets/img/gallery/department_man.png" alt="" />
+                      <img src={diagnosticImage} alt="" />
                     </div>
                   </div>
                 </div>
@@ -309,20 +303,18 @@ function Services() {
                 role="tabpanel"
                 aria-labelledby="Blood-tab"
               >
-                {/* <!-- single_content  --> */}
+                {/* <!-- ENDOCRINE  --> */}
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
-                      <h3>
-                        Dentist with surgical mask holding <br /> scaler near
-                        patient
-                      </h3>
+                      <h3>Treating Pet Endocrine Disorders</h3>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Quis ipsum suspendisse ultrices gravida.
-                        Risus commodo viverra maecenas accumsan lacus vel
-                        facilisis.{" "}
+                        "Endocrine gland disorders are often difficult to
+                        identify by visual symptoms alone. As a result, these
+                        symptoms can either be mistaken for other conditions or
+                        may go undetected until it is too late to save the pet's
+                        life. This is why regular pet wellness checkups are so
+                        important."
                       </p>
                       <a href="/" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
@@ -331,7 +323,7 @@ function Services() {
                   </div>
                   <div className="col-lg-5">
                     <div className="dept_thumb">
-                      <img src="assets/img/gallery/department_man.png" alt="" />
+                      <img src={endocrineImage} alt="" />
                     </div>
                   </div>
                 </div>
