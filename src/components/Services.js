@@ -7,6 +7,7 @@ import drmaIcon from "../assets/img/Services-Imgs/Services-Dermatology.png";
 import diagnosticIcon from "../assets/img/Services-Imgs/Services-Dagnostic.png";
 import endocrinologyIcon from "../assets/img/Services-Imgs/Services-Endocrine.png";
 import dentisteryImage from "../assets/img/Services-Imgs/Services-Pet-Dentistery.jpg";
+import cardiologyImage from "../assets/img/Services-Imgs/Services-Pet-Cardiology.jpg";
 
 function Services() {
   return (
@@ -173,7 +174,7 @@ function Services() {
                 role="tabpanel"
                 aria-labelledby="profile-tab"
               >
-                {/* <!-- single_content  --> */}
+                {/* <!-- Cardiology Content  --> */}
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
@@ -192,7 +193,11 @@ function Services() {
                   </div>
                   <div className="col-lg-5">
                     <div className="dept_thumb">
-                      <img src="assets/img/gallery/department_man.png" alt="" />
+                      <img
+                        src={cardiologyImage}
+                        className="services-Image"
+                        alt=""
+                      />
                     </div>
                   </div>
                 </div>
