@@ -5,13 +5,13 @@ export default function FAQquestions(props) {
     <div>
       <div className="accordion my-3" id="accordionPanelsStayOpenExample">
         <div className="accordion-item">
-          <h2 className="accordion-header" id="panelsStayOpen-headingOne">
+          <h2 className="accordion-header" id={`${props.id}-headingOne`}>
             <button
-              className="accordion-button "
+              className="accordion-button collapsed "
               type="button"
               data-bs-toggle="collapse"
               data-bs-target={`#${props.id}-collapseOne1`}
-              aria-expanded="true"
+              aria-expanded="false"
               aria-controls={`${props.id}-collapseOne1`}
             >
               <h3>Question no 1</h3>
@@ -19,8 +19,8 @@ export default function FAQquestions(props) {
           </h2>
           <div
             id={`${props.id}-collapseOne1`}
-            className="accordion-collapse collapse show"
-            aria-labelledby="panelsStayOpen-headingOne"
+            className="accordion-collapse collapse "
+            aria-labelledby={`${props.id}-headingOne`}
           >
             <div className="accordion-body generic-blockquote">
                 <p>
@@ -37,7 +37,7 @@ export default function FAQquestions(props) {
           </div>
         </div>
         <div className="accordion-item">
-          <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
+          <h2 className="accordion-header" id={`${props.id}-headingTwo`}>
             <button
               className="accordion-button collapsed "
               type="button"
@@ -52,7 +52,7 @@ export default function FAQquestions(props) {
           <div
             id={`${props.id}-collapseTwo`}
             className="accordion-collapse collapse"
-            aria-labelledby="panelsStayOpen-headingTwo"
+            aria-labelledby={`${props.id}-headingTwo`}
           >
             <div className="accordion-body generic-blockquote">
                 <p>
@@ -69,7 +69,7 @@ export default function FAQquestions(props) {
           </div>
         </div>
         <div className="accordion-item">
-          <h2 className="accordion-header" id="panelsStayOpen-headingThree">
+          <h2 className="accordion-header" id={`${props.id}-headingThree`}>
             <button
               className="accordion-button collapsed "
               type="button"
@@ -82,9 +82,9 @@ export default function FAQquestions(props) {
             </button>
           </h2>
           <div
-            id={`${props.id}-collapseThree`}
+            id={`${props.id }-collapseThree`}
             className="accordion-collapse collapse"
-            aria-labelledby="panelsStayOpen-headingThree"
+            aria-labelledby={`${props.id}-headingThree`}
           >
             <div className="accordion-body generic-blockquote">
                 <p>
