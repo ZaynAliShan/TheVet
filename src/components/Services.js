@@ -35,11 +35,11 @@ function Services() {
                   <li className="nav-item">
                     <a
                       className="nav-link active"
-                      id="home-tab"
+                      id="dentistry-tab"
                       data-toggle="tab"
-                      href="#home"
+                      href="#dentistry"
                       role="tab"
-                      aria-controls="home"
+                      aria-controls="dentistry"
                       aria-selected="true"
                     >
                       {/* <i className="flaticon-teeth"></i> */}
@@ -52,11 +52,11 @@ function Services() {
                   <li className="nav-item">
                     <a
                       className="nav-link"
-                      id="profile-tab"
+                      id="cardiology-tab"
                       data-toggle="tab"
-                      href="#profile"
+                      href="#cardiology"
                       role="tab"
-                      aria-controls="profile"
+                      aria-controls="cardiology"
                       aria-selected="false"
                     >
                       {/* <i className="flaticon-cardiovascular"></i> */}
@@ -69,11 +69,11 @@ function Services() {
                   <li className="nav-item">
                     <a
                       className="nav-link"
-                      id="contact-tab"
+                      id="allergy-tab"
                       data-toggle="tab"
-                      href="#contact"
+                      href="#allergy"
                       role="tab"
-                      aria-controls="contact"
+                      aria-controls="allergy"
                       aria-selected="false"
                     >
                       {/* <i className="flaticon-ear"></i> */}
@@ -86,11 +86,11 @@ function Services() {
                   <li className="nav-item">
                     <a
                       className="nav-link"
-                      id="Astrology-tab"
+                      id="dermatology-tab"
                       data-toggle="tab"
-                      href="#Astrology"
+                      href="#dermatology"
                       role="tab"
-                      aria-controls="contact"
+                      aria-controls="dermatology"
                       aria-selected="false"
                     >
                       {/* <i className="flaticon-bone"></i> */}
@@ -103,11 +103,11 @@ function Services() {
                   <li className="nav-item">
                     <a
                       className="nav-link"
-                      id="Neuroanatomy-tab"
+                      id="diagnostics-tab"
                       data-toggle="tab"
-                      href="#Neuroanatomy"
+                      href="#diagnostics"
                       role="tab"
-                      aria-controls="contact"
+                      aria-controls="diagnostics"
                       aria-selected="false"
                     >
                       {/* <i className="flaticon-lung"></i> */}
@@ -120,11 +120,11 @@ function Services() {
                   <li className="nav-item">
                     <a
                       className="nav-link"
-                      id="Blood-tab"
+                      id="endocrinology-tab"
                       data-toggle="tab"
-                      href="#Blood"
+                      href="#endocrinology"
                       role="tab"
-                      aria-controls="contact"
+                      aria-controls="endocrinology"
                       aria-selected="false"
                     >
                       {/* <i className="flaticon-cell"></i> */}
@@ -146,9 +146,9 @@ function Services() {
             <div className="tab-content" id="myTabContent">
               <div
                 className="tab-pane fade show active"
-                id="home"
+                id="dentistry"
                 role="tabpanel"
-                aria-labelledby="home-tab"
+                aria-labelledby="dentistry-tab"
               >
                 {/* <!-- Dentistery Content  --> */}
                 <div className="row align-items-center no-gutters">
@@ -174,9 +174,9 @@ function Services() {
               </div>
               <div
                 className="tab-pane fade"
-                id="profile"
+                id="cardiology"
                 role="tabpanel"
-                aria-labelledby="profile-tab"
+                aria-labelledby="cardiology-tab"
               >
                 {/* <!-- Cardiology Content  --> */}
                 <div className="row align-items-center no-gutters">
@@ -209,9 +209,9 @@ function Services() {
               </div>
               <div
                 className="tab-pane fade"
-                id="contact"
+                id="allergy"
                 role="tabpanel"
-                aria-labelledby="contact-tab"
+                aria-labelledby="allergy-tab"
               >
                 {/* <!-- ALLERGY CONTENT  --> */}
                 <div className="row align-items-center no-gutters">
@@ -240,9 +240,9 @@ function Services() {
               </div>
               <div
                 className="tab-pane fade"
-                id="Astrology"
+                id="dermatology"
                 role="tabpanel"
-                aria-labelledby="Astrology-tab"
+                aria-labelledby="dermatology-tab"
               >
                 {/* <!-- DERMATOLOGY  --> */}
                 <div className="row align-items-center no-gutters">
@@ -269,9 +269,9 @@ function Services() {
               </div>
               <div
                 className="tab-pane fade"
-                id="Neuroanatomy"
+                id="diagnostics"
                 role="tabpanel"
-                aria-labelledby="Neuroanatomy-tab"
+                aria-labelledby="diagnostics-tab"
               >
                 {/* <!-- DIAGNOSTOCS CONTENT  --> */}
                 <div className="row align-items-center no-gutters">
@@ -299,9 +299,9 @@ function Services() {
               </div>
               <div
                 className="tab-pane fade"
-                id="Blood"
+                id="endocrinology"
                 role="tabpanel"
-                aria-labelledby="Blood-tab"
+                aria-labelledby="endocrinology-tab"
               >
                 {/* <!-- ENDOCRINE  --> */}
                 <div className="row align-items-center no-gutters">
