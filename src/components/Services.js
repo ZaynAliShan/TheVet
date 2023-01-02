@@ -8,6 +8,7 @@ import diagnosticIcon from "../assets/img/Services-Imgs/Services-Dagnostic.png";
 import endocrinologyIcon from "../assets/img/Services-Imgs/Services-Endocrine.png";
 import dentisteryImage from "../assets/img/Services-Imgs/Services-Pet-Dentistery.jpg";
 import cardiologyImage from "../assets/img/Services-Imgs/Services-Pet-Cardiology.jpg";
+import allergyImage from "../assets/img/Services-Imgs/Service-Pet-Allergy.jpg";
 
 function Services() {
   return (
@@ -76,7 +77,7 @@ function Services() {
                       <i>
                         <img src={allergyIcon} className="flaticon" alt="" />
                       </i>
-                      <h4>Allergy</h4>
+                      <h4>Allergy Testing</h4>
                     </a>
                   </li>
                   <li className="nav-item">
@@ -209,20 +210,17 @@ function Services() {
                 role="tabpanel"
                 aria-labelledby="contact-tab"
               >
-                {/* <!-- single_content  --> */}
+                {/* <!-- ALLERGY CONTENT  --> */}
                 <div className="row align-items-center no-gutters">
                   <div className="col-lg-7">
                     <div className="dept_info">
                       <h3>
-                        Dentist with surgical mask holding <br /> scaler near
-                        patient
+                        Allergy Testing & Treatment Bring Relief to Your Pet
                       </h3>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Quis ipsum suspendisse ultrices gravida.
-                        Risus commodo viverra maecenas accumsan lacus vel
-                        facilisis.{" "}
+                        "Once the source of the allergy has been identified, we
+                        can recommend ways to relieve or manage the allergy so
+                        that your pet can lead a more normal life."
                       </p>
                       <a href="/" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
@@ -231,7 +229,7 @@ function Services() {
                   </div>
                   <div className="col-lg-5">
                     <div className="dept_thumb">
-                      <img src="assets/img/gallery/department_man.png" alt="" />
+                      <img src={allergyImage} alt="" />
                     </div>
                   </div>
                 </div>
