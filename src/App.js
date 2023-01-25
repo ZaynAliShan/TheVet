@@ -1,23 +1,25 @@
-import './App.css';
-import Doctors from './components/Doctors';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
-
-import Blog from './components/Blog';
-import FAQs from './components/FAQs';
+import "./App.css";
+import Doctors from "./components/Doctors";
+import Navbar from "./components/Navbar";
+import Services from "./components/Services";
+import Appointments from "./components/Appointments";
+// import Signup from "./components/Signup";
+import Blog from "./components/Blog";
+import FAQ from "./components/FAQs";
+import Footer from "./components/Footer";
 
 function App() {
-
   return (
     <>
-      <Navbar/>
-      <FAQs/>
-
-   
+      <Navbar />
+      <Doctors />
+      <Services />
+      <Appointments />
+      {/* <Signup /> */}
+      <Blog/>
+      <FAQ/>
       <Footer/>
-      {/* <Blogs/>
-      Adding component of Footer
-      <Footer/> */}
+
     </>
   );
 }

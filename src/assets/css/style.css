@@ -199,7 +199,7 @@ a:hover,
 }
 a,
 button {
-  color: rgb(45, 6, 6);
+  color: #fff;
   outline: medium none;
 }
 button:focus,
