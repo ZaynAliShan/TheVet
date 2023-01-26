@@ -3,6 +3,10 @@ import Doctors from "./components/Doctors";
 import Navbar from "./components/Navbar";
 import Services from "./components/Services";
 import Appointments from "./components/Appointments";
+// import Signup from "./components/Signup";
+import Blog from "./components/Blog";
+import FAQ from "./components/FAQs";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -11,6 +15,11 @@ function App() {
       <Doctors />
       <Services />
       <Appointments />
+      {/* <Signup /> */}
+      <Blog/>
+      <FAQ/>
+      <Footer/>
+
     </>
   );
 }
