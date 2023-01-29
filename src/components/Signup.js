@@ -50,10 +50,6 @@ const onChange = (e)=>{
           <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" id="password" name='password' onChange={onChange} required/>
         </div>
-        {/* <div className="mb-3">
-          <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-          <input type="password" className="form-control" id="cpassword" name='cpasssword' onChange={onChange} required/>
-        </div> */} 
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
       </div>

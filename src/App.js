@@ -7,6 +7,7 @@ import Appointments from "./components/Appointments";
 import Blog from "./components/Blog";
 import FAQ from "./components/FAQs";
 import Footer from "./components/Footer";
+import SignInSide from "./components/SignInSide";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Services />
       <Appointments />
       {/* <Signup /> */}
+      <SignInSide/>
       <Blog/>
       <FAQ/>
       <Footer/>
