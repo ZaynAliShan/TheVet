@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useHistory} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { fontSize } from '@mui/system';
 const signup_img = require('../assets/img/signup_img.jpg')
@@ -41,7 +41,7 @@ export default function SignInSide() {
 
   // Code to manage Functionality of Signup functions
   const [credentials, setCredentials] = useState({name:"", email: "", password: "", cpassword:""}) 
-  let history = useHistory();
+  const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +59,6 @@ export default function SignInSide() {
       // Save the auth token and redirect
       localStorage.setItem('token', json.authtoken); 
       alert("You have been signed up successfully!")
-      history.push("/");
   }
   else{
       alert(json.error)
