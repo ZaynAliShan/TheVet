@@ -21,7 +21,7 @@ export default function Appointments() {
             </div>
             {/* <!--? Contact form Start --> */}
             <div className="contact-form-main section-padding2" >
-                <div className='container' style={{minWidth:"100%"}} >
+                <div className='container' style={{ minWidth: "100%" }} >
                     <div className="row justify-content-end">
                         <div className="col-xl-7 col-lg-7">
                             <div className="form-wrapper">
@@ -49,7 +49,7 @@ export default function Appointments() {
                                                 <input type="text" name="email" placeholder="Phone" />
                                             </div>
                                         </div>
-                                        
+
                                         <div className="col-lg-6 col-md-6">
                                             <div className="form-box subject-icon mb-30">
                                                 <input type="Email" name="subject" placeholder="Email" />
@@ -71,11 +71,13 @@ export default function Appointments() {
                 </div>
                 {/* <!-- contact left Img--> */}
                 <div className="from-left d-none d-lg-block section-padding2">
-                    <img src={contact_form} alt="contact_image"/>
+                    <img src={contact_form} alt="contact_image" />
                 </div>
             </div>
             {/* <!-- Contact form End --> */}
-
+            <div id="back-top" >
+                <a title="Go to Top" href="#"> <i className="fas fa-level-up-alt"></i></a>
+            </div>
         </div>
     )
 }

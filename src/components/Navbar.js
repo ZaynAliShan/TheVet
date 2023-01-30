@@ -22,7 +22,7 @@ export default function Navbar(props) {
                 <Link className="nav-link" aria-current="page" to="/home" style={{color: "white"}}>Home</Link>
               </li>
               <li className="nav-item d-flex align-items-center">
-                <a className="nav-link" href="#" style={{color: "white"}}>About</a>
+                <Link className="nav-link" to="/about" style={{color: "white"}}>About</Link>
               </li>
               <li className="nav-item d-flex align-items-center">
                 <Link className="nav-link" to="/doctors" style={{color: "white"}}>Doctors</Link>
@@ -31,7 +31,7 @@ export default function Navbar(props) {
                 <Link className="nav-link" to="/services" style={{color: "white"}}>Department</Link>
               </li>
               <li className="nav-item d-flex align-items-center">
-                <a className="nav-link" href="#" style={{color: "white"}}>Contact</a>
+                <Link className="nav-link" to="/contact" style={{color: "white"}}>Contact</Link>
               </li>
               <li className="nav-item d-flex align-items-center" style={{listStyle:"none"}}>
                 <Link to="/dashboard">Admin Dashboard</Link>

@@ -17,6 +17,8 @@ import Blog from "./components/Blog";
 import FAQ from "./components/FAQs";
 import Footer from "./components/Footer";
 import SignInSide from "./components/SignInSide";
+import About from "./components/About";
+import Contact from "./components/ContactUs";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +31,9 @@ export default function Router() {
         { path: 'home', element: [<Navbar />, <Doctors />, <Services />, <Appointments /> , <SignInSide />, <FAQ />, <Blog />, <Footer />]},
         {path : 'doctors', element : [<Navbar />, <Doctors />, <Footer />]},
         {path: 'appointment', element : [<Navbar/>,<Appointments />, <Footer />]},
-        {path: 'services', element : [<Navbar/>,<Services />, <Footer />]}
+        {path: 'services', element : [<Navbar/>,<Services />, <Footer />]},
+        {path: 'about', element : [<Navbar/>,<About />, <Footer />]},
+        {path: 'contact', element : [<Navbar/>,<Contact />, <Footer />]}
       ],
     },
     {
