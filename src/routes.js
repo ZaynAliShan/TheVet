@@ -26,7 +26,10 @@ export default function Router() {
       path: '/' ,
       children: [
         { element: <Navigate to="/home" />, index: true },
-        { path: 'home', element: [<Navbar />, <Doctors />, <Services />, <Appointments /> , <SignInSide />, <FAQ />, <Blog />, <Footer />]}
+        { path: 'home', element: [<Navbar />, <Doctors />, <Services />, <Appointments /> , <SignInSide />, <FAQ />, <Blog />, <Footer />]},
+        {path : 'doctors', element : [<Navbar />, <Doctors />, <Footer />]},
+        {path: 'appointment', element : [<Navbar/>,<Appointments />, <Footer />]},
+        {path: 'services', element : [<Navbar/>,<Services />, <Footer />]}
       ],
     },
     {

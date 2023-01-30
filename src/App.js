@@ -1,6 +1,6 @@
 import "./App.css";
-// import Doctors from "./components/Doctors";
-// import Navbar from "./components/Navbar";
+import Doctors from "./components/Doctors";
+import Navbar from "./components/Navbar";
 // import Services from "./components/Services";
 // import Appointments from "./components/Appointments";
 // // import Signup from "./components/Signup";
@@ -15,20 +15,30 @@ import ThemeProvider from './theme';
 // components
 import ScrollToTop from './components/scroll-to-top';
 import { StyledChart } from './components/chart';
-
+import {
+  BrowserRouter as ReactRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 function App() {
   return (
     <>
-      {/* <Navbar />
-      <Doctors />
-      <Services />
-      <Appointments />
-      <SignInSide/>
-      <Blog/>
-      <FAQ/>
-      <Footer/> */}
-
+      
+      
+        {/* 
+        <Navbar />
+        <Routes>
+          <Route exact path="/doctors" element={Doctors} />
+        </Routes> */}
+        {/* <Services />
+          <Appointments />
+          <SignInSide/>
+          <Blog/>
+          <FAQ/>
+          <Footer/> */}
+      
+      
       <ThemeProvider>
         <ScrollToTop />
         <StyledChart />

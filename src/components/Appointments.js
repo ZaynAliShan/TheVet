@@ -20,8 +20,8 @@ export default function Appointments() {
                 </div>
             </div>
             {/* <!--? Contact form Start --> */}
-            <div className="contact-form-main section-padding2">
-                <div className="container">
+            <div className="contact-form-main section-padding2" >
+                <div className='container' style={{minWidth:"100%"}} >
                     <div className="row justify-content-end">
                         <div className="col-xl-7 col-lg-7">
                             <div className="form-wrapper">

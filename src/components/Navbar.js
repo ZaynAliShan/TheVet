@@ -19,16 +19,16 @@ export default function Navbar(props) {
           <div className="collapse navbar-collapse mybar" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item d-flex align-items-center">
-                <a className="nav-link" aria-current="page" href="#" style={{color: "white"}}>Home</a>
+                <Link className="nav-link" aria-current="page" to="/home" style={{color: "white"}}>Home</Link>
               </li>
               <li className="nav-item d-flex align-items-center">
                 <a className="nav-link" href="#" style={{color: "white"}}>About</a>
               </li>
               <li className="nav-item d-flex align-items-center">
-                <a className="nav-link" href="#" style={{color: "white"}}>Doctors</a>
+                <Link className="nav-link" to="/doctors" style={{color: "white"}}>Doctors</Link>
               </li>
               <li className="nav-item d-flex align-items-center">
-                <a className="nav-link" href="#" style={{color: "white"}}>Department</a>
+                <Link className="nav-link" to="/services" style={{color: "white"}}>Department</Link>
               </li>
               <li className="nav-item d-flex align-items-center">
                 <a className="nav-link" href="#" style={{color: "white"}}>Contact</a>
@@ -37,7 +37,9 @@ export default function Navbar(props) {
                 <Link to="/dashboard">Admin Dashboard</Link>
               </li>
               <li className="nav-item">
-                <button type="button" className="btn btn-primary">Book Appointment</button>
+                <Link to="/appointment" >
+                <button  type="button" className="btn btn-primary">Book Appointment</button>
+                </Link>
               </li>
             </ul>
           </div>
