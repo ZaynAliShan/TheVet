@@ -3,13 +3,12 @@ const express = require("express");
 const router = express.Router();
 // create and instance of model
 const Users = require("../models/Users");
-const bcrypt = require("bcryptjs"); 
-var jwt = require('jsonwebtoken');
-var fetchuser = require('../middleware/fetchuser')
+const bcrypt = require("bcryptjs");
+var jwt = require("jsonwebtoken");
+var fetchuser = require("../middleware/fetchuser");
 
 // Secret to sign
 const JWT_Secret = "API$withExpressAreFun&XOXO";
-
 
 // for validation we use express validator after installing it
 const { body, validationResult } = require("express-validator");
@@ -38,7 +37,10 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ success, error: "Sorry a user with this email is already exists" });
+          .json({
+            success,
+            error: "Sorry a user with this email is already exists",
+          });
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -71,7 +73,7 @@ router.post(
 router.post(
   "/login",
   [
-    body("email", "Please Enter a Valid Emiail!!!").isEmail(),
+    body("email", "Please Enter a Valid Email!!!").isEmail(),
     body("password", "Password cannot be empty.").exists(),
   ],
   async (req, res) => {
@@ -148,7 +150,6 @@ module.exports = router;
 
 // Overall Picture -- JWT gives us secure communication between client and server
 
-
-// Middleware - file: 
+// Middleware - file:
 // Auth token has user id
 // Middleware takes auth token and verifies user
