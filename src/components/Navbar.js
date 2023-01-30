@@ -36,6 +36,9 @@ export default function Navbar(props) {
               <li className="nav-item d-flex align-items-center" style={{listStyle:"none"}}>
                 <Link to="/dashboard">Admin Dashboard</Link>
               </li>
+              <li className="nav-item d-flex align-items-center" style={{listStyle:"none"}}>
+                <Link to="/login">Sign In</Link>
+              </li>
               <li className="nav-item">
                 <Link to="/appointment" >
                 <button  type="button" className="btn btn-primary">Book Appointment</button>

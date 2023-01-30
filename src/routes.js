@@ -33,7 +33,8 @@ export default function Router() {
         {path: 'appointment', element : [<Navbar/>,<Appointments />, <Footer />]},
         {path: 'services', element : [<Navbar/>,<Services />, <Footer />]},
         {path: 'about', element : [<Navbar/>,<About />, <Footer />]},
-        {path: 'contact', element : [<Navbar/>,<Contact />, <Footer />]}
+        {path: 'contact', element : [<Navbar/>,<Contact />, <Footer />]},
+        {path: 'signUp', element : [<Navbar/>,<SignInSide />, <Footer />]}
       ],
     },
     {

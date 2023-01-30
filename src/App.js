@@ -1,6 +1,5 @@
 import "./App.css";
 import Doctors from "./components/Doctors";
-import About from "./components/About";
 // import Services from "./components/Services";
 // import Appointments from "./components/Appointments";
 // // import Signup from "./components/Signup";
@@ -25,7 +24,6 @@ function App() {
   return (
     <>
       
-        
         {/* 
         <Navbar />
         <Routes>
