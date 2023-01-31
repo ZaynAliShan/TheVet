@@ -34,7 +34,7 @@ function Services() {
                 <ul className="nav" id="myTab" role="tablist">
                   <li className="nav-item">
                     <a
-                      className="nav-link active"
+                      className="nav-link active align-items-center"
                       id="dentistry-tab"
                       data-toggle="tab"
                       href="#dentistry"
@@ -51,7 +51,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="cardiology-tab"
                       data-toggle="tab"
                       href="#cardiology"
@@ -68,7 +68,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="allergy-tab"
                       data-toggle="tab"
                       href="#allergy"
@@ -85,7 +85,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="dermatology-tab"
                       data-toggle="tab"
                       href="#dermatology"
@@ -102,7 +102,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="diagnostics-tab"
                       data-toggle="tab"
                       href="#diagnostics"
@@ -119,7 +119,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="endocrinology-tab"
                       data-toggle="tab"
                       href="#endocrinology"
@@ -332,6 +332,12 @@ function Services() {
             </div>
           </div>
         </div>
+      </div>
+      <div id="back-top">
+        <a title="Go to Top" href="#">
+          {" "}
+          <i className="fas fa-level-up-alt"></i>
+        </a>
       </div>
     </>
   );

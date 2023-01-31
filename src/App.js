@@ -1,8 +1,5 @@
 import "./App.css";
 import Doctors from "./components/Doctors";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Navbar from "./components/Navbar";
 // import Services from "./components/Services";
 // import Appointments from "./components/Appointments";
 // // import Signup from "./components/Signup";

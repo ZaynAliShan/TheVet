@@ -17,6 +17,8 @@ import Blog from "./components/Blog";
 import FAQ from "./components/FAQs";
 import Footer from "./components/Footer";
 import SignInSide from "./components/SignInSide";
+import About from "./components/About";
+import Contact from "./components/ContactUs";
 import Login from "./components/Login";
 
 // ----------------------------------------------------------------------
@@ -46,6 +48,9 @@ export default function Router() {
           element: [<Navbar />, <Appointments />, <Footer />],
         },
         { path: "services", element: [<Navbar />, <Services />, <Footer />] },
+        { path: "about", element: [<Navbar />, <About />, <Footer />] },
+        { path: "contact", element: [<Navbar />, <Contact />, <Footer />] },
+        { path: "signUp", element: [<Navbar />, <SignInSide />, <Footer />] },
       ],
     },
     {
