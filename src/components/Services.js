@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import allergyIcon from "../assets/img/Services-Imgs/Services-Allergy.png";
 import defntistIcon from "../assets/img/Services-Imgs/Services-Dentistery.png";
 import cardiologyIcon from "../assets/img/Services-Imgs/Services-cardiology.png";
@@ -159,9 +159,9 @@ function Services() {
                         "Even if your pet dose'nt have stained teeth, bacteria
                         can still be present below the gum line."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -190,9 +190,9 @@ function Services() {
                         made great strides in recent times, which has enabled us
                         to provide our pets with longer and healthier lives."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -225,9 +225,9 @@ function Services() {
                         can recommend ways to relieve or manage the allergy so
                         that your pet can lead a more normal life."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -254,9 +254,9 @@ function Services() {
                         bring your new pet home, are a good way to help ensure
                         that any health problems will be diagnosed early."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -284,9 +284,9 @@ function Services() {
                         in a good position to help your pet enjoy a long and
                         healthy life with you."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -316,9 +316,9 @@ function Services() {
                         life. This is why regular pet wellness checkups are so
                         important."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
