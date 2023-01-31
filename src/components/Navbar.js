@@ -1,5 +1,4 @@
 import React from "react";
-import Navimg from "../assets/img/nav-icon-2.png";
 import the_vet_logo from "../assets/img/TheVet (3).png"
 import '../assets/css/style.css'
 import { Link } from "react-router-dom";
@@ -9,7 +8,7 @@ export default function Navbar(props) {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-black py-2">
         <div className="container-fluid">
-          <a className="navbar-brand d-flex align-items-center gap-2" href="#">
+          <a className="navbar-brand d-flex align-items-center gap-2" href="/">
             <img src={the_vet_logo} alt="Nav img" height={"69px"} width={"89px"}/><span className="navTitle">TheVet</span>
           </a>
 
