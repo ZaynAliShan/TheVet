@@ -37,10 +37,7 @@ export default function Navbar(props) {
                 <Link to="/dashboard">Admin Dashboard</Link>
               </li>
               <li className="nav-item d-flex align-items-center" style={{listStyle:"none"}}>
-                <Link to="/signup">Signup</Link>
-              </li>
-              <li className="nav-item d-flex align-items-center" style={{listStyle:"none"}}>
-                <Link to="/login">Sign In</Link>
+                <Link to="/login">Login/Register</Link>
               </li>
               <li className="nav-item">
                 <Link to="/appointment" >

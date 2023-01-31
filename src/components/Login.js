@@ -9,6 +9,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link } from "react-router-dom";
+
 const signup_img = require("../assets/img/signup_img.jpg");
 
 const Login = (props) => {
@@ -209,6 +211,9 @@ const Login = (props) => {
                   </Link>
                 </Grid>
               </Grid> */}
+                  <Typography align="center" component="h1" variant="h6" >
+                    <Link className="nav-link" to="/signup">New User? Click to Register</Link>
+                  </Typography>
                   <Copyright sx={{ mt: 5 }} />
                 </Box>
               </div>
