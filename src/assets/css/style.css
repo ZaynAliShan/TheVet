@@ -2285,7 +2285,7 @@ hr {
 }
 .slider-area {
   margin-top: -1px;
-  background-image: url(../img/hero/h1_hero.png);
+  background-image: url(../img/gallery/Hero.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -2951,7 +2951,7 @@ hr {
 }
 .all-starups-area .starups-img {
   width: 50%;
-  background-image: url(../img/gallery/startup.png);
+  background-image: url(../img/gallery/AI.jpg);
   background-size: 100%;
   background-size: cover;
   background-repeat: no-repeat;

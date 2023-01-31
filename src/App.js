@@ -7,17 +7,14 @@ import Appointments from "./components/Appointments";
 import Blog from "./components/Blog";
 import FAQ from "./components/FAQs";
 import Footer from "./components/Footer";
+import Home from "./components/Home";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Doctors />
-      <Services />
-      <Appointments />
-      {/* <Signup /> */}
-      <Blog/>
-      <FAQ/>
+      <Home/>
+    
       <Footer/>
 
     </>
