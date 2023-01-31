@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from "react-router-dom";
 import contact_form from "../assets/img/gallery/contact_form.png"
 
 export default function Appointments() {
@@ -60,7 +60,7 @@ export default function Appointments() {
                                                 <textarea name="message" id="message" placeholder="Message"></textarea>
                                             </div>
                                             <div className="submit-info">
-                                                <button className="btn" type="submit">Submit Now <i className="ti-arrow-right"></i> </button>
+                                               <Link to="/"> <button className="btn" type="submit">Submit Now <i className="ti-arrow-right"></i> </button></Link>
                                             </div>
                                         </div>
                                     </div>

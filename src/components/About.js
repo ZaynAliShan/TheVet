@@ -8,6 +8,7 @@ import gallery4 from "../assets/img/gallery/gallery4.png"
 import gallery5 from "../assets/img/gallery/gallery5.png"
 import gallery6 from "../assets/img/gallery/gallery6.png"
 
+import { Link } from "react-router-dom";
 
 import Hero from './Hero'
 
@@ -38,10 +39,10 @@ function About() {
                             </div>
                             <p>Welcome to our hospital, where patient care and comfort is our top priority. Our highly skilled medical team is dedicated to providing you with the highest quality medical treatment and support. Trust us to be your partner in health and wellness.</p>
                             <div className="about-btn1 mb-30">
-                                <a href="/" className="btn about-btn">Find Doctors .<i className="ti-arrow-right"></i></a>
+                                <Link to="/doctors" className="btn about-btn">Find Doctors .<i className="ti-arrow-right"></i></Link>
                             </div>
                             <div className="about-btn1 mb-30">
-                                <a href="/" className="btn about-btn2">Appointment <i className="ti-arrow-right"></i></a>
+                                <Link to="/appointment" className="btn about-btn2">Appointment <i className="ti-arrow-right"></i></Link>
                             </div>
                             <div className="about-btn1 mb-30">
                                 <a href="/" className="btn about-btn2">Emergency <i className="ti-arrow-right"></i></a>
