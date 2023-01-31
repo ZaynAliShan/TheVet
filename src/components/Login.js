@@ -9,12 +9,13 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { fontSize } from "@mui/system";
 const signup_img = require("../assets/img/signup_img.jpg");
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
+
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,10 +34,12 @@ const Login = (props) => {
     if (json.authToken) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
-      navigate("/");
-      alert(json.authToken);
+      alert(json.authToken + "=================");
+      setError(false);
+      navigate("/userDashboard");
     } else {
-      alert("Invalid credentials Login");
+      //alert("Invalid credentials Login");
+      setError(true);
     }
   };
 
@@ -166,6 +169,21 @@ const Login = (props) => {
                       }}
                     />
                   </div>
+                  {error && (
+                    <div className="mb-3">
+                      <label
+                        htmlFor="errorMessage"
+                        className="form-label"
+                        style={{
+                          fontSize: "16px",
+                          color: "red",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Invalid Credentials!!! Please Use Correct Credentials
+                      </label>
+                    </div>
+                  )}
                   {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"

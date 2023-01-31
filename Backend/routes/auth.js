@@ -21,8 +21,8 @@ router.post(
   "/signup",
   [
     body("name", "Please Enter a valid name").isLength({ min: 3 }),
-    body("email", "Please Enter a valid Email").isEmail(),
-    body("password", "Password must of 5 Characters.").isLength({ min: 5 }),
+    body("email", "Please Enter a valid Email!!!").isEmail(),
+    body("password", "Password must be of 5 Characters.").isLength({ min: 5 }),
   ],
   async (req, res) => {
     let success = false;
@@ -35,12 +35,10 @@ router.post(
     try {
       let user = await Users.findOne({ email: req.body.email });
       if (user) {
-        return res
-          .status(400)
-          .json({
-            success,
-            error: "Sorry a user with this email is already exists",
-          });
+        return res.status(400).json({
+          success,
+          error: "Sorry a user with this email is already exists",
+        });
       }
 
       const salt = await bcrypt.genSalt(10);

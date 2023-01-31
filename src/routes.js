@@ -35,7 +35,6 @@ export default function Router() {
             <Services />,
             <Appointments />,
             <SignInSide />,
-            <Login />,
             <FAQ />,
             <Blog />,
             <Footer />,
@@ -61,8 +60,22 @@ export default function Router() {
       ],
     },
     {
+      path: "/userDashboard",
+      element: <DashboardLayout />,
+      children: [
+        {
+          element: <Navigate to="/userDashboard/bookAppointment" />,
+          index: true,
+        },
+        { path: "bookAppointment", element: <Appointments /> },
+        { path: "user", element: <UserPage /> },
+        { path: "products", element: <ProductsPage /> },
+        { path: "blog", element: <BlogPage /> },
+      ],
+    },
+    {
       path: "login",
-      element: <LoginPage />,
+      element: [<Navbar />, <Login />, <Footer />],
     },
     {
       element: <SimpleLayout />,

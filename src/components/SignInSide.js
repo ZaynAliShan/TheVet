@@ -58,6 +58,8 @@ export default function SignInSide() {
     password: "",
     cpassword: "",
   });
+
+  const [error, setError] = useState({ status: false, message: "" });
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -76,9 +78,12 @@ export default function SignInSide() {
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
+      setError({ status: false, message: "" });
       alert("You have been signed up successfully!");
+      navigate("/login");
     } else {
       alert(json.error);
+      setError({ status: true, message: json.errors[0].msg });
     }
   };
 
@@ -206,6 +211,21 @@ export default function SignInSide() {
                       }}
                     />
                   </div>
+                  {error.status && (
+                    <div className="mb-3">
+                      <label
+                        htmlFor="errorMessage"
+                        className="form-label"
+                        style={{
+                          fontSize: "16px",
+                          color: "red",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {error.message}
+                      </label>
+                    </div>
+                  )}
                   {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
