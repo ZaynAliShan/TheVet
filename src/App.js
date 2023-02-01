@@ -1,5 +1,5 @@
 import "./App.css";
-import Doctors from "./components/Doctors";
+//import Doctors from "./components/Doctors";
 // import Services from "./components/Services";
 // import Appointments from "./components/Appointments";
 // // import Signup from "./components/Signup";
@@ -14,7 +14,7 @@ import ThemeProvider from "./theme";
 // components
 import ScrollToTop from "./components/scroll-to-top";
 import { StyledChart } from "./components/chart";
-import { BrowserRouter as ReactRouter, Routes, Route } from "react-router-dom";
+//import { BrowserRouter as ReactRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
