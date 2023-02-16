@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 import { useTheme, styled } from '@mui/material/styles';
 import { Card, CardHeader } from '@mui/material';
 // utils
-import { fNumber } from '../../../utils/formatNumber';
+// import { fNumber } from '../../../utils/formatNumber';
 // components
 import { useChart } from '../../../components/chart';
 
@@ -53,12 +53,12 @@ export default function AppCurrentVisits({ title, subheader, chartColors, chartD
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
     tooltip: {
       fillSeriesColor: false,
-      y: {
-        formatter: (seriesName) => fNumber(seriesName),
-        title: {
-          formatter: (seriesName) => `${seriesName}`,
-        },
-      },
+      // y: {
+      //   formatter: (seriesName) => fNumber(seriesName),
+      //   title: {
+      //     formatter: (seriesName) => `${seriesName}`,
+      //   },
+      // },
     },
     plotOptions: {
       pie: { donut: { labels: { show: false } } },
