@@ -4,6 +4,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
 // component
 import Iconify from '../../../components/iconify';
+import {deleteAllAppointments} from '../../../services/api'
 
 // ----------------------------------------------------------------------
 
@@ -30,15 +31,25 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
   },
 }));
 
+
+
+
 // ----------------------------------------------------------------------
 
 UserListToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
+  selected : PropTypes.array
 };
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserListToolbar({ numSelected, filterName, onFilterName,selected,getAppointments }) {
+  
+  const deleteAllSelected = async ()=>{
+      await deleteAllAppointments(selected);
+      getAppointments();
+
+  }
   return (
     <StyledRoot
       sx={{
@@ -51,6 +62,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
       {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">
           {numSelected} selected
+          
         </Typography>
       ) : (
         <StyledSearch
@@ -67,7 +79,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={()=>deleteAllSelected()}>
             <Iconify icon="eva:trash-2-fill" />
           </IconButton>
         </Tooltip>

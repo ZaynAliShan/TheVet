@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose
 
 const PatientSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   animalType: {
     type: String,
     required: true,
