@@ -23,8 +23,8 @@ const Login = (props) => {
     e.preventDefault();
 
     if (
-      credentials.email == "admin@gmail.com" &&
-      credentials.password == "admin"
+      credentials.email === "admin@gmail.com" &&
+      credentials.password === "admin"
     ) {
       navigate("/dashboard");
     } else {
@@ -43,7 +43,7 @@ const Login = (props) => {
       if (json.authToken) {
         // Save the auth token and redirect
         localStorage.setItem("token", json.authtoken);
-        alert(json.authToken + "=================");
+        alert(json.authToken);
         setError(false);
         navigate("/userDashboard");
       } else {
@@ -219,8 +219,10 @@ const Login = (props) => {
                   </Link>
                 </Grid>
               </Grid> */}
-                  <Typography align="center" component="h1" variant="h6" >
-                    <Link className="nav-link" to="/signup">New User? Click to Register</Link>
+                  <Typography align="center" component="h1" variant="h6">
+                    <Link className="nav-link" to="/signup">
+                      New User? Click to Register
+                    </Link>
                   </Typography>
                   <Copyright sx={{ mt: 5 }} />
                 </Box>
