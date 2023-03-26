@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { filter } from "lodash";
 import { sentenceCase } from "change-case";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // @mui
 import {
   Card,
@@ -29,7 +29,8 @@ import Scrollbar from "../components/scrollbar";
 // sections
 import { UserListHead, UserListToolbar } from "../sections/@dashboard/user";
 // mock
-import USERLIST from "../_mock/user";
+//import USERLIST from '../_mock/user';
+import { getAllAppointments, deleteUser } from "../services/api";
 
 // ----------------------------------------------------------------------
 
@@ -77,6 +78,8 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function UserPage() {
+  const [USERLIST, setUSERLIST] = useState([]);
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -91,8 +94,20 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleOpenMenu = (event) => {
+  const [appointmentID, setAppointmentID] = useState({});
+
+  const getAppointments = async () => {
+    let response = await getAllAppointments();
+    setUSERLIST(response.data.patientList);
+    setSelected([]);
+  };
+  useEffect(() => {
+    getAppointments();
+  }, []);
+
+  const handleOpenMenu = (event, id) => {
     setOpen(event.currentTarget);
+    setAppointmentID({ _id: id });
   };
 
   const handleCloseMenu = () => {
@@ -107,18 +122,19 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = USERLIST.map((n) => n.appointmentList[0]._id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
+    console.log(selected);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, name, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -157,6 +173,11 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  const deleteUserById = async (id) => {
+    await deleteUser(id);
+    getAppointments();
+  };
+
   return (
     <>
       <Helmet>
@@ -186,6 +207,8 @@ export default function UserPage() {
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            selected={selected}
+            getAppointments={getAppointments}
           />
 
           <Scrollbar>
@@ -204,17 +227,18 @@ export default function UserPage() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const {
-                        id,
-                        name,
-                        role,
-                        status,
-                        company,
-                        avatarUrl,
-                        isVerified,
-                      } = row;
-                      const selectedUser = selected.indexOf(name) !== -1;
+                      //const { id, name, role, status, company, avatarUrl, isVerified }=row;
 
+                      const id = row.appointmentList[0]._id;
+                      const name = row.appointmentList[0].attendent;
+                      const role = row.appointmentList[0].checkupType;
+                      const status = row.appointmentList[0].caseStatus;
+                      const company = row.patient.name;
+                      const isVerified = row.appointmentList[0].admitted;
+                      const avatarUrl =
+                        "https://thumbs.dreamstime.com/z/person-icon-flat-style-man-symbol-person-icon-flat-style-man-symbol-isolated-white-background-simple-people-abstract-icon-118611127.jpg";
+
+                      const selectedUser = selected.indexOf(id) !== -1;
                       return (
                         <TableRow
                           hover
@@ -226,7 +250,7 @@ export default function UserPage() {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={selectedUser}
-                              onChange={(event) => handleClick(event, name)}
+                              onChange={(event) => handleClick(event, name, id)}
                             />
                           </TableCell>
 
@@ -265,7 +289,12 @@ export default function UserPage() {
                             <IconButton
                               size="large"
                               color="inherit"
-                              onClick={handleOpenMenu}
+                              onClick={(event) =>
+                                handleOpenMenu(
+                                  event,
+                                  row.appointmentList[0]._id
+                                )
+                              }
                             >
                               <Iconify icon={"eva:more-vertical-fill"} />
                             </IconButton>
@@ -343,7 +372,10 @@ export default function UserPage() {
           Edit
         </MenuItem>
 
-        <MenuItem sx={{ color: "error.main" }}>
+        <MenuItem
+          sx={{ color: "error.main" }}
+          onClick={() => deleteUserById(appointmentID._id)}
+        >
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>
