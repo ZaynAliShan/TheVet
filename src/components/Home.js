@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useCallback } from "react";
 import { useState } from "react";
 import MovingText from "react-moving-text";
+import { Link } from "react-router-dom";
 
 import testimonial1 from "../assets/img/gallery/Testimonial1.jpeg";
 import testimonial2 from "../assets/img/gallery/Testimonial2.jpeg";
@@ -83,14 +84,14 @@ export default function Home() {
                         iteration="1"
                         fillMode="none"
                       >
-                        <a
-                          href="/"
+                        <Link
+                          to="/appointment"
                           className="btn hero-btn"
                           data-animation="fadeInLeft"
                           data-delay="0.5s"
                         >
                           Appointment <i className="ti-arrow-right"></i>
-                        </a>
+                        </Link>
                       </MovingText>
                     </div>
                   </div>
@@ -125,14 +126,14 @@ export default function Home() {
                     it’s easier to give them the exceptional care they deserve.
                   </p>
                   <div class="about-btn1 mb-30">
-                    <a href="about.html" class="btn about-btn">
+                    <Link to="/doctors" class="btn about-btn">
                       Find Doctors .<i class="ti-arrow-right"></i>
-                    </a>
+                    </Link>
                   </div>
                   <div class="about-btn1 mb-30">
-                    <a href="about.html" class="btn about-btn2">
+                    <Link to="/appointment" class="btn about-btn2">
                       Appointment <i class="ti-arrow-right"></i>
-                    </a>
+                    </Link>
                   </div>
                   {/* <div class="about-btn1 mb-30">
                     <a href="about.html" class="btn about-btn2">
@@ -184,9 +185,9 @@ export default function Home() {
                   </div>
                   {/* <!-- founder --> */}
                   <div class="about-btn1 mb-30"  style={{display: "flex",alignItems:"flex-start"}}>
-                    <a href="about.html" class="btn about-btn">
+                    <Link to="/home" class="btn about-btn">
                       AI BOT .<i class="ti-arrow-right"></i>
-                    </a>
+                    </Link>
                   </div>
                  
                 </div>
@@ -197,7 +198,7 @@ export default function Home() {
           {/* <!--Right Contents  --> */}
           <div class="starups-img"></div>
         </div>
-        People REVIEWS
+        
         {/* <!--? Blog start --> */}
         <div class="home_blog-area section-padding30">
           <div class="container">
@@ -296,6 +297,10 @@ export default function Home() {
         </div>
         {/* <!-- Blog End --> */}
       </main>
+      {/* <!-- Scroll Up --> */}
+    <div id="back-top" >
+        <a title="Go to Top" href="#"> <i className="fas fa-level-up-alt"></i></a>
+    </div>
     </div>
   );
 }

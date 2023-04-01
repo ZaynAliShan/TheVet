@@ -1,3 +1,22 @@
+.navtitle-div {
+  display: flex;
+  gap: 10px;
+}
+.navTitle {
+  font-size: 24px;
+}
+
+.mybar {
+  display: flex;
+  justify-content: flex-end;
+}
+.mybar ul {
+  gap: 30px;
+}
+.mybar ul li {
+  font-size: 17px;
+}
+
 @import url("https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap");
 .white-bg {
   background: #ffffff;
@@ -127,13 +146,13 @@ p {
   font-weight: normal;
 }
 .bg-img-1 {
-  background-image: url(../img/slider/slider-img-1.jpg);
+  background-image: url(../img/gallery/team1.png);
 }
 .bg-img-2 {
-  background-image: url(../img/background-img/bg-img-2.jpg);
+  background-image: url(../img/gallery/team1.png);
 }
 .cta-bg-1 {
-  background-image: url(../img/background-img/bg-img-3.jpg);
+  background-image: url(../img/gallery/team1.png);
 }
 .img {
   max-width: 100%;
@@ -4713,13 +4732,13 @@ hr {
   background-color: #1f2b7b;
 }
 .breadcam_bg {
-  background-image: url(../img/banner/bradcam.png);
+  background-image: url(../img/gallery/team1.png);
 }
 .breadcam_bg_1 {
-  background-image: url(../img/banner/bradcam2.png);
+  background-image: url(../img/gallery/team1.png);
 }
 .breadcam_bg_2 {
-  background-image: url(../img/banner/bradcam3.png);
+  background-image: url(../img/gallery/team1.png);
 }
 .bradcam_area {
   background-size: cover;

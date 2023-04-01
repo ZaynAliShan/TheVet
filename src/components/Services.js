@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import allergyIcon from "../assets/img/Services-Imgs/Services-Allergy.png";
 import defntistIcon from "../assets/img/Services-Imgs/Services-Dentistery.png";
 import cardiologyIcon from "../assets/img/Services-Imgs/Services-cardiology.png";
@@ -34,7 +34,7 @@ function Services() {
                 <ul className="nav" id="myTab" role="tablist">
                   <li className="nav-item">
                     <a
-                      className="nav-link active"
+                      className="nav-link active align-items-center"
                       id="dentistry-tab"
                       data-toggle="tab"
                       href="#dentistry"
@@ -51,7 +51,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="cardiology-tab"
                       data-toggle="tab"
                       href="#cardiology"
@@ -68,7 +68,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="allergy-tab"
                       data-toggle="tab"
                       href="#allergy"
@@ -85,7 +85,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="dermatology-tab"
                       data-toggle="tab"
                       href="#dermatology"
@@ -102,7 +102,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="diagnostics-tab"
                       data-toggle="tab"
                       href="#diagnostics"
@@ -119,7 +119,7 @@ function Services() {
                   </li>
                   <li className="nav-item">
                     <a
-                      className="nav-link"
+                      className="nav-link align-items-center"
                       id="endocrinology-tab"
                       data-toggle="tab"
                       href="#endocrinology"
@@ -159,9 +159,9 @@ function Services() {
                         "Even if your pet dose'nt have stained teeth, bacteria
                         can still be present below the gum line."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -190,9 +190,9 @@ function Services() {
                         made great strides in recent times, which has enabled us
                         to provide our pets with longer and healthier lives."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -225,9 +225,9 @@ function Services() {
                         can recommend ways to relieve or manage the allergy so
                         that your pet can lead a more normal life."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -254,9 +254,9 @@ function Services() {
                         bring your new pet home, are a good way to help ensure
                         that any health problems will be diagnosed early."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -284,9 +284,9 @@ function Services() {
                         in a good position to help your pet enjoy a long and
                         healthy life with you."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -316,9 +316,9 @@ function Services() {
                         life. This is why regular pet wellness checkups are so
                         important."
                       </p>
-                      <a href="/" className="dep-btn">
+                      <Link to="/appointment" className="dep-btn">
                         Appointment<i className="ti-arrow-right"></i>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -332,6 +332,12 @@ function Services() {
             </div>
           </div>
         </div>
+      </div>
+      <div id="back-top">
+        <a title="Go to Top" href="#">
+          {" "}
+          <i className="fas fa-level-up-alt"></i>
+        </a>
       </div>
     </>
   );
