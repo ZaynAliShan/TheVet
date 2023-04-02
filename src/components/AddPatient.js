@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import contact_form from "../assets/img/gallery/contact_form.png";
-const animals = ["cats", "dogs", "rabbits", "hens"];
+const animals = ["Cats", "Dogs", "Rabbits", "Hens"];
 const Breeds = {
-  cats: [
+  Cats: [
     "Ragdoll",
     "Maine Coon Cat",
     "Exotic",
@@ -14,34 +14,34 @@ const Breeds = {
     "Abyssinian",
     "American Shorthair",
     "Scottish Fold",
-    " Companion Cat",
-    " Sphynx",
+    "Companion Cat",
+    "Sphynx",
   ],
-  dogs: [
-    "golden retriever",
-    "labrador retriever",
-    "french bulldog",
-    "beagle",
-    "german shepherd dog",
-    "poodle",
-    "bulldog",
+  Dogs: [
+    "Golden Retriever",
+    "labrador Retriever",
+    "French bulldog",
+    "Beagle",
+    "German shepherd Dog",
+    "Poodle",
+    "Bulldog",
   ],
-  rabbits: [
+  Rabbits: [
     "Holland Lop",
     "Mini Lop",
-    " Dutch ",
-    " Lionhead",
-    " French Lop",
-    " Californian ",
-    " Dwarf Papillon",
-    " Netherland Dwarf",
+    "Dutch",
+    "Lionhead",
+    "French Lop",
+    "Californian ",
+    "Dwarf Papillon",
+    "Netherland Dwarf",
   ],
-  hens: [
+  Hens: [
     "Ancona",
     "Andalusian",
     "Campine",
     "Fayoumi",
-    " Hamburg",
+    "Hamburg",
     "Lakenvelder",
     "Leghorn",
     "Old English Bantam",
@@ -54,21 +54,18 @@ const getBreeds = (animal) => {
 export default function AddPatient() {
   const [userId, setUserId] = useState(null);
   const genderOptions = ["Male", "Female", "Intersex"];
+  const [error, setError] = useState(false);
   let navigate = useNavigate();
   useEffect(() => {
     var token = localStorage.getItem("checking");
-    console.log("Checking of Patient: " + token);
+   
     if (token) {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
       setUserId(decodedToken.user.id);
-      console.log(userId);
+      
     }
   }, []);
-
-  const [selectedAnimal, setSelectedAnimal] = useState(animals[0]);
-  const [breeds, setBreeds] = useState(getBreeds(selectedAnimal));
-
   const [patient, setPatient] = useState({
     name: "",
     animalType: "",
@@ -76,7 +73,12 @@ export default function AddPatient() {
     gender: "",
     age: "",
   });
-  const [selectedState, setSelectedState] = useState("");
+
+  const [selectedAnimal, setSelectedAnimal] = useState(animals[0]);
+  const [breeds, setBreeds] = useState(getBreeds(selectedAnimal));
+
+
+  const [errorsR, setErrorR] = useState("");
 
   const onChange = (e) => {
     setPatient({ ...patient, [e.target.name]: e.target.value });
@@ -87,12 +89,18 @@ export default function AddPatient() {
     const animal = event.target.value;
     setSelectedAnimal(animal);
     setBreeds(getBreeds(animal));
-    console.log(breeds);
+    
+
+    setPatient((prevState) => ({
+      ...prevState, // spread operator to copy existing values
+      breed: breeds[0], // update breed property
+    }));
     onChange(event);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, animalType,breed,gender,age  } = patient;
+   
     const response = await fetch("http://localhost:5000/api/appointment/addPatient", {
       method: "POST",
       headers: {
@@ -107,9 +115,20 @@ export default function AddPatient() {
         id:userId,
       }),
     });
+    const json = await response.json();
+  
+    setErrorR(json.errors);
+   
+    if(json.success)
 
-    navigate("/userDashboard/makeAppointment");
-
+    {
+      setError(false);
+      navigate("/userDashboard/makeAppointment");
+  }
+  else {
+    
+    setError(true);
+  }
   };
 
   
@@ -148,14 +167,14 @@ export default function AddPatient() {
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">
-                      <div className=" form-box subject-icon  mb-30 single-element-widget mt-30">
+                      <div className=" form-box subject-icon  mb-30 single-element-widget mt-20">
                         <div className="default-select" id="default-select">
-                          <select
+                          <select style={{ width:"250px" , height: "34px",paddingLeft:"20px" }} 
                             onChange={handleAnimalChange}
                             name="animalType"
                             type="animalType"
                             placeholder="AnimalType"
-                            
+                          
                           >
                             <option value="" disabled selected>
                               Select Animal Type
@@ -172,7 +191,7 @@ export default function AddPatient() {
 
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <select onChange={onChange} id="breed"   name ="breed" >
+                        <select  style={{ width:"250px" , height: "29px" ,paddingLeft:"20px"}} onChange={onChange} id="breed"   name ="breed" >
                           <option value="" disabled selected>
                             Select a Breed
                           </option>
@@ -186,7 +205,7 @@ export default function AddPatient() {
                     </div>
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
-                        <select id="gender" name ="gender" onChange={onChange} >
+                        <select style={{ width:"250px" , height: "29px",paddingLeft:"20px" }}  id="gender" name ="gender" onChange={onChange} >
                           <option value="" disabled selected>
                             Select gender
                           </option>
@@ -207,6 +226,26 @@ export default function AddPatient() {
                         />
                       </div>
                     </div>
+
+                    {error && (
+                    <div className="mb-3">
+                      <label
+                        htmlFor="errorMessage"
+                        className="form-label"
+                        style={{
+                          fontSize: "16px",
+                          color: "red",
+                          fontWeight: "bold",
+                        }}
+                      >
+                         Invalid Enteries!! Please fill all the fields.
+                        {errorsR.map((b) => (
+                           <p>{b.msg}</p>
+                          ))}
+                      
+                      </label>
+                    </div>
+                  )}
                       <div className="submit-info">
                         <button className="btn" type="submit">
                           Submit Now <i className="ti-arrow-right"></i>{" "}

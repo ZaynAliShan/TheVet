@@ -4,7 +4,7 @@ const Users = require('../models/Users');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-
+const { check, validationResult } = require("express-validator");
 const findAppointment = async (id)=>{
     let app = await Appointment.findOne({_id : `${id}`})
     return app;
@@ -61,10 +61,25 @@ router.delete('/:id', async (req,res) => {
 });
 router.post(
     "/addPatient",
+    [
+        check("name", "Please Enter a valid name").isLength({ min: 3 }),
+        check("animalType", "AnimalType cannot be empty.").exists().withMessage("AnimalType cannot be empty"),
+        check("breed", "breed cannot be empty.").exists(),
+        check("gender", "gender cannot be empty.").exists(),
+        check("age", "Age cannot be empty.").exists().isFloat({ min: 0, max: 200 }).withMessage('Numeric field must be between 0 and 200'),
+        
+        
+      ],
    
     async (req, res) => {    
       
-      
+        let success = false;
+        
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ success, errors: errors.array() });
+        }
+    try{
       pt = await Patient.create({
         name: req.body.name,
         animalType: req.body.animalType,
@@ -76,7 +91,13 @@ router.post(
       const user=await Users.findOne({ _id : req.body.id });
       const objectId = mongoose.Types.ObjectId(pt.id);  
       await Users.updateOne({ _id: user._id}, { $push: { patients: objectId } });
-      res.send("Addes the Patient")
+      success = true;
+      res.json({ success});
+    }catch(error)
+    {
+        success = false;
+        return res.status(500).json({ success, errors: errors.array() })
+    }
     
      
       
