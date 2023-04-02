@@ -15,7 +15,6 @@ import Doctors from "./components/Doctors";
 import Services from "./components/Services";
 import Appointments from "./components/Appointments";
 import UserAppointmentsForm from "./components/userAppointmentsForm";
-import addPatient from "./components/AddPatient";
 //import Blog from "./components/Blog";
 //import FAQ from "./components/FAQs";
 import Footer from "./components/Footer";
