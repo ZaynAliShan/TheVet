@@ -11,7 +11,8 @@ const DoctorSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
@@ -27,7 +28,8 @@ const DoctorSchema = new Schema({
   },
   licenceNumber: { 
     type: String,
-    required: true
+    required: true,
+    unique : true
   },
   experience: { 
     type: String,

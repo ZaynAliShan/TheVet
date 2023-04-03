@@ -30,7 +30,7 @@ import Scrollbar from '../components/scrollbar';
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 //import USERLIST from '../_mock/user';
-import {getAllAppointments, deleteUser} from '../services/api'
+import {getAllAppointments, deleteUser, addAppointment} from '../services/api'
 
 // ----------------------------------------------------------------------
 
@@ -168,7 +168,9 @@ export default function UserPage() {
     await deleteUser(id);
     getAppointments();
   }
-  
+  const onClickAddAppointment = async (data) => {
+    await addAppointment(data);
+  }
   
   return (
    
@@ -183,7 +185,18 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
           Appointments
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" onClick={()=>onClickAddAppointment({
+  
+  attendent: "atoa",
+  attendentGender: "female",
+  checkupType: "neccheck",
+  caseStatus: "success",
+  admitted: true,
+  email : 'atiagull321@gmail.com',
+  patientId : '640ebf3ec5c2da9a125e0072',
+  date : '2023-1-4',
+  time : '1:00 AM'
+})} startIcon={<Iconify icon="eva:plus-fill"  />}>
             New Appointment
           </Button>
         </Stack>

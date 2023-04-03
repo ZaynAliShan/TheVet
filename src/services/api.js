@@ -8,7 +8,17 @@ export const getAllAppointments = ()=>{
         return axios.get(`${URL}/api/appointment/all`);
     }
     catch(error){
-        console.log("error in getall appointments " , error);
+        console.log("error in get all appointments " , error);
+    }
+}
+
+export const addAppointment = async (data)=>{
+
+    try{
+        return await axios.post(`${URL}/api/appointment/add`,data);
+    }
+    catch(error){
+        console.log("error in add appointment " , error);
     }
 }
 
