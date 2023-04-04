@@ -195,7 +195,7 @@ export default function UserPage() {
   email : 'atiagull321@gmail.com',
   patientId : '640ebf3ec5c2da9a125e0072',
   date : '2023-1-4',
-  time : '1:00 AM'
+  time : '8:00 AM'
 })} startIcon={<Iconify icon="eva:plus-fill"  />}>
             New Appointment
           </Button>
@@ -223,12 +223,12 @@ export default function UserPage() {
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     //const { id, name, role, status, company, avatarUrl, isVerified }=row;
                     
-                    const id = row.appointmentList[0]._id;
-                    const name = row.appointmentList[0].attendent;
-                    const role = row.appointmentList[0].checkupType;
-                    const status = row.appointmentList[0].caseStatus;
+                    const id = row.appointmentList._id;
+                    const name = row.appointmentList.attendent;
+                    const role = row.appointmentList.checkupType;
+                    const status = row.appointmentList.caseStatus;
                     const company = row.patient.name;
-                    const isVerified = row.appointmentList[0].admitted;
+                    const isVerified = row.appointmentList.admitted;
                     const avatarUrl = 'https://thumbs.dreamstime.com/z/person-icon-flat-style-man-symbol-person-icon-flat-style-man-symbol-isolated-white-background-simple-people-abstract-icon-118611127.jpg';
 
                     const selectedUser = selected.indexOf(id) !== -1;

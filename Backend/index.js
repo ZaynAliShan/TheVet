@@ -14,7 +14,7 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT","DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
@@ -37,7 +37,11 @@ const port = 5000;
 app.use(express.json());
 // Available Routes (getting routes from routes folder)
 app.use("/api/auth", require("./routes/auth"));
+
 app.use("/api/appointment", require("./routes/appointment"));
+app.use("/api/patient", require("./routes/patient"));
+
+//app.use("/api/patient", require("./routes/patient"));
 
 app.listen(port, () => {
   console.log(`Your app listening on port ${port}`);

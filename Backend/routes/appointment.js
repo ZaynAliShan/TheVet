@@ -1,4 +1,4 @@
-const Patient = require('../models/Patient.js');
+const Patient = require('../models/Patients.js');
 const Appointment = require('../models/Appointments');
 const Schedule = require('../models/Schedules.js');
 const Doctor = require('../models/Doctors.js');
@@ -9,34 +9,32 @@ const findAppointment = async (id) => {
     let app = await Appointment.findOne({ _id: `${id}` })
     return app;
 }
-
 router.get('/all', async (req, res) => {
-  try {
-      let patientList = [];
+    try {
+        let patientList = [];
 
-      const patients = await Patient.find({});
+        const patients = await Patient.find({});
 
-
-      for (const patient of patients) {
-
-          let patientObj = {};
-          patientObj.patient = patient;
-
-          for (const item of patient.appointments) {
-
-              let appointment = [];
-              let app = await findAppointment(item._id);
-              appointment.push(app);
+        
+        for (const patient of patients) {
+          
+          const appointments = await Appointment.find({
+            '_id': { $in: patient.appointments }
+          });
+          for(const appointment of appointments)
+          {
+              const patientObj = {};
+              patientObj.patient = patient;
               patientObj.appointmentList = appointment;
               patientList.push(patientObj);
           }
-      }
+        }
 
-      res.status(200).json({ patientList });
-  }
-  catch (error) {
-      res.status(404).json({ Message: error.Message });
-  }
+        res.status(200).json({ patientList });
+    }
+    catch (error) {
+        res.status(404).json({ Message: error.Message });
+    }
 });
 
 router.post('/add', async (req, res) => {
@@ -57,7 +55,6 @@ router.post('/add', async (req, res) => {
   
       appointmentData.schedule = schedule._id;
       const doctorId = schedule.doctor;
-      console.log(doctorId);
       if (!doctorId) {
         return res.status(404).json({ error: 'No doctor is available in this slot' });
       }

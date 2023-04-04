@@ -1,6 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 // layouts
 import DashboardLayout from "./layouts/dashboard";
+import UserDashboardLayout from "./layouts/userDashboard";
 import SimpleLayout from "./layouts/simple";
 //
 import BlogPage from "./pages/BlogPage";
@@ -13,6 +14,7 @@ import Navbar from "./components/Navbar";
 import Doctors from "./components/Doctors";
 import Services from "./components/Services";
 import Appointments from "./components/Appointments";
+import UserAppointmentsForm from "./components/userAppointmentsForm";
 //import Blog from "./components/Blog";
 //import FAQ from "./components/FAQs";
 import Footer from "./components/Footer";
@@ -21,6 +23,7 @@ import About from "./components/About";
 import Contact from "./components/ContactUs";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import AddPatient from "./components/AddPatient";
 
 // ----------------------------------------------------------------------
 
@@ -55,16 +58,15 @@ export default function Router() {
     },
     {
       path: "/userDashboard",
-      element: <DashboardLayout />,
+      element: <UserDashboardLayout />,
       children: [
         {
-          element: <Navigate to="/userDashboard/bookAppointment" />,
+          element: <Navigate to="/userDashboard/makeAppointment" />,
           index: true,
         },
-        { path: "bookAppointment", element: <Appointments /> },
-        { path: "user", element: <UserPage /> },
-        { path: "products", element: <ProductsPage /> },
-        { path: "blog", element: <BlogPage /> },
+        { path: "makeAppointment", element: <UserAppointmentsForm /> },
+        { path: "userApppointments", element: <UserPage /> },
+        { path: "addPatient", element: <AddPatient /> },
       ],
     },
     {

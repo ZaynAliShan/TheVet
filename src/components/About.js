@@ -40,18 +40,13 @@ function About() {
                     randomisation.
                   </p>
                   <div className="about-btn1 mb-30">
-                    <a href="/" className="btn about-btn">
+                    <a href="/doctors" className="btn about-btn">
                       Find Doctors .<i className="ti-arrow-right"></i>
                     </a>
                   </div>
                   <div className="about-btn1 mb-30">
-                    <a href="/" className="btn about-btn2">
+                    <a href="/appointment" className="btn about-btn2">
                       Appointment <i className="ti-arrow-right"></i>
-                    </a>
-                  </div>
-                  <div className="about-btn1 mb-30">
-                    <a href="/" className="btn about-btn2">
-                      Emergency 1 <i className="ti-arrow-right"></i>
                     </a>
                   </div>
                 </div>

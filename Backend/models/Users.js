@@ -21,12 +21,12 @@ const UserSchema = new Schema({
   date: { // the date our user got registered
     type: Date,
     default: Date.now
-  }
+  },
   // , //one user can have many pets/patients.
-  // patients : [{
-  //   type : Schema.Types.ObjectId,
-  //   ref : 'patients'
-  // }]
+  patients : [{
+    type : Schema.Types.ObjectId,
+    ref : 'patients'
+  }]
 });
 
 const Users = mongoose.model('users', UserSchema);
