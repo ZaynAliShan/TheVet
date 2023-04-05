@@ -1,5 +1,7 @@
 const Patient = require("../models/Patients.js");
+const Schedule = require("../models/Schedules.js");
 const Users = require("../models/Users");
+const Doctor = require("../models/Doctors.js");
 const express = require("express");
 var fetchuser = require("../middleware/fetchuser");
 const router = express.Router();
@@ -50,6 +52,20 @@ router.get('/patientByUserId', async (req, res) => {
     });
     console.log(patients)
     res.status(200).json(patients);
+  }
+  catch (error) {
+    res.status(404).json({ Message: error.Message });
+  }
+});
+
+router.get('/getSchedule', async (req, res) => {
+  try {
+    
+    const schedule = await Schedule.find({ 
+      doctor: { $exists: true, $ne: null },
+      _id: { $nin: await Doctor.distinct("schedules") }
+    });
+    res.status(200).json(schedule);
   }
   catch (error) {
     res.status(404).json({ Message: error.Message });

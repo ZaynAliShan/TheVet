@@ -49,6 +49,7 @@ router.post('/add', async (req, res) => {
       checkupType: req.body.checkupType,
       caseStatus: req.body.caseStatus,
       admitted: req.body.admitted,
+      date : req.body.date,
       schedule: null,
     };
 
@@ -59,10 +60,10 @@ router.post('/add', async (req, res) => {
 
     appointmentData.schedule = schedule._id;
     const doctorId = schedule.doctor;
-    if (!doctorId) {
+    const isDoctorAvailable = await Doctor.findOne({schedules :  {$in : schedule._id}})
+    if (!doctorId || isDoctorAvailable!=null){
       return res.status(404).json({ error: 'No doctor is available in this slot' });
     }
-
     const newApp = new Appointment(appointmentData);
     await newApp.save();
 
@@ -78,7 +79,7 @@ router.post('/add', async (req, res) => {
 
     const doctorUpdateResult = await Doctor.updateOne(
       { _id: doctorId },
-      { $push: { appointments: newApp._id } }
+      { $push: { appointments: newApp._id , schedules : schedule._id} }
     );
 
     if (doctorUpdateResult.nModified === 0) {
@@ -98,15 +99,24 @@ router.post('/add', async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const appointmentObject = await Appointment.findOne({ _id: req.params.id });
+    const scheduleId = appointmentObject.schedule;
     if (appointmentObject != null) {
       const patientObject = await Patient.findOne({
         appointments: { $in: req.params.id },
       });
+      // removing appointment id from patient table 
       await Patient.updateOne(
         { _id: patientObject._id },
         { $pull: { appointments: req.params.id } }
       );
       await Appointment.deleteOne({ _id: req.params.id });
+
+       // Remove the appointment and schedule IDs from the doctor table
+      const doctorObject = await Doctor.findOne({schedules : {$in : appointmentObject.schedule}});
+      await Doctor.updateOne(
+        { _id: doctorObject._id },
+        { $pull: { appointments: req.params.id, schedules: appointmentObject.schedule } }
+      );
       res.status(200).json({ Message: "user is deleted " + patientObject });
     } else {
     }

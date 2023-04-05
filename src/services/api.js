@@ -67,5 +67,15 @@ export const deleteAllAppointments = async (ids) => {
     catch(error){
         console.log("error in get by userID patients " , error);
     }
-};
+  };
+
+  export const getSchedule = async () =>{
+    try{
+        return axios.get(`${URL}/api/patient/getSchedule`);
+    }
+    catch(error){
+        console.log("error in get Schedule  " , error);
+    }
+  };
+
   

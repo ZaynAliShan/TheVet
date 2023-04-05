@@ -15,7 +15,8 @@ const ScheduleSchema = new Schema({
   },//specific doctor is associated against each schedule
   doctor : {
     type : Schema.Types.ObjectId,
-    ref : 'doctors'
+    ref : 'doctors',
+    default : null
   }
 });
 

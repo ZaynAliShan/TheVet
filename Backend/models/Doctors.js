@@ -40,7 +40,10 @@ const DoctorSchema = new Schema({
   appointments: [{
     type : Schema.Types.ObjectId,
     ref : 'appointments'
-  }]
+  }],
+  schedules : [{
+    type : Schema.Types.ObjectId,
+    ref : 'schedules'}]
 });
 
 const Doctors = mongoose.model('doctors', DoctorSchema);
