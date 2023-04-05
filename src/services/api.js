@@ -32,8 +32,6 @@ export const deleteUser= async (id) =>{
 
 }
 
-
-
 export const deleteAllAppointments = async (ids) => {
     try {
       const promises = ids.map((id) => axios.delete(`${URL}/api/appointment/${id}`));
@@ -43,4 +41,31 @@ export const deleteAllAppointments = async (ids) => {
       console.log("error in deleting appointments ", error);
     }
   };
+
+  export const getUser = async (token) => {
+    try{
+        return axios.post(`${URL}/api/auth/getuser/${token}`);
+    }
+    catch(error){
+        console.log("error in getall appointments " , error);
+    }
+  };
+
+  export const getPatients = async () =>{
+    try{
+        return axios.get(`${URL}/api/patient/all`);
+    }
+    catch(error){
+        console.log("error in getall patients " , error);
+    }
+  };
+
+  export const getPatientsByUserId = async (id) =>{
+    try{
+        return axios.get(`${URL}/api/patient/patientByUserId`, { params: { id } });
+    }
+    catch(error){
+        console.log("error in get by userID patients " , error);
+    }
+};
   

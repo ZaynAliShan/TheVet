@@ -63,7 +63,6 @@ export default function AddPatient() {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
       setUserId(decodedToken.user.id);
-      
     }
   }, []);
   const [patient, setPatient] = useState({

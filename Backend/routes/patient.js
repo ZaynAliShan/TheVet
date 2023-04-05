@@ -28,4 +28,32 @@ router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
   }
 });
 
+router.get('/all', async (req, res) => {
+  try {
+     
+    const patients = await Patient.find({});
+    console.log(patients[0].name + " " + patients[0]._id)
+    res.status(200).json(patients);
+  }
+  catch (error) {
+      res.status(404).json({ Message: error.Message });
+  }
+});
+
+router.get('/patientByUserId', async (req, res) => {
+  try {
+    const id = req.query.id;
+    const user = await Users.findOne({_id : id});
+    console.log(user.patients)
+    const patients = await Patient.find({
+      '_id': { $in: user.patients }
+    });
+    console.log(patients)
+    res.status(200).json(patients);
+  }
+  catch (error) {
+    res.status(404).json({ Message: error.Message });
+  }
+});
+
 module.exports = router;
