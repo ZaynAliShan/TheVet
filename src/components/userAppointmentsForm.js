@@ -1,15 +1,28 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
-
+import { useNavigate } from "react-router-dom";
 import contact_form from "../assets/img/gallery/contact_form.png";
 import { addAppointment, getPatientsByUserId, getSchedule} from "../services/api";
 
 export default function Appointments() {
+  const currentDate = new Date().toISOString().split('T')[0];
+  const[appointment,setAppointment]= useState({
+    attendent: "",
+      attendentGender: "",
+      checkupType: "",
+      caseStatus: "success",
+      admitted: true,
+      email : '',
+      patientId : '',
+      date : '',
+      time : "",
+  });
   const [userId, setUserId] = useState(null);
   const genderOptions = ["Male", "Female"];
   const [patientList, setPatientList] = useState([]);
   const [timeList, setTimeList] = useState([]);
+  let navigate = useNavigate();
   useEffect(() => {
     var token = localStorage.getItem("checking");
    
@@ -18,10 +31,12 @@ export default function Appointments() {
       const { id } = decodedToken;
       setUserId(decodedToken.user.id);
     }
+
+    
   }, []);
   
   const getAllPatients = async ()=>{
-    console.log(userId);
+  
     const list  = await getPatientsByUserId(userId);
     setPatientList(list.data);
   }
@@ -30,20 +45,51 @@ export default function Appointments() {
     const list = await getSchedule();
     setTimeList(list.data);
   }
-
+  const onChange = (e) => {
+    setAppointment({ ...appointment, [e.target.name]: e.target.value });
+  };
   const onClickAddAppointment = async ()=>{
-    const appointment = {
-      attendent: "atoa",
-      attendentGender: "female",
-      checkupType: "neccheck",
-      caseStatus: "success",
-      admitted: true,
-      email : 'atiagull321@gmail.com',
-      patientId : '640ebf3ec5c2da9a125e0072',
-      date : '2023-1-4',
-      time : '9:00 AM'
+    const {attendent,attendentGender,checkupType,caseStatus,admitted,email,patientId ,date,time }=appointment;
+    
+    const adstaus=true;
+    if (admitted=="false")
+    {
+      adstaus=false;
+
     }
-    await addAppointment(appointment)
+    setAppointment((prevState) => ({
+      ...prevState, // spread operator to copy existing values
+      admitted: adstaus, // update breed property
+    }));
+    await addAppointment(appointment);
+
+    console.log(appointment);
+    // const response = await fetch("http://localhost:5000/api/appointment/add", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //   attendent: attendent,
+    //   attendentGender: attendentGender,
+    //   checkupType: checkupType,
+    //   caseStatus: caseStatus,
+    //   admitted: adstaus,
+    //   email : email,
+    //   patientId :patientId,
+    //   date : date,
+    //   time : time,
+    //   }),
+    // });
+
+    //   const json = await response.json();
+    //   console.log(json);
+
+  
+   
+
+    navigate("/userDashboard/userApppointments");
+   
   }
   return (
     
@@ -66,20 +112,22 @@ export default function Appointments() {
                   </div>
                 </div>
                 {/* <!--End Section Tittle  --> */}
-                <form id="contact-form" action="#" method="POST">
+                <form id="contact-form" onSubmit={onClickAddAppointment}>
                   <div className="row">
 
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <input type="text" name="attendent" placeholder="Attendent" />
+                        <input  onChange={onChange} type="text" name="attendent" id ="attendant" placeholder="Attendent" required />
                       </div>
                     </div>
 
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box subject-icon mb-30">
                         <input
+                         onChange={onChange}
                           type="Email"
                           name="email"
+                          id="email"
                           placeholder="Email"
                         />
                       </div>
@@ -87,13 +135,13 @@ export default function Appointments() {
 
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <input type="text" name="checkupType" placeholder="CheckUp Type" />
+                        <input type="text" id ="checkupType"name="checkupType" onChange={onChange} placeholder="CheckUp Type" required />
                       </div>
                     </div>
 
                     <div className="col-lg-12" >
                       <div className="form-box user-icon mb-30">
-                        <select style={{ width: "250px", height: "29px", paddingLeft: "20px" }} >
+                        <select  id="attendentGender" name="attendentGender" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} required >
                           <option value="" disabled selected>
                             Select attendent Gender
                           </option>
@@ -111,30 +159,30 @@ export default function Appointments() {
 
                     <div className="col-lg-6 col-md-6" >
                       <div className="form-box user-icon mb-30">
-                        <select style={{ width: "250px", height: "29px", paddingLeft: "20px" }} onClick={getAllPatients}>
+                        <select  id="patientId" name="patientId" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} onClick={getAllPatients} required>
                           <option value="" disabled selected>
                             Select Patient Name
                           </option>
                           {patientList.map((patient)=>(
-                            <option key={patient._id} value={patient.name}>
+                            <option key={patient._id} value={patient._id}>
                               {patient.name}
                             </option>
                           ))}
-                          {console.log(patientList)}
+                         
                         </select>
                       </div>
                     </div>
 
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
-                        <select style={{ width: "250px", height: "29px", paddingLeft: "20px" }} >
+                        <select  id="admitted" name="admitted" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} required >
                           <option value="" disabled selected>
                             admitted
                           </option>
-                          <option>
+                          <option key="true" value="true">
                             Yes
                           </option>
-                          <option>
+                          <option key="false" value="false">
                             No
                           </option>
                         </select>
@@ -142,7 +190,7 @@ export default function Appointments() {
                     </div>
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
-                        <select style={{ width: "250px", height: "29px", paddingLeft: "20px" }} onClick={getAllAvailableSchedule}>
+                        <select  id="time" name="time" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} onClick={getAllAvailableSchedule }  required>
                           <option value="" disabled selected>
                             Select Time
                           </option>
@@ -156,13 +204,13 @@ export default function Appointments() {
                     </div>
 
                     <div className="col-lg-12">
-                      <div className="form-box user-icon mb-30">
-                      <input type="date" id="date" className="expand" name="date" min="2023-04-05" placeholder="Departure date" required=""/>
+                      <div   className="form-box user-icon mb-30">
+                      <input  type="date" id="date" className="expand" name="date" min="2023-05-04" onChange={onChange} required/>
                       </div>
                     </div>
 
                     <div className="submit-info">
-                    <button className="btn" type="submit" onClick={onClickAddAppointment}>
+                    <button className="btn" type="submit">
                           Submit Now <i className="ti-arrow-right"></i>{" "}
                     </button>
                     </div>

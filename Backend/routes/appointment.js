@@ -52,6 +52,7 @@ router.post('/add', async (req, res) => {
       date : req.body.date,
       schedule: null,
     };
+    console.log("Appointments data"+ appointmentData);
 
     const schedule = await Schedule.findOne({ time: req.body.time });
     if (!schedule) {

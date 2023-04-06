@@ -71,7 +71,7 @@ export const deleteAllAppointments = async (ids) => {
 
   export const getSchedule = async () =>{
     try{
-        return axios.get(`${URL}/api/patient/getSchedule`);
+        return await axios.get(`${URL}/api/patient/getSchedule`);
     }
     catch(error){
         console.log("error in get Schedule  " , error);
