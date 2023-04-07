@@ -9,6 +9,8 @@ import UserPage from "./pages/UserPage";
 //import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import ProductsPage from "./pages/ProductsPage";
+import DoctorPage from "./pages/DoctorPage";
+import DoctorForm from "./components/DoctorForm";
 import DashboardAppPage from "./pages/DashboardAppPage";
 import Navbar from "./components/Navbar";
 import Doctors from "./components/Doctors";
@@ -52,8 +54,8 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: "app", element: <DashboardAppPage /> },
         { path: "apppointments", element: <UserPage /> },
-        { path: "products", element: <ProductsPage /> },
-        { path: "blog", element: <BlogPage /> },
+        { path: "doctor", element: <DoctorPage /> },
+        { path: "RegisterDoctor", element: <DoctorForm /> },
       ],
     },
     {

@@ -52,18 +52,19 @@ export default function Appointments() {
     const {attendent,attendentGender,checkupType,caseStatus,admitted,email,patientId ,date,time }=appointment;
     
     const adstaus=true;
-    if (admitted=="false")
+    if (admitted==="No")
     {
       adstaus=false;
+      console.log(adstaus);
 
     }
     setAppointment((prevState) => ({
       ...prevState, // spread operator to copy existing values
       admitted: adstaus, // update breed property
     }));
-    await addAppointment(appointment);
+    // await addAppointment(appointment);
 
-    console.log(appointment);
+    // console.log(appointment);
     // const response = await fetch("http://localhost:5000/api/appointment/add", {
     //   method: "POST",
     //   headers: {
@@ -179,10 +180,10 @@ export default function Appointments() {
                           <option value="" disabled selected>
                             admitted
                           </option>
-                          <option key="true" value="true">
+                          <option>
                             Yes
                           </option>
-                          <option key="false" value="false">
+                          <option >
                             No
                           </option>
                         </select>
