@@ -21,7 +21,7 @@ router.post(
   ],
    
     async (req, res) => {    
-        console.log(req.body.name+req.body.phone);
+      
         let success = false;
         // Email Validayion for uniqueness
         const errors = validationResult(req);

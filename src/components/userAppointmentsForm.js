@@ -57,9 +57,9 @@ export default function Appointments() {
 
   const getAllAvailableSchedule = async () => {
     if (appointment.doctorId && appointment.date) {
-      console.log(appointment.doctorId+appointment.date);
+     
       const list = await getSchedule(appointment.doctorId, appointment.date);
-      console.log(list.data);
+    
       if (list.data.length === 0) {
         setTimeList(hours);
        
@@ -84,9 +84,11 @@ export default function Appointments() {
   const onChange = (e) => {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
   };
-  const onClickAddAppointment = async () => {
-
-    const response = await fetch("http://localhost:5000/api/appointment/add", {
+   
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+   
+    await fetch("http://localhost:5000/api/appointment/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,14 +102,19 @@ export default function Appointments() {
         date: appointment.date,
         time: appointment.time,
       }),
-    });
-    const json = await response.json();
+    }) .then((response) => response.json())
+    .then((data) => {
    
-  
-   console.log("Hello There");
-   if(json.sucess)
-    {navigate("/userDashboard/addPatient");}
-  };
+      navigate("/userDashboard/addPatient");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+   
+   
+}
+ 
   return (
     <>
       {/* <!--? Contact form Start --> */}
@@ -128,7 +135,7 @@ export default function Appointments() {
                   </div>
                 </div>
                 {/* <!--End Section Tittle  --> */}
-                <form id="contact-form" onSubmit={onClickAddAppointment}>
+                <form id="contact-form" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
@@ -300,10 +307,11 @@ export default function Appointments() {
                       </div>
                     </div>
 
-                    <div className="submit-info  mb-60 " align="center">
-                      <button className="btn" type="submit">
-                        Submit Now <i className="ti-arrow-right"></i>{" "}
-                      </button>
+                    <div className="submit-info">
+                        <button className="btn" type="submit" >
+                          Submit Now <i className="ti-arrow-right"></i>{" "}
+                        </button>
+                      </div>
 
                       <Typography  className="mb-60 "align="center"  >
                     <Link className="nav-link" to="/userDashboard/addPatient"  style={{ textDecoration: "underline" }}>
@@ -314,7 +322,7 @@ export default function Appointments() {
                     </Link>
                   </Typography>
                  
-                    </div>
+                  
                   </div>
                 </form>
               </div>
