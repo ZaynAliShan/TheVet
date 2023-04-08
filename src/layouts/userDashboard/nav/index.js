@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // @mui
 import { styled, alpha } from "@mui/material/styles";
@@ -13,7 +13,7 @@ import {
   Stack,
 } from "@mui/material";
 // mock
-import account from "../../../_mock/userAccount";
+//import account from "../../../_mock/userAccount";
 // hooks
 import useResponsive from "../../../hooks/useResponsive";
 // components
@@ -45,6 +45,7 @@ Nav.propTypes = {
 };
 
 export default function Nav({ openNav, onCloseNav }) {
+  const [account, setAccount] = useState({});
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive("up", "lg");
@@ -52,6 +53,18 @@ export default function Nav({ openNav, onCloseNav }) {
   useEffect(() => {
     if (openNav) {
       onCloseNav();
+    }
+    var token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:5000/api/auth/getuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setAccount(data));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
@@ -74,11 +87,11 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={admin} alt="photoURL" />
+            <Avatar alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: "text.primary" }}>
-                {account.displayName}
+                {account.name}
               </Typography>
 
               <Typography variant="body2" sx={{ color: "text.secondary" }}>

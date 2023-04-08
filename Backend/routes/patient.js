@@ -2,6 +2,7 @@ const Patient = require("../models/Patients.js");
 const Users = require("../models/Users");
 const express = require("express");
 var fetchuser = require("../middleware/fetchuser");
+const Patients = require("../models/Patients.js");
 const router = express.Router();
 
 router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
@@ -23,6 +24,22 @@ router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
       Success: "Patient Has Been Deleted",
       Patient: patient,
     });
+  } catch (error) {
+    return res.status(500).send("Internal Server Error!!!");
+  }
+});
+
+router.get("/getMyAllPatients", fetchuser, async (req, res) => {
+  try {
+    let user = await Users.findById(req.user.id);
+    let myPatients = [];
+    var i = 0;
+    while (i < user.patients.length) {
+      let patient = await Patients.findById(user.patients[i]);
+      myPatients.push(patient);
+      i = i + 1;
+    }
+    res.send(myPatients);
   } catch (error) {
     return res.status(500).send("Internal Server Error!!!");
   }
