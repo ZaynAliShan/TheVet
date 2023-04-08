@@ -18,11 +18,6 @@ const AppointmentSchema = new Schema({
     type: String,
     required: false
   },
-
-  date :{
-    type :Date,
-    required : false
-  },
   //one appointment can  have only one schedule object associated with it
   schedule : {
     type : Schema.Types.ObjectId,
