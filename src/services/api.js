@@ -79,3 +79,5 @@ export const deleteAllAppointments = async (ids) => {
   };
 
   
+
+  

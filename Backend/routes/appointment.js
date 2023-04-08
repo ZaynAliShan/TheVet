@@ -10,10 +10,20 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
 
-const findAppointment = async (id) => {
-    let app = await Appointment.findOne({ _id: `${id}` })
-    return app;
+const addSchedule = async (time,date,doctorId) => {
+    const schedule = await Schedule.findOne({date: date, time: time, doctor: doctorId});
+    if(!schedule)
+    {   
+      const scheduleObj= {date: date, time: time, doctor:doctorId};
+      const newSchedule = new Schedule(scheduleObj);
+      await newSchedule.save();
+      return newSchedule._id;
+    }
+    else{
+      return false;
+    }
 }
+
 router.get('/all', async (req, res) => {
     try {
         let patientList = [];
@@ -49,22 +59,17 @@ router.post('/add', async (req, res) => {
       checkupType: req.body.checkupType,
       caseStatus: req.body.caseStatus,
       admitted: req.body.admitted,
-      date : req.body.date,
       schedule: null,
     };
     console.log("Appointments data"+ appointmentData);
-
-    const schedule = await Schedule.findOne({ time: req.body.time });
-    if (!schedule) {
-      return res.status(404).json({ error: 'No schedule found for the given time' });
+    const newSchedule = await addSchedule(req.body.time,req.body.date,req.body.doctorId);
+    if(newSchedule===false)
+    {
+       return res.status(404).json({ error: 'this slot with doctorId ' + req.body.doctorId + 'is already booked..' });
     }
 
-    appointmentData.schedule = schedule._id;
-    const doctorId = schedule.doctor;
-    const isDoctorAvailable = await Doctor.findOne({schedules :  {$in : schedule._id}})
-    if (!doctorId || isDoctorAvailable!=null){
-      return res.status(404).json({ error: 'No doctor is available in this slot' });
-    }
+   
+    appointmentData.schedule = newSchedule._id;
     const newApp = new Appointment(appointmentData);
     await newApp.save();
 
@@ -75,12 +80,13 @@ router.post('/add', async (req, res) => {
 
     if (patientUpdateResult.nModified === 0) {
       await newApp.remove();
+      await Schedule.findByIdAndDelete(newSchedule._id);
       return res.status(500).json({ error: 'Failed to add appointment to patient' });
     }
 
     const doctorUpdateResult = await Doctor.updateOne(
-      { _id: doctorId },
-      { $push: { appointments: newApp._id , schedules : schedule._id} }
+      { _id: req.body.doctorId },
+      { $push: { appointments: newApp._id } }
     );
 
     if (doctorUpdateResult.nModified === 0) {
@@ -89,6 +95,7 @@ router.post('/add', async (req, res) => {
         { _id: req.body.patientId },
         { $pull: { appointments: newApp._id } }
       );
+      await Schedule.findByIdAndDelete(newSchedule._id);
       return res.status(500).json({ error: 'Failed to add appointment to doctor' });
     }
 
@@ -101,6 +108,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const appointmentObject = await Appointment.findOne({ _id: req.params.id });
     const scheduleId = appointmentObject.schedule;
+    
     if (appointmentObject != null) {
       const patientObject = await Patient.findOne({
         appointments: { $in: req.params.id },
@@ -110,16 +118,19 @@ router.delete("/:id", async (req, res) => {
         { _id: patientObject._id },
         { $pull: { appointments: req.params.id } }
       );
-      await Appointment.deleteOne({ _id: req.params.id });
-
-       // Remove the appointment and schedule IDs from the doctor table
-      const doctorObject = await Doctor.findOne({schedules : {$in : appointmentObject.schedule}});
+       // Remove the appointment  from the doctor table
+      const doctorObject = await Doctor.findOne({appointments: { $in: req.params.id },});
       await Doctor.updateOne(
         { _id: doctorObject._id },
-        { $pull: { appointments: req.params.id, schedules: appointmentObject.schedule } }
+        { $pull: { appointments: req.params.id } }
       );
+      await Schedule.findByIdAndDelete(scheduleId);
+      await Appointment.deleteOne({ _id: req.params.id });
       res.status(200).json({ Message: "user is deleted " + patientObject });
-    } else {
+    } 
+    else 
+    {
+      res.status(404).json("appointment object is not found");
     }
   } catch (error) {
     res.status(404).json({ Message: error.Message });

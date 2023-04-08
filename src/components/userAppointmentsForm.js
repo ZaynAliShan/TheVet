@@ -52,7 +52,7 @@ export default function Appointments() {
     const {attendent,attendentGender,checkupType,caseStatus,admitted,email,patientId ,date,time }=appointment;
     
     const adstaus=true;
-    if (admitted=="false")
+    if (admitted==="No")
     {
       adstaus=false;
 

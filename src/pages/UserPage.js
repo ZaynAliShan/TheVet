@@ -207,15 +207,16 @@ export default function UserPage() {
           </Typography>
           <Button variant="contained" onClick={()=>onClickAddAppointment({
   
-  attendent: "atoa",
+  attendent: "atia gull",
   attendentGender: "female",
   checkupType: "neccheck",
   caseStatus: "success",
-  admitted: true,
+  admitted: false,
   email : 'atiagull321@gmail.com',
-  patientId : '640ec0664637ec82f934b48b',
+  patientId : '642d919ba8c64033c631997d',
+  doctorId: "642936879fcb8f90b710b64a",
   date : '2023-1-4',
-  time : '8:00 PM'
+  time : '10:00 PM'
 })} startIcon={<Iconify icon="eva:plus-fill"  />}>
             New Appointment
           </Button>
