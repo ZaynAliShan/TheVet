@@ -8,7 +8,19 @@ export const getAllAppointments = ()=>{
         return axios.get(`${URL}/api/appointment/all`);
     }
     catch(error){
-        console.log("error in getall appointments " , error);
+        console.log("error in get all appointments " , error);
+    }
+}
+
+export const addAppointment = async (data)=>{
+
+    try{
+        return await axios.post(`${URL}/api/appointment/add`,data);
+    }
+    catch(error){
+        const success=false;
+       return  error;
+        console.log("error in add appointment " , error);
     }
 }
 
@@ -21,8 +33,6 @@ export const deleteUser= async (id) =>{
     }
 
 }
-
-
 
 export const deleteAllAppointments = async (ids) => {
     try {
@@ -42,4 +52,51 @@ export const deleteAllAppointments = async (ids) => {
         console.log("error in getall appointments " , error);
     }
   };
+
+  export const getPatients = async () =>{
+    try{
+        return axios.get(`${URL}/api/patient/all`);
+    }
+    catch(error){
+        console.log("error in getall patients " , error);
+    }
+  };
+
+  export const getDoctors = async () =>{
+    try{
+        return axios.get(`${URL}/api/doctor/all`);
+    }
+    catch(error){
+        console.log("error in get all Doctors " , error);
+    }
+  };
+
+  export const getPatientsByUserId = async (id) =>{
+    try{
+        return axios.get(`${URL}/api/patient/patientByUserId`, { params: { id } });
+    }
+    catch(error){
+        console.log("error in get by userID patients " , error);
+    }
+  };
+  export const  getSchedule = async (id,date) =>{
+    try{
+        return axios.get(`${URL}/api/patient/getSchedule`, { params: { id,date } });
+    }
+    catch(error){
+        console.log("error in get by userID patients " , error);
+    }
+  };
+
+//   export const getSchedule = async () =>{
+//     try{
+//         return await axios.get(`${URL}/api/patient/getSchedule`);
+//     }
+//     catch(error){
+//         console.log("error in get Schedule  " , error);
+//     }
+//   };
+
+  
+
   

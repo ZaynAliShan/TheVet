@@ -10,12 +10,13 @@ const ScheduleSchema = new Schema({
     required: true,
   },
   time: {
-    type: Date,
+    type: String,
     required: true
   },//specific doctor is associated against each schedule
   doctor : {
     type : Schema.Types.ObjectId,
-    ref : 'doctors'
+    ref : 'doctors',
+    default : null
   }
 });
 

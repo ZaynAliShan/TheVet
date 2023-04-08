@@ -21,11 +21,16 @@ const navConfig = [
     path: "/dashboard/apppointments",
     icon: icon("ic_user"),
   },
-  // {
-  //   title: 'product',
-  //   path: '/dashboard/products',
-  //   icon: icon('ic_cart'),
-  // },
+  {
+    title: 'Doctor',
+    path: '/dashboard/doctor',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'RegisterDoctor',
+    path: '/dashboard/RegisterDoctor',
+    icon: icon('ic_cart'),
+  },
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',

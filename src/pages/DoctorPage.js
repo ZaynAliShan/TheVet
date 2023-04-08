@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { filter } from "lodash";
 import { sentenceCase } from "change-case";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // @mui
 import {
@@ -78,7 +79,7 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserPage() {
+export default function DoctorPage() {
   const [USERLIST, setUSERLIST] = useState([]);
 
   const [open, setOpen] = useState(null);
@@ -96,6 +97,8 @@ export default function UserPage() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [appointmentID, setAppointmentID] = useState({});
+
+  let navigate = useNavigate();
 
   const getAppointments = async () => {
     let response = await getAllAppointments();
@@ -188,6 +191,12 @@ export default function UserPage() {
   const onClickAddAppointment = async (data) => {
     await addAppointment(data);
   }
+//To move to doctors registration Forms.
+  const AddDoctor = async () => {
+
+    useNavigate("/rDashboard/RegisterDoctor");
+    
+  }
   
   return (
     <>
@@ -205,19 +214,7 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             Appointments
           </Typography>
-          <Button variant="contained" onClick={()=>onClickAddAppointment({
-  
-  attendent: "atia gull",
-  attendentGender: "female",
-  checkupType: "neccheck",
-  caseStatus: "success",
-  admitted: false,
-  email : 'atiagull321@gmail.com',
-  patientId : '6427e72dfa632e65d0aa89db',
-  doctorId: "64308cf95c4a71230a64bfec",
-  date : '2023-4-8',
-  time : '02:00 pM'
-})} startIcon={<Iconify icon="eva:plus-fill"  />}>
+          <Button variant="contained" onClick={AddDoctor} startIcon={<Iconify icon="eva:plus-fill"  />}>
             New Appointment
           </Button>
         </Stack>

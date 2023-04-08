@@ -13,17 +13,15 @@ const AppointmentSchema = new Schema({
     type: String,
     required: true
   },
-  checkupType:{
-    type:String,
-    required: true
-  },
+ 
   caseStatus:{
     type: String,
     required: false
   },
-  admitted:{
-    type: Boolean,
-    required: false
+
+  date :{
+    type :Date,
+    required : false
   },
   //one appointment can  have only one schedule object associated with it
   schedule : {

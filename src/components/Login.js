@@ -224,7 +224,7 @@ const Login = (props) => {
                 </Grid>
               </Grid> */}
                   <Typography align="center" component="h1" variant="h6">
-                    <Link className="nav-link" to="/signup">
+                    <Link className="nav-link" to="/AddPatient">
                       New User? Click to Register
                     </Link>
                   </Typography>

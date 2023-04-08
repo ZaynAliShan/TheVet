@@ -11,12 +11,10 @@ const DoctorSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
-  password: {
-    type: String,
-    required: true
-  },
+
   phone: { 
     type: String,
     required: true
@@ -27,7 +25,8 @@ const DoctorSchema = new Schema({
   },
   licenceNumber: { 
     type: String,
-    required: true
+    required: true,
+    unique : true
   },
   experience: { 
     type: String,
@@ -38,7 +37,10 @@ const DoctorSchema = new Schema({
   appointments: [{
     type : Schema.Types.ObjectId,
     ref : 'appointments'
-  }]
+  }],
+  schedules : [{
+    type : Schema.Types.ObjectId,
+    ref : 'schedules'}]
 });
 
 const Doctors = mongoose.model('doctors', DoctorSchema);
