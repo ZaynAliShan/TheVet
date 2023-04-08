@@ -20,7 +20,7 @@ const addSchedule = async (time,date,doctorId) => {
       return newSchedule._id;
     }
     else{
-      return false;
+      return "false";
     }
 }
 
@@ -56,19 +56,17 @@ router.post('/add', async (req, res) => {
     const appointmentData = {
       attendent: req.body.attendent,
       attendentGender: req.body.attendentGender,
-      checkupType: req.body.checkupType,
       caseStatus: req.body.caseStatus,
-      admitted: req.body.admitted,
       schedule: null,
     };
     
     const newSchedule = await addSchedule(req.body.time,req.body.date,req.body.doctorId);
     const success=false;
-    if(newSchedule===false)
+    if(newSchedule==="false")
     {
        return res.status(404).json({ success,error: 'this slot with doctorId ' + req.body.doctorId + 'is already booked..' });
     }
-
+console.log("Here at line 69");
    
     appointmentData.schedule = newSchedule._id;
     const newApp = new Appointment(appointmentData);
@@ -90,6 +88,7 @@ router.post('/add', async (req, res) => {
       { _id: req.body.doctorId },
       { $push: { appointments: newApp._id } }
     );
+    console.log("Here at line 91");
 
     if (doctorUpdateResult.nModified === 0) {
       await newApp.remove();
@@ -98,11 +97,17 @@ router.post('/add', async (req, res) => {
         { $pull: { appointments: newApp._id } }
       );
       await Schedule.findByIdAndDelete(newSchedule._id);
+      console.log("Here at line 99");
       const success=false;
       return res.status(500).json({ success,error: 'Failed to add appointment to doctor' });
     }
+    console.log("Here at line 104");
+    success = "true";
+    return res.json({ success});
 
-    res.status(201).json(newApp);
+    console.log("Here at line 108");
+
+    // res.status(201).json(newApp);
   } catch (error) {
     const success=false;
     res.status(500).json({success, error: error.message });

@@ -85,8 +85,26 @@ export default function Appointments() {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
   };
   const onClickAddAppointment = async () => {
+
+    const response = await fetch("http://localhost:5000/api/appointment/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        attendent: appointment.attendent,
+        attendentGender: appointment.attendentGender,
+        caseStatus: "success",
+        patientId: appointment.patientId,
+        doctorId: appointment.doctorId,
+        date: appointment.date,
+        time: appointment.time,
+      }),
+    });
+    const json = await response.json();
    
-   const json= await addAppointment(appointment);
+  
+   console.log("Hello There");
    if(json.sucess)
     {navigate("/userDashboard/addPatient");}
   };
