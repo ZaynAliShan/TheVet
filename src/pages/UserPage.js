@@ -213,10 +213,10 @@ export default function UserPage() {
   caseStatus: "success",
   admitted: false,
   email : 'atiagull321@gmail.com',
-  patientId : '642d919ba8c64033c631997d',
-  doctorId: "642936879fcb8f90b710b64a",
-  date : '2023-1-4',
-  time : '10:00 PM'
+  patientId : '6427e72dfa632e65d0aa89db',
+  doctorId: "64308cf95c4a71230a64bfec",
+  date : '2023-4-8',
+  time : '02:00 pM'
 })} startIcon={<Iconify icon="eva:plus-fill"  />}>
             New Appointment
           </Button>

@@ -18,6 +18,8 @@ export const addAppointment = async (data)=>{
         return await axios.post(`${URL}/api/appointment/add`,data);
     }
     catch(error){
+        const success=false;
+       return  error;
         console.log("error in add appointment " , error);
     }
 }
@@ -60,6 +62,15 @@ export const deleteAllAppointments = async (ids) => {
     }
   };
 
+  export const getDoctors = async () =>{
+    try{
+        return axios.get(`${URL}/api/doctor/all`);
+    }
+    catch(error){
+        console.log("error in get all Doctors " , error);
+    }
+  };
+
   export const getPatientsByUserId = async (id) =>{
     try{
         return axios.get(`${URL}/api/patient/patientByUserId`, { params: { id } });
@@ -68,15 +79,23 @@ export const deleteAllAppointments = async (ids) => {
         console.log("error in get by userID patients " , error);
     }
   };
-
-  export const getSchedule = async () =>{
+  export const  getSchedule = async (id,date) =>{
     try{
-        return await axios.get(`${URL}/api/patient/getSchedule`);
+        return axios.get(`${URL}/api/patient/getSchedule`, { params: { id,date } });
     }
     catch(error){
-        console.log("error in get Schedule  " , error);
+        console.log("error in get by userID patients " , error);
     }
   };
+
+//   export const getSchedule = async () =>{
+//     try{
+//         return await axios.get(`${URL}/api/patient/getSchedule`);
+//     }
+//     catch(error){
+//         console.log("error in get Schedule  " , error);
+//     }
+//   };
 
   
 

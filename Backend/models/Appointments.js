@@ -13,18 +13,12 @@ const AppointmentSchema = new Schema({
     type: String,
     required: true
   },
-  checkupType:{
-    type:String,
-    required: true
-  },
+ 
   caseStatus:{
     type: String,
     required: false
   },
-  admitted:{
-    type: Boolean,
-    required: false
-  },
+
   date :{
     type :Date,
     required : false
