@@ -140,7 +140,7 @@ function DoctorPage() {
                           </IconButton>
                           <IconButton
                             onClick={() => {
-                              console.log("DELETE" + doctor._id);
+                              console.log("DELETEEEEEEEEE" + doctor._id);
                             }}
                           >
                             <DeleteIcon></DeleteIcon>
