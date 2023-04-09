@@ -19,6 +19,7 @@ export default function DoctorForm() {
       const [phoneNumberError, setPhoneNumberError] = useState("");
       const [error, setError] = useState(false);
       const [errorsR, setErrorR] = useState("");
+      let navigate = useNavigate();
     
       const validatePhoneNumber = () => {
         if (!phoneNumber) {
@@ -62,7 +63,7 @@ export default function DoctorForm() {
 
     {
       setError(false);
-      //navigate("/userDashboard/makeAppointment");
+      navigate("/dashboard/doctor");
   }
   else {
     
@@ -176,7 +177,8 @@ export default function DoctorForm() {
                           fontWeight: "bold",
                         }}
                       >
-                         Invalid Enteries!! Please fill all the fields.
+                         Invalid Enteries!! {(!errorsR)&&"Email or liscence number already exists"}
+
                         {errorsR&&(errorsR.map((b) => (
                            <p>{b.msg}</p>
                           )))}

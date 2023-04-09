@@ -53,11 +53,12 @@ router.get('/all', async (req, res) => {
 });
 router.post('/add', async (req, res) => {
   try {
+    // console.log("JustChecking");
     const appointmentData = {
       attendent: req.body.attendent,
       attendentGender: req.body.attendentGender,
       caseStatus: req.body.caseStatus,
-      schedule: null,
+     
     };
     
     const newSchedule = await addSchedule(req.body.time,req.body.date,req.body.doctorId);
@@ -66,7 +67,7 @@ router.post('/add', async (req, res) => {
     {
        return res.status(404).json({ success,error: 'this slot with doctorId ' + req.body.doctorId + 'is already booked..' });
     }
-console.log("Here at line 69");
+// console.log("Here at line 69");
    
     appointmentData.schedule = newSchedule._id;
     const newApp = new Appointment(appointmentData);
@@ -88,7 +89,7 @@ console.log("Here at line 69");
       { _id: req.body.doctorId },
       { $push: { appointments: newApp._id } }
     );
-    console.log("Here at line 91");
+    // console.log("Here at line 91");
 
     if (doctorUpdateResult.nModified === 0) {
       await newApp.remove();
@@ -97,15 +98,14 @@ console.log("Here at line 69");
         { $pull: { appointments: newApp._id } }
       );
       await Schedule.findByIdAndDelete(newSchedule._id);
-      console.log("Here at line 99");
+      // console.log("Here at line 99");
       const success=false;
       return res.status(500).json({ success,error: 'Failed to add appointment to doctor' });
     }
-    console.log("Here at line 104");
-    success = "true";
-    return res.json({ success});
-
-    console.log("Here at line 108");
+  
+    const data = { message: "Added Appointment" };
+    res.json(data);
+  
 
     // res.status(201).json(newApp);
   } catch (error) {

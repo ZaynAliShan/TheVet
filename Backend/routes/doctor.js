@@ -25,16 +25,17 @@ router.post(
   ],
 
   async (req, res) => {
-    console.log(req.body.name + req.body.phone);
     let success = false;
     // Email Validayion for uniqueness
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      // console.log("Validation Error!");
       return res.status(400).json({ success, errors: errors.array() });
     }
     try {
       let doc = await Doctor.findOne({ email: req.body.email });
       if (doc) {
+        // console.log("Sorry a Doc with this email already exists");
         return res.status(400).json({
           success,
           error: "Sorry a Doc with this email already exists",
@@ -43,6 +44,7 @@ router.post(
       let lis = await Doctor.findOne({ licenceNumber: req.body.licenceNumber });
 
       if (lis) {
+        // console.log("Sorry a Doc with this licenceNumber already exists");
         return res.status(400).json({
           success,
           error: "Sorry a Doc with this licenceNumber already exists",
