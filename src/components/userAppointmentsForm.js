@@ -11,7 +11,19 @@ import {
   getPatientsByUserId,
   getSchedule,
 } from "../services/api";
-const hours= ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM","12:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM"];
+const hours = [
+  "8:00 AM",
+  "9:00 AM",
+  "10:00 AM",
+  "11:00 AM",
+  "12:00 PM",
+  "2:00 PM",
+  "3:00 PM",
+  "4:00 PM",
+  "5:00 PM",
+  "6:00 PM",
+  "7:00 PM",
+];
 
 export default function Appointments() {
   const currentDate = new Date().toISOString().split("T")[0];
@@ -30,7 +42,6 @@ export default function Appointments() {
   const [patientList, setPatientList] = useState([]);
   const [doctorList, setDoctorList] = useState([]);
   const [timeList, setTimeList] = useState([]);
-  
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -42,8 +53,6 @@ export default function Appointments() {
     }
     getAllAvailableSchedule();
   }, [appointment.doctorId, appointment.date]);
-
-  
 
   const getAllPatients = async () => {
     const list = await getPatientsByUserId(userId);
@@ -57,12 +66,11 @@ export default function Appointments() {
 
   const getAllAvailableSchedule = async () => {
     if (appointment.doctorId && appointment.date) {
-      console.log(appointment.doctorId+appointment.date);
+      console.log(appointment.doctorId + appointment.date);
       const list = await getSchedule(appointment.doctorId, appointment.date);
       console.log(list.data);
       if (list.data.length === 0) {
         setTimeList(hours);
-       
       } else {
         const timeavailable = hours.filter((hour) => {
           for (let i = 0; i < list.data.length; i++) {
@@ -72,20 +80,16 @@ export default function Appointments() {
           }
           return true;
         });
-      
+
         setTimeList(timeavailable);
-       
       }
-      
     }
   };
-  
- 
+
   const onChange = (e) => {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
   };
   const onClickAddAppointment = async () => {
-
     const response = await fetch("http://localhost:5000/api/appointment/add", {
       method: "POST",
       headers: {
@@ -102,11 +106,11 @@ export default function Appointments() {
       }),
     });
     const json = await response.json();
-   
-  
-   console.log("Hello There");
-   if(json.sucess)
-    {navigate("/userDashboard/addPatient");}
+
+    console.log("Hello There");
+    if (json.sucess) {
+      navigate("/userDashboard/addPatient");
+    }
   };
   return (
     <>
@@ -181,10 +185,9 @@ export default function Appointments() {
                             paddingLeft: "20px",
                           }}
                           required
+                          value={appointment.attendentGender}
                         >
-                          <option value="" >
-                            Select attendent Gender
-                          </option>
+                          <option value="">Select attendent Gender</option>
                           {genderOptions.map((options) => (
                             <option key={options} value={options}>
                               {options}
@@ -193,7 +196,7 @@ export default function Appointments() {
                         </select>
                       </div>
                     </div>
-{/* 
+                    {/* 
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
                         <select  id="admitted" name="admitted" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} required >
@@ -224,9 +227,7 @@ export default function Appointments() {
                           onClick={getAllPatients}
                           required
                         >
-                          <option value="" >
-                            Select Patient Name
-                          </option>
+                          <option value="">Select Patient Name</option>
                           {patientList.map((patient) => (
                             <option key={patient._id} value={patient._id}>
                               {patient.name}
@@ -288,14 +289,13 @@ export default function Appointments() {
                           }}
                           required
                         >
-                          <option value="" >
-                            Select Time
-                          </option>
-                          {timeList&&timeList.map((time) => (
-                            <option key={time} value={time}>
-                              {time}
-                            </option>
-                          ))}
+                          <option value="">Select Time</option>
+                          {timeList &&
+                            timeList.map((time) => (
+                              <option key={time} value={time}>
+                                {time}
+                              </option>
+                            ))}
                         </select>
                       </div>
                     </div>
@@ -305,15 +305,16 @@ export default function Appointments() {
                         Submit Now <i className="ti-arrow-right"></i>{" "}
                       </button>
 
-                      <Typography  className="mb-60 "align="center"  >
-                    <Link className="nav-link" to="/userDashboard/addPatient"  style={{ textDecoration: "underline" }}>
-
-
-                      <br></br>
-                      New Patient? Click to Register
-                    </Link>
-                  </Typography>
-                 
+                      <Typography className="mb-60 " align="center">
+                        <Link
+                          className="nav-link"
+                          to="/userDashboard/addPatient"
+                          style={{ textDecoration: "underline" }}
+                        >
+                          <br></br>
+                          New Patient? Click to Register
+                        </Link>
+                      </Typography>
                     </div>
                   </div>
                 </form>
