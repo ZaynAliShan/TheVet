@@ -86,6 +86,7 @@ export default function EditPatient() {
         setPatient(data);
         setAnimalSelection(data.animalType);
         setBreeds(getBreeds(data.animalType));
+        setSelecteBreed(data.breed);
       });
   };
 
@@ -137,6 +138,7 @@ export default function EditPatient() {
         patient.breed +
         patient.age
     );
+    console.log(selectedBreed);
 
     const response = await fetch(
       `http://localhost:5000/api/patient/updatePatient/${id}`,
@@ -148,7 +150,7 @@ export default function EditPatient() {
         body: JSON.stringify({
           name: patient.name,
           animalType: patient.animalType,
-          breed: patient.breed,
+          breed: selectedBreed,
           gender: patient.gender,
           age: patient.age,
         }),
