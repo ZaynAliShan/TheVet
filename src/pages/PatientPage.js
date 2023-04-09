@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet-async";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
+
 // @mui
 import {
   Card,
@@ -109,12 +111,10 @@ function PatientPage() {
                         <TableCell align="right">{patient.gender}</TableCell>
                         <TableCell align="right">{patient.age}</TableCell>
                         <TableCell align="right">
-                          <IconButton
-                            onClick={() => {
-                              console.log("EDIT" + patient._id);
-                            }}
-                          >
-                            <EditIcon></EditIcon>
+                          <IconButton >
+                            <Link to={`/userDashboard/editPatients/${patient._id}`}>
+                            <EditIcon style={{ color: "grey" }}></EditIcon>
+                            </Link>
                           </IconButton>
                           <IconButton
                             onClick={() => {

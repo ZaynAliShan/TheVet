@@ -7,6 +7,7 @@ import SimpleLayout from "./layouts/simple";
 import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import PatientPage from "./pages/PatientPage";
+import EditPatient from "./pages/EditPatient"
 //import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import ProductsPage from "./pages/ProductsPage";
@@ -71,6 +72,7 @@ export default function Router() {
         { path: "userApppointments", element: <UserPage /> },
         { path: "addPatient", element: <AddPatient /> },
         { path: "showPatients", element: <PatientPage /> },
+        { path: "editPatients/:id", element: <EditPatient /> },
       ],
     },
     {
