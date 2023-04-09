@@ -22,14 +22,14 @@ const navConfig = [
     icon: icon("ic_user"),
   },
   {
-    title: 'Doctor',
-    path: '/dashboard/doctor',
-    icon: icon('ic_cart'),
+    title: "Doctor",
+    path: "/dashboard/doctor",
+    icon: icon("ic_user"),
   },
   {
-    title: 'RegisterDoctor',
-    path: '/dashboard/RegisterDoctor',
-    icon: icon('ic_cart'),
+    title: "RegisterDoctor",
+    path: "/dashboard/RegisterDoctor",
+    icon: icon("ic_cart"),
   },
   // {
   //   title: 'blog',
