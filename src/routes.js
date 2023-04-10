@@ -8,6 +8,7 @@ import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import PatientPage from "./pages/PatientPage";
 import EditPatient from "./pages/EditPatient"
+import EditDoctor from "./pages/EditDoctor"
 //import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import ProductsPage from "./pages/ProductsPage";
@@ -58,6 +59,7 @@ export default function Router() {
         { path: "apppointments", element: <UserPage /> },
         { path: "doctor", element: <DoctorPage /> },
         { path: "RegisterDoctor", element: <DoctorForm /> },
+        { path: "editDoctors/:id", element: <EditDoctor /> },
       ],
     },
     {
@@ -73,6 +75,7 @@ export default function Router() {
         { path: "addPatient", element: <AddPatient /> },
         { path: "showPatients", element: <PatientPage /> },
         { path: "editPatients/:id", element: <EditPatient /> },
+       
       ],
     },
     {

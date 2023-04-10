@@ -130,15 +130,15 @@ export default function EditPatient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, animalType, breed, gender, age } = patient;
-    console.log(
-      patient.name +
-        patient.gender +
-        patient.animalType +
-        patient.breed +
-        patient.age
-    );
-    console.log(selectedBreed);
+    // const { name, animalType, breed, gender, age } = patient;
+    // console.log(
+    //   patient.name +
+    //     patient.gender +
+    //     patient.animalType +
+    //     patient.breed +
+    //     patient.age
+    // );
+    // console.log(selectedBreed);
 
     const response = await fetch(
       `http://localhost:5000/api/patient/updatePatient/${id}`,
@@ -245,7 +245,7 @@ export default function EditPatient() {
                           name="breed"
                           required
                         >
-                          {breeds.map((b) => (
+                          {breeds&&breeds.map((b) => (
                             <option key={b} value={b}>
                               {b}
                             </option>
