@@ -111,18 +111,20 @@ function PatientPage() {
                         <TableCell align="right">{patient.gender}</TableCell>
                         <TableCell align="right">{patient.age}</TableCell>
                         <TableCell align="right">
-                          <IconButton >
-                            <Link to={`/userDashboard/editPatients/${patient._id}`}>
-                            <EditIcon style={{ color: "grey" }}></EditIcon>
+                          <IconButton>
+                            <Link
+                              to={`/userDashboard/editPatients/${patient._id}`}
+                            >
+                              <EditIcon style={{ color: "grey" }}></EditIcon>
                             </Link>
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             onClick={() => {
                               DeletePatient(patient._id);
                             }}
                           >
                             <DeleteIcon></DeleteIcon>
-                          </IconButton>
+                          </IconButton> */}
                         </TableCell>
                       </TableRow>
                     );

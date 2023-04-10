@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet-async";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -33,6 +34,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { getAllAppointments } from "../services/api";
 
 const style = {
   position: "absolute",
@@ -46,48 +48,58 @@ const style = {
   p: 4,
 };
 
-function DoctorPage() {
-  const [DoctorsList, SetDoctorsList] = useState([]);
+function UserAppointmentsPage() {
+  const [AppointmentsList, SetAppointmentsList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [seletectedDoctorId, setSeletectedDoctorId] = useState(null);
+  // const [seletectedDoctorId, setSeletectedDoctorId] = useState(null);
 
-  const getAllDoctors = async () => {
-    await fetch("http://localhost:5000/api/doctor/allDoctorsAdmin", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        SetDoctorsList(data);
-      });
+  const getMyAppointments = async () => {
+    var token = localStorage.getItem("checking");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      // const { id } = decodedToken;
+      // setUserId(decodedToken.user.id);
+      await fetch(
+        `http://localhost:5000/api/appointment/getUserAppointments/${decodedToken.user.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          SetAppointmentsList(data);
+          console.log(data);
+        });
+    }
   };
 
-  const handleDelete = async () => {
-    const response = await fetch(
-      `http://localhost:5000/api/doctor/makeInctive/${seletectedDoctorId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    getAllDoctors();
-    handleClose();
-  };
+  //   const handleDelete = async () => {
+  //     const response = await fetch(
+  //       `http://localhost:5000/api/doctor/makeInctive/${seletectedDoctorId}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     getAllDoctors();
+  //     handleClose();
+  //   };
 
   useEffect(() => {
-    getAllDoctors();
+    getMyAppointments();
   }, []);
   return (
     <>
       <Helmet>
-        <title> Doctors </title>
+        <title> Appointments </title>
       </Helmet>
 
       <Container>
@@ -98,7 +110,7 @@ function DoctorPage() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            My Doctors
+            My Appointments
           </Typography>
         </Stack>
 
@@ -108,50 +120,58 @@ function DoctorPage() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Email</TableCell>
-                    <TableCell align="right">Phone</TableCell>
-                    <TableCell align="right">Gender</TableCell>
-                    <TableCell align="right">Licence No.</TableCell>
-                    <TableCell align="right">Experience</TableCell>
+                    <TableCell>Attendent</TableCell>
+                    {/* <TableCell align="right">Email</TableCell> */}
+                    <TableCell align="right">Patient</TableCell>
+                    <TableCell align="right">Doctor</TableCell>
+                    <TableCell align="right">Date</TableCell>
+                    <TableCell align="right">Time</TableCell>
 
                     <TableCell align="right">Status</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {DoctorsList.map((doctor) => {
+                  {AppointmentsList.map((appointment) => {
                     return (
-                      <TableRow hover key={doctor._id}>
-                        <TableCell>{doctor.name}</TableCell>
-                        <TableCell align="right">{doctor.email}</TableCell>
-                        <TableCell align="right">{doctor.phone}</TableCell>
-                        <TableCell align="right">{doctor.gender}</TableCell>
-                        <TableCell align="right">
-                          {doctor.licenceNumber}
+                      <TableRow hover key={appointment.AppointmentId}>
+                        <TableCell>
+                          {appointment.AppointmentAttendent}
                         </TableCell>
-                        <TableCell align="right">{doctor.experience}</TableCell>
+                        {/* <TableCell align="right">{doctor.email}</TableCell> */}
+                        <TableCell align="right">
+                          {appointment.patientName}
+                        </TableCell>
+                        <TableCell align="right">
+                          {appointment.AppointmentDoctor.name}
+                        </TableCell>
+                        <TableCell align="right">
+                          {appointment.AppointmentScheduleDate.substring(0, 10)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {appointment.AppointmentScheduleTime}
+                        </TableCell>
                         <TableCell align="right">
                           <Label
                             color={
-                              (doctor.status === "Inactive" && "error") ||
+                              (appointment.AppointmentCaseStatus === "Cancel" &&
+                                "error") ||
                               "success"
                             }
                           >
-                            {doctor.status}
+                            {appointment.AppointmentCaseStatus}
                           </Label>
                         </TableCell>
                         <TableCell align="right">
                           <IconButton
                             onClick={() => {
-                              console.log("EDIT" + doctor._id);
+                              console.log("EDIT");
                             }}
                           >
                             <EditIcon></EditIcon>
                           </IconButton>
                           <IconButton
                             onClick={() => {
-                              setSeletectedDoctorId(doctor._id);
                               handleOpen();
                             }}
                           >
@@ -191,7 +211,7 @@ function DoctorPage() {
               Are you sure. This Doctor is Inactive?
             </Typography>
             <Box display="flex" justifyContent="space-between">
-              <Button onClick={handleDelete}>Make Inactive</Button>
+              <Button onClick={handleClose}>Make Inactive</Button>
               <Button onClick={handleClose}>Cancel</Button>
             </Box>
           </Box>
@@ -201,4 +221,4 @@ function DoctorPage() {
   );
 }
 
-export default DoctorPage;
+export default UserAppointmentsPage;
