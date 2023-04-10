@@ -32,6 +32,10 @@ const DoctorSchema = new Schema({
     type: String,
     required: true
   },
+  status: { // the date our user got registered
+    type: String,
+    default: "Active"
+  },
   // one doctor can have many appointments so array will contain all 
   // reference ids to the appointment objects associated with single doctor
   appointments: [{

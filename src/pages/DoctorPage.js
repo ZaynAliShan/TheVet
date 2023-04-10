@@ -115,6 +115,8 @@ function DoctorPage() {
                     <TableCell align="right">Gender</TableCell>
                     <TableCell align="right">Licence No.</TableCell>
                     <TableCell align="right">Experience</TableCell>
+                    
+                    <TableCell align="right">Status</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
@@ -130,6 +132,7 @@ function DoctorPage() {
                           {doctor.licenceNumber}
                         </TableCell>
                         <TableCell align="right">{doctor.experience}</TableCell>
+                        <TableCell align="right">{doctor.status}</TableCell>
                         <TableCell align="right">
                           <IconButton
                             onClick={() => {
