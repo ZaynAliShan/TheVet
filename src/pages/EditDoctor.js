@@ -118,7 +118,7 @@ export default function EditDoctor() {
                     </div>
 
                     <div className="col-lg-6 col-md-6">
-                      <div className="form-box subject-icon mb-30">
+                      <div className="form-box user-icon mb-30">
                         <input
                           type="Email"
                           name="email"
