@@ -3023,7 +3023,7 @@ hr {
   border: 0;
   color: #112957;
   font-weight: 500;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   border-radius: 0px;
   border-bottom: 2px solid #e9f0f4;
 }

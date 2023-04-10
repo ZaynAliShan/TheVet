@@ -87,15 +87,26 @@ export default function Navbar(props) {
                 className="nav-item d-flex align-items-center"
                 style={{ listStyle: "none" }}
               >
-                <Link to="/login">Login/Register</Link>
+                <Link to="/login"><button type="button" style={{border: "none",
+    padding: "9px 9px 9px 9px",
+    
+    borderRadius: "6px",
+   
+    color: "#fff",
+    
+    fontSize: "11px",
+ 
+    backgroundImage: "linear-gradient(to left, #559af3, #6314f3, #559af3)"}}className="btn btn-primary">
+                    LOGIN
+                  </button></Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/appointment">
                   <button type="button" className="btn btn-primary">
                     Book Appointment
                   </button>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

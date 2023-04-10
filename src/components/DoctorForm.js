@@ -110,12 +110,15 @@ export default function DoctorForm() {
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box subject-icon mb-30">
                         <input
+                        style={{autocapitalize:"off"}}
                           type="Email"
                           name="email"
                           id="email"
                           onChange={onChange}
                           placeholder="Email"
+                          autoComplete="email"
                         />
+                        
                       </div>
                     </div>
 

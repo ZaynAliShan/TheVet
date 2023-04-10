@@ -20,8 +20,8 @@ router.post(
     ).isLength({ min: 5 }),
     body("experience", "Experince cannot be empty.")
       .exists()
-      .isFloat({ min: 0, max: 50 })
-      .withMessage("Experince must be between 0 and 50"),
+      .isFloat({ min: 1, max: 50 })
+      .withMessage("Experince must be between 1 and 50"),
   ],
 
   async (req, res) => {
@@ -101,4 +101,84 @@ router.post("/makeInctive/:id", async (req, res) => {
   }
 });
 
+router.get("/doctorById/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const doc = await Doctor.findById(id);
+    res.json(doc);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.put(
+  "/updateDoctor/:id",
+  [
+    body("name", "Please Enter a valid name").isLength({ min: 3 }),
+    body("email", "Please Enter a valid Email!!!").isEmail(),
+    body(
+      "licenceNumber",
+      "LiscenceNumber must contain atleast 5 Characters."
+    ).isLength({ min: 5 }),
+    body("experience", "Experince cannot be empty.")
+      .exists()
+      .isFloat({ min: 1, max: 50 })
+      .withMessage("Experince must be between 1 and 50"),
+  ],
+
+  async (req, res) => {
+    let success = false;
+    const id = req.params.id;
+    // Email Validayion for uniqueness
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // console.log("Validation Error!");
+      return res.status(400).json({ success, errors: errors.array() });
+    }
+    try {
+      let doc = await Doctor.findOne({ email: req.body.email });
+      if (doc && doc._id != id) {
+        // console.log("Sorry a Doc with this email already exists");
+        return res.status(400).json({
+          success,
+          error: "Sorry a Doc with this email already exists",
+        });
+      }
+
+      let lis = await Doctor.findOne({ licenceNumber: req.body.licenceNumber });
+
+      if (lis && lis._id != id) {
+        // console.log("Sorry a Doc with this licenceNumber already exists");
+        return res.status(400).json({
+          success,
+          error: "Sorry a Doc with this licenceNumber already exists",
+        });
+      }
+
+      console.log("Hello There");
+
+      const { name, email, phone, gender, licenceNumber, experience } =
+        req.body;
+
+      Doctor.findByIdAndUpdate(
+        id,
+        { name, email, phone, gender, licenceNumber, experience },
+        { new: true }
+      )
+        .then((updatedUser) => {
+          success = true;
+          res.json({ success });
+        })
+        .catch((err) => {
+          success = false;
+          return res.status(500).json({ success, errors: errors.array() });
+        });
+    } catch (error) {
+      success = false;
+      return res.status(500).json({ success, errors: errors.array() });
+    }
+  }
+);
 module.exports = router;

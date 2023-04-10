@@ -85,7 +85,7 @@ export default function Home() {
                         fillMode="none"
                       >
                         <Link
-                          to="/appointment"
+                          to="/login"
                           className="btn hero-btn"
                           data-animation="fadeInLeft"
                           data-delay="0.5s"
@@ -131,7 +131,7 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="about-btn1 mb-30">
-                    <Link to="/appointment" class="btn about-btn2">
+                    <Link to="/login" class="btn about-btn2">
                       Appointment <i class="ti-arrow-right"></i>
                     </Link>
                   </div>

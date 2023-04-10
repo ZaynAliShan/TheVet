@@ -27,6 +27,13 @@ const hours = [
 
 export default function Appointments() {
   const currentDate = new Date().toISOString().split("T")[0];
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate()+7);
+
+const futureDate = maxDate.toISOString().split("T")[0];
+  // const maxDate = new Date().toISOString().split("T")[0];
+
   const [appointment, setAppointment] = useState({
     attendent: "",
     attendentGender: "",
@@ -273,7 +280,8 @@ export default function Appointments() {
                           id="date"
                           className="expand"
                           name="date"
-                          min="2023-05-04"
+                          min={currentDate}
+                          max={futureDate}
                           onChange={onChange}
                           required
                         />
