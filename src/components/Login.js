@@ -39,18 +39,15 @@ const Login = (props) => {
         }),
       });
       const json = await response.json();
-      
+
       console.log(json.authToken);
 
       if (json.authToken) {
         // Save the auth token and redirect
-        const check=json.authToken;
-        localStorage.setItem("token",JSON.stringify(json.authtoken));
-        localStorage.setItem("checking",JSON.stringify(check));
-       
-       
-       
-        alert(json.authToken);
+        const check = json.authToken;
+        localStorage.setItem("token", check);
+        localStorage.setItem("checking", JSON.stringify(check));
+
         setError(false);
         navigate("/userDashboard");
       } else {

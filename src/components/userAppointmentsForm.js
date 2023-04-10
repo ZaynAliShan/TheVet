@@ -2,98 +2,128 @@ import React from "react";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 import contact_form from "../assets/img/gallery/contact_form.png";
-import { addAppointment, getPatientsByUserId, getSchedule} from "../services/api";
+import { Link } from "react-router-dom";
+import {
+  getDoctors,
+  addAppointment,
+  getPatientsByUserId,
+  getSchedule,
+} from "../services/api";
+const hours = [
+  "8:00 AM",
+  "9:00 AM",
+  "10:00 AM",
+  "11:00 AM",
+  "12:00 PM",
+  "2:00 PM",
+  "3:00 PM",
+  "4:00 PM",
+  "5:00 PM",
+  "6:00 PM",
+  "7:00 PM",
+];
 
 export default function Appointments() {
-  const currentDate = new Date().toISOString().split('T')[0];
-  const[appointment,setAppointment]= useState({
+  const currentDate = new Date().toISOString().split("T")[0];
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate()+7);
+
+const futureDate = maxDate.toISOString().split("T")[0];
+  // const maxDate = new Date().toISOString().split("T")[0];
+
+  const [appointment, setAppointment] = useState({
     attendent: "",
-      attendentGender: "",
-      checkupType: "",
-      caseStatus: "success",
-      admitted: true,
-      email : '',
-      patientId : '',
-      date : '',
-      time : "",
+    attendentGender: "",
+    caseStatus: "success",
+    email: "",
+    patientId: "",
+    doctorId: "",
+    date: "",
+    time: "",
   });
   const [userId, setUserId] = useState(null);
   const genderOptions = ["Male", "Female"];
   const [patientList, setPatientList] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
   const [timeList, setTimeList] = useState([]);
+
   let navigate = useNavigate();
   useEffect(() => {
     var token = localStorage.getItem("checking");
-   
     if (token) {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
       setUserId(decodedToken.user.id);
     }
+    getAllAvailableSchedule();
+  }, [appointment.doctorId, appointment.date]);
 
-    
-  }, []);
-  
-  const getAllPatients = async ()=>{
-  
-    const list  = await getPatientsByUserId(userId);
+  const getAllPatients = async () => {
+    const list = await getPatientsByUserId(userId);
     setPatientList(list.data);
-  }
+  };
 
-  const getAllAvailableSchedule = async ()=>{
-    const list = await getSchedule();
-    setTimeList(list.data);
-  }
+  const getAllDoctors = async () => {
+    const list = await getDoctors();
+    setDoctorList(list.data);
+  };
+
+  const getAllAvailableSchedule = async () => {
+    if (appointment.doctorId && appointment.date) {
+      const list = await getSchedule(appointment.doctorId, appointment.date);
+
+      if (list.data.length === 0) {
+        setTimeList(hours);
+      } else {
+        const timeavailable = hours.filter((hour) => {
+          for (let i = 0; i < list.data.length; i++) {
+            if (list.data[i].time === hour) {
+              return false;
+            }
+          }
+          return true;
+        });
+
+        setTimeList(timeavailable);
+      }
+    }
+  };
+
   const onChange = (e) => {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
   };
-  const onClickAddAppointment = async ()=>{
-    const {attendent,attendentGender,checkupType,caseStatus,admitted,email,patientId ,date,time }=appointment;
-    
-    const adstaus=true;
-    if (admitted==="No")
-    {
-      adstaus=false;
-      console.log(adstaus);
 
-    }
-    setAppointment((prevState) => ({
-      ...prevState, // spread operator to copy existing values
-      admitted: adstaus, // update breed property
-    }));
-    // await addAppointment(appointment);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // console.log(appointment);
-    // const response = await fetch("http://localhost:5000/api/appointment/add", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //   attendent: attendent,
-    //   attendentGender: attendentGender,
-    //   checkupType: checkupType,
-    //   caseStatus: caseStatus,
-    //   admitted: adstaus,
-    //   email : email,
-    //   patientId :patientId,
-    //   date : date,
-    //   time : time,
-    //   }),
-    // });
+    await fetch("http://localhost:5000/api/appointment/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        attendent: appointment.attendent,
+        attendentGender: appointment.attendentGender,
+        caseStatus: "success",
+        patientId: appointment.patientId,
+        doctorId: appointment.doctorId,
+        date: appointment.date,
+        time: appointment.time,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        navigate("/userDashboard/addPatient");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    //   const json = await response.json();
-    //   console.log(json);
-
-  
-   
-
-    navigate("/userDashboard/userApppointments");
-   
-  }
   return (
-    
     <>
       {/* <!--? Contact form Start --> */}
       <div className="contact-form-main">
@@ -113,40 +143,63 @@ export default function Appointments() {
                   </div>
                 </div>
                 {/* <!--End Section Tittle  --> */}
-                <form id="contact-form" onSubmit={onClickAddAppointment}>
+                <form id="contact-form" onSubmit={handleSubmit}>
                   <div className="row">
-
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <input  onChange={onChange} type="text" name="attendent" id ="attendant" placeholder="Attendent" required />
+                        <input
+                          onChange={onChange}
+                          type="text"
+                          name="attendent"
+                          id="attendant"
+                          placeholder="Attendent"
+                          required
+                        />
                       </div>
                     </div>
 
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box subject-icon mb-30">
                         <input
-                         onChange={onChange}
+                          onChange={onChange}
                           type="Email"
                           name="email"
                           id="email"
                           placeholder="Email"
+                          required
                         />
                       </div>
                     </div>
 
+                    {/* <div className="col-lg-12 col-md-12">
+                      <div className="form-box user-icon mb-30">
+                        <input
+                          type="text"
+                          id="checkupType"
+                          name="checkupType"
+                          onChange={onChange}
+                          placeholder="CheckUp Type"
+                          required
+                        />
+                      </div>
+                    </div> */}
+
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <input type="text" id ="checkupType"name="checkupType" onChange={onChange} placeholder="CheckUp Type" required />
-                      </div>
-                    </div>
-
-                    <div className="col-lg-12" >
-                      <div className="form-box user-icon mb-30">
-                        <select  id="attendentGender" name="attendentGender" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} required >
-                          <option value="" disabled selected>
-                            Select attendent Gender
-                          </option>
-                          {genderOptions.map((options)=>(
+                        <select
+                          id="attendentGender"
+                          name="attendentGender"
+                          onChange={onChange}
+                          style={{
+                            width: "250px",
+                            height: "29px",
+                            paddingLeft: "20px",
+                          }}
+                          required
+                          value={appointment.attendentGender}
+                        >
+                          <option value="">Select attendent Gender</option>
+                          {genderOptions.map((options) => (
                             <option key={options} value={options}>
                               {options}
                             </option>
@@ -154,50 +207,66 @@ export default function Appointments() {
                         </select>
                       </div>
                     </div>
-
-                    
-
-
-                    <div className="col-lg-6 col-md-6" >
-                      <div className="form-box user-icon mb-30">
-                        <select  id="patientId" name="patientId" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} onClick={getAllPatients} required>
-                          <option value="" disabled selected>
-                            Select Patient Name
-                          </option>
-                          {patientList.map((patient)=>(
-                            <option key={patient._id} value={patient._id}>
-                              {patient.name}
-                            </option>
-                          ))}
-                         
-                        </select>
-                      </div>
-                    </div>
-
+                    {/* 
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
                         <select  id="admitted" name="admitted" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} required >
                           <option value="" disabled selected>
                             admitted
                           </option>
-                          <option>
+                          <option key="true" value="true">
                             Yes
                           </option>
-                          <option >
+                          <option key="false" value="false">
                             No
                           </option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-lg-12">
+                    </div> */}
+
+                    <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <select  id="time" name="time" onChange={onChange} style={{ width: "250px", height: "29px", paddingLeft: "20px" }} onClick={getAllAvailableSchedule }  required>
+                        <select
+                          id="patientId"
+                          name="patientId"
+                          onChange={onChange}
+                          style={{
+                            width: "250px",
+                            height: "29px",
+                            paddingLeft: "20px",
+                          }}
+                          onClick={getAllPatients}
+                          required
+                        >
+                          <option value="">Select Patient Name</option>
+                          {patientList.map((patient) => (
+                            <option key={patient._id} value={patient._id}>
+                              {patient.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6">
+                      <div className="form-box user-icon mb-30">
+                        <select
+                          id="doctorId"
+                          name="doctorId"
+                          onChange={onChange}
+                          style={{
+                            width: "250px",
+                            height: "29px",
+                            paddingLeft: "20px",
+                          }}
+                          onClick={getAllDoctors}
+                          required
+                        >
                           <option value="" disabled selected>
-                            Select Time
+                            Select Doctor
                           </option>
-                          {timeList.map((item)=>(
-                            <option  key={item.time} value={item.time}>
-                              {item.time}
+                          {doctorList.map((doc) => (
+                            <option key={doc._id} value={doc._id}>
+                              {doc.name}
                             </option>
                           ))}
                         </select>
@@ -205,28 +274,72 @@ export default function Appointments() {
                     </div>
 
                     <div className="col-lg-12">
-                      <div   className="form-box user-icon mb-30">
-                      <input  type="date" id="date" className="expand" name="date" min="2023-05-04" onChange={onChange} required/>
+                      <div className="form-box user-icon mb-30">
+                        <input
+                          type="date"
+                          id="date"
+                          className="expand"
+                          name="date"
+                          min={currentDate}
+                          max={futureDate}
+                          onChange={onChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-12">
+                      <div className="form-box user-icon mb-30">
+                        <select
+                          id="time"
+                          name="time"
+                          onChange={onChange}
+                          style={{
+                            width: "250px",
+                            height: "29px",
+                            paddingLeft: "20px",
+                          }}
+                          required
+                        >
+                          <option value="">Select Time</option>
+                          {timeList &&
+                            timeList.map((time) => (
+                              <option key={time} value={time}>
+                                {time}
+                              </option>
+                            ))}
+                        </select>
                       </div>
                     </div>
 
                     <div className="submit-info">
-                    <button className="btn" type="submit">
-                          Submit Now <i className="ti-arrow-right"></i>{" "}
-                    </button>
+                      <button className="btn" type="submit">
+                        Submit Now <i className="ti-arrow-right"></i>{" "}
+                      </button>
                     </div>
+
+                    <Typography className="mb-60 " align="center">
+                      <Link
+                        className="nav-link"
+                        to="/userDashboard/addPatient"
+                        style={{ textDecoration: "underline" }}
+                      >
+                        <br></br>
+                        New Patient? Click to Register
+                      </Link>
+                    </Typography>
                   </div>
-            </form>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
+        {/* <!-- contact left Img--> */}
+        <div div className="from-left d-none d-lg-block">
+          <img src={contact_form} alt="contact_image" />
+        </div>
       </div>
-    </div >
-      {/* <!-- contact left Img--> */ }
-      <div div className = "from-left d-none d-lg-block" >
-        <img src={contact_form} alt="contact_image" />
-        </div >
-      </div >
-    {/* <!-- Contact form End --> */ }
+      {/* <!-- Contact form End --> */}
     </>
   );
 }

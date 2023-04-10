@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // @mui
 import { alpha } from "@mui/material/styles";
 import {
@@ -12,7 +13,7 @@ import {
   Popover,
 } from "@mui/material";
 // mocks_
-import account from "../../../_mock/userAccount";
+//import account from "../../../_mock/userAccount";
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,8 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const [account, setAccount] = useState({});
+  let navigate = useNavigate();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -43,6 +46,21 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  useEffect(() => {
+    var token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:5000/api/auth/getuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setAccount(data));
+    }
+  }, []);
 
   return (
     <>
@@ -87,7 +105,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {account.name}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
             {account.email}

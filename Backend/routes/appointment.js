@@ -1,8 +1,8 @@
 const Patient = require("../models/Patients.js");
 const Appointment = require("../models/Appointments");
 const Users = require("../models/Users");
-const Schedule = require('../models/Schedules.js');
-const Doctor = require('../models/Doctors.js');
+const Schedule = require("../models/Schedules.js");
+const Doctor = require("../models/Doctors.js");
 const express = require("express");
 var fetchuser = require("../middleware/fetchuser");
 const mongoose = require("mongoose");
@@ -45,20 +45,17 @@ router.get('/all', async (req, res) => {
     }
 
     res.status(200).json({ patientList });
-  }
-  catch (error) {
+  } catch (error) {
     res.status(404).json({ Message: error.Message });
   }
 });
-router.post('/add', async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
+    // console.log("JustChecking");
     const appointmentData = {
       attendent: req.body.attendent,
       attendentGender: req.body.attendentGender,
-      checkupType: req.body.checkupType,
       caseStatus: req.body.caseStatus,
-      admitted: req.body.admitted,
-      schedule: null,
     };
     const newSchedule = await addSchedule(req.body.time, req.body.date, req.body.doctorId);
     if (newSchedule === false) {
@@ -78,13 +75,17 @@ router.post('/add', async (req, res) => {
     if (patientUpdateResult.nModified === 0) {
       await newApp.remove();
       await Schedule.findByIdAndDelete(newSchedule._id);
-      return res.status(500).json({ error: 'Failed to add appointment to patient' });
+      const success = false;
+      return res
+        .status(500)
+        .json({ success, error: "Failed to add appointment to patient" });
     }
 
     const doctorUpdateResult = await Doctor.updateOne(
       { _id: req.body.doctorId },
       { $push: { appointments: newApp._id } }
     );
+    // console.log("Here at line 91");
 
     if (doctorUpdateResult.nModified === 0) {
       await newApp.remove();
@@ -93,12 +94,20 @@ router.post('/add', async (req, res) => {
         { $pull: { appointments: newApp._id } }
       );
       await Schedule.findByIdAndDelete(newSchedule._id);
-      return res.status(500).json({ error: 'Failed to add appointment to doctor' });
+      // console.log("Here at line 99");
+      const success = false;
+      return res
+        .status(500)
+        .json({ success, error: "Failed to add appointment to doctor" });
     }
 
-    res.status(201).json(newApp);
+    const data = { message: "Added Appointment" };
+    res.json(data);
+
+    // res.status(201).json(newApp);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    const success = false;
+    res.status(500).json({ success, error: error.message });
   }
 });
 router.delete("/:id", async (req, res) => {
@@ -106,11 +115,12 @@ router.delete("/:id", async (req, res) => {
     const appointmentObject = await Appointment.findOne({ _id: req.params.id });
     const scheduleId = appointmentObject.schedule;
 
+
     if (appointmentObject != null) {
       const patientObject = await Patient.findOne({
         appointments: { $in: req.params.id },
       });
-      // removing appointment id from patient table 
+      // removing appointment id from patient table
       await Patient.updateOne(
         { _id: patientObject._id },
         { $pull: { appointments: req.params.id } }
@@ -136,16 +146,18 @@ router.post(
   "/addPatient",
   [
     check("name", "Please Enter a valid name").isLength({ min: 3 }),
-    check("animalType", "AnimalType cannot be empty.").exists().withMessage("AnimalType cannot be empty"),
+    check("animalType", "AnimalType cannot be empty.")
+      .exists()
+      .withMessage("AnimalType cannot be empty"),
     check("breed", "breed cannot be empty.").exists(),
     check("gender", "gender cannot be empty.").exists(),
-    check("age", "Age cannot be empty.").exists().isFloat({ min: 0, max: 200 }).withMessage('Numeric field must be between 0 and 200'),
-
-
+    check("age", "Age cannot be empty.")
+      .exists()
+      .isFloat({ min: 0, max: 200 })
+      .withMessage("Numeric field must be between 0 and 200"),
   ],
 
   async (req, res) => {
-
     let success = false;
 
     const errors = validationResult(req);
@@ -195,6 +207,73 @@ router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
       Success: "Patient Has Been Deleted",
       Patient: patient,
     });
+  } catch (error) {
+    return res.status(500).send("Internal Server Error!!!");
+  }
+});
+
+router.get("/getUserAppointments/:id", async (req, res) => {
+  try {
+    let user = await Users.findById(req.params.id);
+    let i = 0;
+    let userPatients = [];
+    while (i < user.patients.length) {
+      userPatients.push(await Patient.findById(user.patients[i]));
+      i = i + 1;
+    }
+    i = 0;
+    let userApppointments = [];
+
+    while (i < userPatients.length) {
+      let j = 0;
+      while (j < userPatients[i].appointments.length) {
+        userApppointments.push({
+          _id: userPatients[i]._id,
+          name: userPatients[i].name,
+          appointment: await Appointment.findById(
+            userPatients[i].appointments[j]
+          ),
+        });
+        j++;
+      }
+      i++;
+    }
+
+    i = 0;
+    var allAppointments = [];
+    while (i < userApppointments.length) {
+      allAppointments.push({
+        patientId: userApppointments[i]._id,
+        patientName: userApppointments[i].name,
+        AppointmentId: userApppointments[i].appointment._id,
+        AppointmentAttendent: userApppointments[i].appointment.attendent,
+        AppointmentCaseStatus: userApppointments[i].appointment.caseStatus,
+        AppointmentSchedule: await Schedule.findById(
+          userApppointments[i].appointment.schedule
+        ),
+      });
+      i = i + 1;
+    }
+
+    var finalAppointment = [];
+    i = 0;
+    while (i < allAppointments.length) {
+      finalAppointment.push({
+        patientId: allAppointments[i].patientId,
+        patientName: allAppointments[i].patientName,
+        AppointmentId: allAppointments[i].AppointmentId,
+        AppointmentAttendent: allAppointments[i].AppointmentAttendent,
+        AppointmentCaseStatus: allAppointments[i].AppointmentCaseStatus,
+        AppointmentScheduleId: allAppointments[i].AppointmentSchedule._id,
+        AppointmentScheduleDate: allAppointments[i].AppointmentSchedule.date,
+        AppointmentScheduleTime: allAppointments[i].AppointmentSchedule.time,
+        AppointmentDoctor: await Doctor.findById(
+          allAppointments[i].AppointmentSchedule.doctor
+        ),
+      });
+      i = i + 1;
+    }
+    res.status(200).json(finalAppointment);
   } catch (error) {
     return res.status(500).send("Internal Server Error!!!");
   }
