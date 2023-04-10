@@ -31,7 +31,7 @@ import Scrollbar from "../components/scrollbar";
 import { UserListHead, UserListToolbar } from "../sections/@dashboard/user";
 // mock
 //import USERLIST from '../_mock/user';
-import { getAllAppointments, deleteUser, addAppointment ,getUser} from "../services/api";
+import { getAllAppointments, deleteUser, addAppointment ,updateAppointment} from "../services/api";
 
 // ----------------------------------------------------------------------
 
@@ -186,7 +186,7 @@ export default function UserPage() {
 
   }
   const onClickAddAppointment = async (data) => {
-    await addAppointment(data);
+    await updateAppointment(data,'643131b9b13ec726d0a7b0c3');
   }
   
   return (
@@ -207,16 +207,16 @@ export default function UserPage() {
           </Typography>
           <Button variant="contained" onClick={()=>onClickAddAppointment({
   
-  attendent: "atia gull",
+  attendent: "gull rana",
   attendentGender: "female",
   checkupType: "neccheck",
   caseStatus: "success",
-  admitted: false,
+  admitted: true,
   email : 'atiagull321@gmail.com',
   patientId : '642d919ba8c64033c631997d',
-  doctorId: "642936879fcb8f90b710b64a",
-  date : '2023-1-4',
-  time : '10:00 PM'
+  doctorId: "642937d49fcb8f90b710b64c",
+  date : '2023-3-5',
+  time : '11:00 PM'
 })} startIcon={<Iconify icon="eva:plus-fill"  />}>
             New Appointment
           </Button>

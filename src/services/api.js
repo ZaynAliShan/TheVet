@@ -42,6 +42,14 @@ export const deleteAllAppointments = async (ids) => {
     }
   };
 
+  export const updateAppointment = async (appointment , id) => {
+    try {
+        return await axios.post(`${URL}/api/appointment/${id}`,appointment);
+    } catch (error) {
+      console.log("error in updating appointments ", error);
+    }
+  };
+
   export const getUser = async (token) => {
     try{
         return axios.post(`${URL}/api/auth/getuser/${token}`);
