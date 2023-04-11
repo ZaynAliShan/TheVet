@@ -5,12 +5,17 @@ import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import contact_form from "../assets/img/gallery/contact_form.png";
 import { Link } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
 import {
   getDoctors,
   addAppointment,
   getPatientsByUserId,
   getSchedule,
+  updateAppointment
 } from "../services/api";
+
+
 const hours = [
   "8:00 AM",
   "9:00 AM",
@@ -25,7 +30,10 @@ const hours = [
   "7:00 PM",
 ];
 
-export default function Appointments() {
+export default function EditAppointments() {
+
+
+    const { id } = useParams();
   const currentDate = new Date().toISOString().split("T")[0];
 
   const maxDate = new Date();
@@ -33,53 +41,117 @@ export default function Appointments() {
 
 const futureDate = maxDate.toISOString().split("T")[0];
   // const maxDate = new Date().toISOString().split("T")[0];
+ 
 
   const [appointment, setAppointment] = useState({
+    id:"",
     attendent: "",
     attendentGender: "",
-    caseStatus: "success",
+    caseStatus: "",
     email: "",
     patientId: "",
+    patientName:"",
     doctorId: "",
     date: "",
     time: "",
+    patients:[],
+   
   });
   const [userId, setUserId] = useState(null);
   const genderOptions = ["Male", "Female"];
   const [patientList, setPatientList] = useState([]);
   const [doctorList, setDoctorList] = useState([]);
-  const [timeList, setTimeList] = useState([]);
+  const [initialValue, setInitialValue] = useState();
+  const [initialdoc, setInitialDoc] = useState();
+  const [initialdate, setInitialdate] = useState();
+  const [initialtime, setInitialTime] = useState();
+
+  const [timeList, setTimeList] = useState([
+    "8:00 AM",
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
+    "5:00 PM",
+    "6:00 PM",
+    "7:00 PM",
+  ]);
+  const [check, setCheck] = useState(true);
 
   let navigate = useNavigate();
+
+ 
+  const getPatient = async () => {
+   await  getAllPatients();
+    
+  };
   useEffect(() => {
-    console.log("jhgjfhh")
+
+   
+   getPatient();
+    getAllDoctors();
+    getAppt(id);
+   
     var token = localStorage.getItem("checking");
     if (token) {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
       setUserId(decodedToken.user.id);
     }
-    getAllAvailableSchedule();
-  }, [appointment.doctorId, appointment.date]);
+    // getAllAvailableSchedule();
+  }, []);
+
+
+  const getAppt= async (id) => {
+    await fetch(`http://localhost:5000/api/appointment/ApptById/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+     
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        
+        setAppointment(data);
+       
+        setPatientList(data.patients);
+        setInitialValue(data.time);
+        setInitialDoc(data.doctorId);
+        setInitialdate(data.date);
+        setInitialTime(data.time);
+
+
+        // setPhoneNumber(data.phone);
+      });
+  };
 
   const getAllPatients = async () => {
     const list = await getPatientsByUserId(userId);
+   
     setPatientList(list.data);
   };
 
   const getAllDoctors = async () => {
     const list = await getDoctors();
+   
     setDoctorList(list.data);
+    // getAllAvailableSchedule();
   };
 
   const getAllAvailableSchedule = async () => {
     if (appointment.doctorId && appointment.date) {
-      const list = await getSchedule(appointment.doctorId, appointment.date);
+      var list = await getSchedule(appointment.doctorId, appointment.date);
+     
 
       if (list.data.length === 0) {
         setTimeList(hours);
       } else {
-        const timeavailable = hours.filter((hour) => {
+        var timeavailable = hours.filter((hour) => {
           for (let i = 0; i < list.data.length; i++) {
             if (list.data[i].time === hour) {
               return false;
@@ -87,7 +159,10 @@ const futureDate = maxDate.toISOString().split("T")[0];
           }
           return true;
         });
-
+        if (appointment.doctorId===initialdoc && appointment.date===initialdate)
+        {
+          timeavailable.push(initialtime);
+        }
         setTimeList(timeavailable);
       }
     }
@@ -97,31 +172,47 @@ const futureDate = maxDate.toISOString().split("T")[0];
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
   };
 
+  const onChangeDoctor = (e) => {
+    setAppointment({ ...appointment, [e.target.name]: e.target.value });
+    // setAppointment({ ...appointment, ['time']:"" });
+     setInitialValue("");
+     getAllAvailableSchedule();
+    
+  
+  };
+  
+  const onChangeTime = (e) => {
+    setAppointment({ ...appointment, [e.target.name]: e.target.value });
+    // setAppointment({ ...appointment, ['time']:"" });
+    setInitialValue(e.target.value);
+  
+    
+    
+  
+  };
+  const onChangeDate = (e) => {
+    setAppointment({ ...appointment, [e.target.name]: e.target.value });
+    // setAppointment({ ...appointment, ['time']:"" });
+    setInitialValue("");
+    getAllAvailableSchedule();
+    
+    
+  
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(appointment);
 
-    await fetch("http://localhost:5000/api/appointment/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        attendent: appointment.attendent,
-        attendentGender: appointment.attendentGender,
-        caseStatus: "success",
-        patientId: appointment.patientId,
-        doctorId: appointment.doctorId,
-        date: appointment.date,
-        time: appointment.time,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        navigate("/userDashboard/addPatient");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    
+    const res=await updateAppointment(appointment,id);
+
+    navigate("/userDashboard/userApppointments")
+    // console.log(res);
+      
+
+    
   };
 
   return (
@@ -137,8 +228,8 @@ const futureDate = maxDate.toISOString().split("T")[0];
                   <div className="row ">
                     <div className="col-xl-12">
                       <div className="section-tittle section-tittle2">
-                        <span>Appointment Apply Form</span>
-                        <h2>Appointment Form</h2>
+                        <span>Appointment Update Form</span>
+                        <h2>Appointment Update Form</h2>
                       </div>
                     </div>
                   </div>
@@ -146,7 +237,7 @@ const futureDate = maxDate.toISOString().split("T")[0];
                 {/* <!--End Section Tittle  --> */}
                 <form id="contact-form" onSubmit={handleSubmit}>
                   <div className="row">
-                    <div className="col-lg-6 col-md-6">
+                    <div className="col-lg-12 col-md-12">
                       <div className="form-box user-icon mb-30">
                         <input
                           onChange={onChange}
@@ -154,12 +245,14 @@ const futureDate = maxDate.toISOString().split("T")[0];
                           name="attendent"
                           id="attendant"
                           placeholder="Attendent"
+                          value={appointment?.
+                            attendent}
                           required
                         />
                       </div>
                     </div>
 
-                    <div className="col-lg-6 col-md-6">
+                    {/* <div className="col-lg-6 col-md-6">
                       <div className="form-box subject-icon mb-30">
                         <input
                           onChange={onChange}
@@ -168,9 +261,10 @@ const futureDate = maxDate.toISOString().split("T")[0];
                           id="email"
                           placeholder="Email"
                           required
+                          value={appointment?.email}
                         />
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* <div className="col-lg-12 col-md-12">
                       <div className="form-box user-icon mb-30">
@@ -236,10 +330,12 @@ const futureDate = maxDate.toISOString().split("T")[0];
                             height: "29px",
                             paddingLeft: "20px",
                           }}
-                          onClick={getAllPatients}
+                        //   onClick={getAllPatients}
+                          key={appointment?.patientId}
+                          value={appointment?.patientId}
                           required
                         >
-                          <option value="">Select Patient Name</option>
+                          <option value=""  disabled selected>Select Patient Name</option>
                           {patientList.map((patient) => (
                             <option key={patient._id} value={patient._id}>
                               {patient.name}
@@ -253,13 +349,16 @@ const futureDate = maxDate.toISOString().split("T")[0];
                         <select
                           id="doctorId"
                           name="doctorId"
-                          onChange={onChange}
+                          onChange={onChangeDoctor}
                           style={{
                             width: "250px",
                             height: "29px",
                             paddingLeft: "20px",
                           }}
-                          onClick={getAllDoctors}
+                          key={appointment?.doctorId}
+                          value={appointment?.doctorId}
+                        
+                        //   onClick={getAllDoctors}
                           required
                         >
                           <option value="" disabled selected>
@@ -281,10 +380,15 @@ const futureDate = maxDate.toISOString().split("T")[0];
                           id="date"
                           className="expand"
                           name="date"
-                          min={currentDate}
-                          max={futureDate}
-                          onChange={onChange}
+                        //   min={currentDate}
+                        //   max={futureDate}
+                         
+                        //   value={appointment?.date}
+                        //   required
+                          defaultValue={appointment?.date}
+                          onChange={onChangeDate}
                           required
+                          
                         />
                       </div>
                     </div>
@@ -294,12 +398,15 @@ const futureDate = maxDate.toISOString().split("T")[0];
                         <select
                           id="time"
                           name="time"
-                          onChange={onChange}
+                          onChange={onChangeTime}
                           style={{
                             width: "250px",
                             height: "29px",
                             paddingLeft: "20px",
                           }}
+                          value={initialValue}
+                        //   defaultValue={appointment?.time}
+                          onClick={getAllAvailableSchedule}
                           required
                         >
                           <option value="">Select Time</option>
@@ -319,16 +426,7 @@ const futureDate = maxDate.toISOString().split("T")[0];
                       </button>
                     </div>
 
-                    <Typography className="mb-60 " align="center">
-                      <Link
-                        className="nav-link"
-                        to="/userDashboard/addPatient"
-                        style={{ textDecoration: "underline" }}
-                      >
-                        <br></br>
-                        New Patient? Click to Register
-                      </Link>
-                    </Typography>
+                   
                   </div>
                 </form>
               </div>

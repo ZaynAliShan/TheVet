@@ -10,6 +10,7 @@ import UserAppointmentsPage from "./pages/UserAppointmentsPage";
 import PatientPage from "./pages/PatientPage";
 import EditPatient from "./pages/EditPatient";
 import EditDoctor from "./pages/EditDoctor";
+import Editappointment from "./pages/EditAppointment";
 //import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import ProductsPage from "./pages/ProductsPage";
@@ -30,6 +31,7 @@ import Contact from "./components/ContactUs";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import AddPatient from "./components/AddPatient";
+import EditAppointments from "./pages/EditAppointment";
 
 // ----------------------------------------------------------------------
 
@@ -76,6 +78,7 @@ export default function Router() {
         { path: "addPatient", element: <AddPatient /> },
         { path: "showPatients", element: <PatientPage /> },
         { path: "editPatients/:id", element: <EditPatient /> },
+        { path: "editAppt/:id", element: <EditAppointments /> },
       ],
     },
     {
