@@ -7,6 +7,7 @@ import SimpleLayout from "./layouts/simple";
 import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import UserAppointmentsPage from "./pages/UserAppointmentsPage";
+import AdminAppointmentsPage from "./pages/AdminAppointmentPage";
 import PatientPage from "./pages/PatientPage";
 import EditPatient from "./pages/EditPatient";
 import EditDoctor from "./pages/EditDoctor";
@@ -59,7 +60,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: "app", element: <DashboardAppPage /> },
-        { path: "apppointments", element: <UserPage /> },
+        { path: "apppointments", element: <AdminAppointmentsPage /> },
         { path: "doctor", element: <DoctorPage /> },
         { path: "RegisterDoctor", element: <DoctorForm /> },
         { path: "editDoctors/:id", element: <EditDoctor /> },

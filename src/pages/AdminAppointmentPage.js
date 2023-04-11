@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet-async";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
 // @mui
 import {
   Card,
@@ -48,7 +47,7 @@ const style = {
   p: 4,
 };
 
-function UserAppointmentsPage() {
+function AdminAppointmentsPage() {
   const [AppointmentsList, SetAppointmentsList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -63,7 +62,7 @@ function UserAppointmentsPage() {
       // const { id } = decodedToken;
       // setUserId(decodedToken.user.id);
       await fetch(
-        `http://localhost:5000/api/appointment/getUserAppointments/${decodedToken.user.id}`,
+        "http://localhost:5000/api/appointment/getAdminAppointments",
         {
           method: "GET",
           headers: {
@@ -74,7 +73,6 @@ function UserAppointmentsPage() {
         .then((response) => response.json())
         .then((data) => {
           SetAppointmentsList(data);
-          console.log(data);
         });
     }
   };
@@ -120,6 +118,8 @@ function UserAppointmentsPage() {
               <Table>
                 <TableHead>
                   <TableRow>
+                    <TableCell>Username</TableCell>
+                    <TableCell>Email</TableCell>
                     <TableCell>Attendent</TableCell>
                     {/* <TableCell align="right">Email</TableCell> */}
                     <TableCell align="right">Patient</TableCell>
@@ -135,6 +135,9 @@ function UserAppointmentsPage() {
                   {AppointmentsList.map((appointment) => {
                     return (
                       <TableRow hover key={appointment.AppointmentId}>
+                        <TableCell>{appointment.User}</TableCell>
+                        <TableCell>{appointment.UserEmail}</TableCell>
+
                         <TableCell>
                           {appointment.AppointmentAttendent}
                         </TableCell>
@@ -164,18 +167,18 @@ function UserAppointmentsPage() {
                           </Label>
                         </TableCell>
                         <TableCell align="right">
-                        <IconButton  disabled={
+                          {/* <IconButton
+                            onClick={() => {
+                              console.log("EDIT");
+                            }}
+                            disabled={
                               appointment.AppointmentCaseStatus == "cancelled"
                                 ? true
                                 : false
-                            } >
-                          
-                            <Link to={`/userDashboard/editAppt/${appointment.AppointmentId}`}>
-                              
-                            <EditIcon style={{ color: "grey" }}></EditIcon>
-                            </Link>
-                           
-                          </IconButton>
+                            }
+                          >
+                            <EditIcon></EditIcon>
+                          </IconButton> */}
                           <IconButton
                             onClick={() => {
                               setSeletectedAppointmentId(
@@ -235,4 +238,4 @@ function UserAppointmentsPage() {
   );
 }
 
-export default UserAppointmentsPage;
+export default AdminAppointmentsPage;
