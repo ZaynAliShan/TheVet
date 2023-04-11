@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
+import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
@@ -53,6 +54,8 @@ function DoctorPage() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const navigate = useNavigate();
+
   const [seletectedDoctorId, setSeletectedDoctorId] = useState(null);
 
   const getAllDoctors = async () => {
@@ -83,6 +86,16 @@ function DoctorPage() {
   };
 
   useEffect(() => {
+    var token = localStorage.getItem("token");
+    if (token) {
+      if (token != "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
     getAllDoctors();
   }, []);
   return (
@@ -143,9 +156,9 @@ function DoctorPage() {
                           </Label>
                         </TableCell>
                         <TableCell align="right">
-                        <IconButton >
+                          <IconButton>
                             <Link to={`/dashboard/editDoctors/${doctor._id}`}>
-                            <EditIcon style={{ color: "grey" }}></EditIcon>
+                              <EditIcon style={{ color: "grey" }}></EditIcon>
                             </Link>
                           </IconButton>
                           <IconButton

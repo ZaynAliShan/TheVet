@@ -29,9 +29,9 @@ export default function Appointments() {
   const currentDate = new Date().toISOString().split("T")[0];
 
   const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate()+7);
+  maxDate.setDate(maxDate.getDate() + 7);
 
-const futureDate = maxDate.toISOString().split("T")[0];
+  const futureDate = maxDate.toISOString().split("T")[0];
   // const maxDate = new Date().toISOString().split("T")[0];
 
   const [appointment, setAppointment] = useState({
@@ -53,6 +53,13 @@ const futureDate = maxDate.toISOString().split("T")[0];
   let navigate = useNavigate();
   useEffect(() => {
     var token = localStorage.getItem("checking");
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+      }
+    } else {
+      navigate("/login");
+    }
     if (token) {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;

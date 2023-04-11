@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -52,11 +53,21 @@ function UserAppointmentsPage() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
 
   const [seletectedAppointmentId, setSeletectedAppointmentId] = useState(null);
 
   const getMyAppointments = async () => {
     var token = localStorage.getItem("checking");
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
     if (token) {
       const decodedToken = jwtDecode(token);
       // const { id } = decodedToken;

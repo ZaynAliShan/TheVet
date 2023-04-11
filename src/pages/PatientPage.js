@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui
 import {
@@ -33,6 +33,8 @@ import Scrollbar from "../components/scrollbar";
 
 function PatientPage() {
   const [PatientsList, SetPatientsList] = useState([]);
+
+  let navigate = useNavigate();
 
   const getAllPatients = async () => {
     await fetch("http://localhost:5000/api/patient/getMyAllPatients", {
@@ -66,6 +68,18 @@ function PatientPage() {
   };
 
   useEffect(() => {
+    var token = localStorage.getItem("checking");
+
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
+
     getAllPatients();
   }, []);
   return (
