@@ -247,6 +247,8 @@ router.get("/getUserAppointments/:id", async (req, res) => {
     }
 
     i = 0;
+
+
     var allAppointments = [];
     while (i < userApppointments.length) {
       allAppointments.push({
@@ -293,22 +295,15 @@ router.post("/:id", async (req, res) => {
     const appointmentData = {
       attendent: req.body.attendent,
       attendentGender: req.body.attendentGender,
-      checkupType: req.body.checkupType,
+     
       caseStatus: req.body.caseStatus,
-      admitted: req.body.admitted,
+     
       schedule: null,
     };
 
-    console.log(
-      oldSchedule.date.toISOString() === new Date(req.body.date).toISOString()
-    );
-    if (
-      oldSchedule.date.toISOString() ===
-        new Date(req.body.date).toISOString() &&
-      oldSchedule.time === req.body.time &&
-      oldSchedule.doctor.equals(new ObjectId(req.body.doctorId))
-    ) {
-      console.log("in if f***");
+
+    if (oldSchedule.date.toISOString() === new Date(req.body.date).toISOString() && oldSchedule.time === req.body.time && oldSchedule.doctor.equals(new ObjectId(req.body.doctorId))) {
+   
       appointmentData.schedule = oldAppointment.schedule;
       const newApp = new Appointment(appointmentData);
       newApp._id = req.params.id;
@@ -322,9 +317,10 @@ router.post("/:id", async (req, res) => {
         { $push: { appointments: newApp._id } }
       );
       res.status(201).json(newApp);
-    } else {
-      console.log("in else");
-      //deleting appointment from doctor appointment array
+    }
+    else {
+     
+      //deleting appointment from doctor appointment array 
       await Doctor.updateOne(
         { _id: oldSchedule.doctor },
         { $pull: { appointments: req.params.id } }
@@ -471,6 +467,51 @@ router.get("/getAdminAppointments", async (req, res) => {
     res.status(200).json(finalAppointment);
   } catch (error) {
     return res.status(500).send("Internal Server Error!!!");
+  }
+});
+
+router.get("/ApptById/:id", fetchuser, async (req, res) => {
+  const id = req.params.id;
+ 
+  try {
+  
+
+   const user = await Users.findOne({ _id: req.user.id });
+
+   const patients = await Patient.find({
+     _id: { $in: user.patients },
+   });
+
+
+    const doc = await Doctor.find({ status: "Active" });
+
+   
+    const patient= await Patient.findOne({appointments: id})
+ 
+    const appt = await Appointment.findById(id);
+
+    const schedule=await Schedule.findById(appt.schedule);
+
+    const dt = schedule.date.toISOString().split("T")[0];
+
+    const appointment={
+      attendent:appt.attendent,
+      attendentGender:appt.attendentGender,
+      caseStatus:appt.caseStatus,
+      // email,
+      patientId:patient._id,
+      patientName:patient.name,
+      doctorId:schedule.doctor,
+      date:dt,
+      time:schedule.time,
+      patients:patients,
+    
+    }
+    
+    res.json(appointment);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
