@@ -295,7 +295,7 @@ router.post('/:id', async (req, res) => {
 
     console.log(oldSchedule.date.toISOString() === new Date(req.body.date).toISOString());
     if (oldSchedule.date.toISOString() === new Date(req.body.date).toISOString() && oldSchedule.time === req.body.time && oldSchedule.doctor.equals(new ObjectId(req.body.doctorId))) {
-      console.log("in if f***");
+      
       appointmentData.schedule = oldAppointment.schedule;
       const newApp = new Appointment(appointmentData);
       newApp._id = req.params.id;
@@ -311,7 +311,7 @@ router.post('/:id', async (req, res) => {
       res.status(201).json(newApp);
     }
     else {
-      console.log("in else");
+      
       //deleting appointment from doctor appointment array 
       await Doctor.updateOne(
         { _id: oldSchedule.doctor },
