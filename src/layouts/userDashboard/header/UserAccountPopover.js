@@ -47,8 +47,23 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
+  const handleLogout = () => {
+    setOpen(null);
+    localStorage.clear();
+    navigate("/login");
+  };
+
   useEffect(() => {
     var token = localStorage.getItem("token");
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
     if (token) {
       fetch("http://localhost:5000/api/auth/getuser", {
         method: "POST",
@@ -114,17 +129,9 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: "dashed" }} />
 
-        <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Stack>
-
         <Divider sx={{ borderStyle: "dashed" }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </Popover>

@@ -61,7 +61,17 @@ export default function AddPatient() {
   let navigate = useNavigate();
   useEffect(() => {
     var token = localStorage.getItem("checking");
-   
+
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
+
     if (token) {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
@@ -80,7 +90,6 @@ export default function AddPatient() {
   const [selectedBreed, setSelecteBreed] = useState(getFirstBreed(animals[0]));
   const [breeds, setBreeds] = useState(getBreeds(selectedAnimal));
 
-
   const [errorsR, setErrorR] = useState("");
 
   const onChange = (e) => {
@@ -91,13 +100,11 @@ export default function AddPatient() {
     setSelecteBreed(e.target.value);
   };
 
-
-
   const handleAnimalChange = (event) => {
     const animal = event.target.value;
     setSelectedAnimal(animal);
     setBreeds(getBreeds(animal));
-   
+
     setSelecteBreed(getFirstBreed(animal));
 
     setPatient((prevState) => ({
@@ -108,40 +115,38 @@ export default function AddPatient() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, animalType,breed,gender,age  } = patient;
-    console.log("After Submission "+selectedBreed);
-   
-    const response = await fetch("http://localhost:5000/api/appointment/addPatient", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        animalType: animalType,
-        breed:selectedBreed,
-        gender:gender,
-        age:age,
-        id:userId,
-      }),
-    });
-    const json = await response.json();
-  
-    setErrorR(json.errors);
-   
-    if(json.success)
+    const { name, animalType, breed, gender, age } = patient;
+    console.log("After Submission " + selectedBreed);
 
-    {
+    const response = await fetch(
+      "http://localhost:5000/api/appointment/addPatient",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          animalType: animalType,
+          breed: selectedBreed,
+          gender: gender,
+          age: age,
+          id: userId,
+        }),
+      }
+    );
+    const json = await response.json();
+
+    setErrorR(json.errors);
+
+    if (json.success) {
       setError(false);
       navigate("/userDashboard/makeAppointment");
-  }
-  else {
-    
-    setError(true);
-  }
+    } else {
+      setError(true);
+    }
   };
 
-  
   return (
     <>
       {/* <!--? Contact form Start --> */}
@@ -162,9 +167,8 @@ export default function AddPatient() {
                   </div>
                 </div>
 
-                
                 {/* <!--End Section Tittle  --> */}
-                <form id="contact-form"  onSubmit={handleSubmit}>
+                <form id="contact-form" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
@@ -179,12 +183,16 @@ export default function AddPatient() {
                     <div className="col-lg-6 col-md-6">
                       <div className=" form-box subject-icon  mb-30 single-element-widget mt-20">
                         <div className="default-select" id="default-select">
-                          <select style={{ width:"250px" , height: "34px",paddingLeft:"20px" }} 
+                          <select
+                            style={{
+                              width: "250px",
+                              height: "34px",
+                              paddingLeft: "20px",
+                            }}
                             onChange={handleAnimalChange}
                             name="animalType"
                             type="animalType"
                             placeholder="AnimalType"
-                          
                           >
                             <option value="" disabled selected>
                               Select Animal Type
@@ -201,7 +209,16 @@ export default function AddPatient() {
 
                     <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
-                        <select  style={{ width:"250px" , height: "29px" ,paddingLeft:"20px"}} onChange={onChangeBreed} id="breed"   name ="breed" >
+                        <select
+                          style={{
+                            width: "250px",
+                            height: "29px",
+                            paddingLeft: "20px",
+                          }}
+                          onChange={onChangeBreed}
+                          id="breed"
+                          name="breed"
+                        >
                           <option value="" disabled selected>
                             Select a Breed
                           </option>
@@ -215,7 +232,16 @@ export default function AddPatient() {
                     </div>
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
-                        <select style={{ width:"250px" , height: "29px",paddingLeft:"20px" }}  id="gender" name ="gender" onChange={onChange} >
+                        <select
+                          style={{
+                            width: "250px",
+                            height: "29px",
+                            paddingLeft: "20px",
+                          }}
+                          id="gender"
+                          name="gender"
+                          onChange={onChange}
+                        >
                           <option value="" disabled selected>
                             Select gender
                           </option>
@@ -227,35 +253,32 @@ export default function AddPatient() {
                         </select>
                       </div>
                       <div className="col-lg-6 col-md-6">
-                      <div className="form-box user-icon mb-30">
-                        <input
-                          type="number"
-                          onChange={onChange}
-                          name="age"
-                          placeholder="Age"
-                        />
+                        <div className="form-box user-icon mb-30">
+                          <input
+                            type="number"
+                            onChange={onChange}
+                            name="age"
+                            placeholder="Age"
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    {error && (
-                    <div className="mb-3">
-                      <label
-                        htmlFor="errorMessage"
-                        className="form-label"
-                        style={{
-                          fontSize: "16px",
-                          color: "red",
-                          fontWeight: "bold",
-                        }}
-                      >
-                         Invalid Enteries!! Please fill all the fields.
-                        {errorsR&&errorsR.map((b) => (
-                           <p>{b.msg}</p>
-                          ))}
-                      
-                      </label>
-                    </div>
-                  )}
+                      {error && (
+                        <div className="mb-3">
+                          <label
+                            htmlFor="errorMessage"
+                            className="form-label"
+                            style={{
+                              fontSize: "16px",
+                              color: "red",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Invalid Enteries!! Please fill all the fields.
+                            {errorsR && errorsR.map((b) => <p>{b.msg}</p>)}
+                          </label>
+                        </div>
+                      )}
                       <div className="submit-info">
                         <button className="btn" type="submit">
                           Submit Now <i className="ti-arrow-right"></i>{" "}

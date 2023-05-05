@@ -7,9 +7,11 @@ import SimpleLayout from "./layouts/simple";
 import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import UserAppointmentsPage from "./pages/UserAppointmentsPage";
+import AdminAppointmentsPage from "./pages/AdminAppointmentPage";
 import PatientPage from "./pages/PatientPage";
 import EditPatient from "./pages/EditPatient";
 import EditDoctor from "./pages/EditDoctor";
+import Editappointment from "./pages/EditAppointment";
 //import LoginPage from "./pages/LoginPage";
 import Page404 from "./pages/Page404";
 import ProductsPage from "./pages/ProductsPage";
@@ -30,6 +32,8 @@ import Contact from "./components/ContactUs";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import AddPatient from "./components/AddPatient";
+import EditAppointments from "./pages/EditAppointment";
+import AddDataPage from "./pages/AddDataPage";
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +53,7 @@ export default function Router() {
         { path: "about", element: [<Navbar />, <About />, <Footer />] },
         { path: "contact", element: [<Navbar />, <Contact />, <Footer />] },
         { path: "signup", element: [<Navbar />, <SignInSide />, <Footer />] },
+        { path: "addData", element: [<Navbar />, <AddDataPage />, <Footer />] },
       ],
     },
     {
@@ -57,7 +62,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: "app", element: <DashboardAppPage /> },
-        { path: "apppointments", element: <UserPage /> },
+        { path: "apppointments", element: <AdminAppointmentsPage /> },
         { path: "doctor", element: <DoctorPage /> },
         { path: "RegisterDoctor", element: <DoctorForm /> },
         { path: "editDoctors/:id", element: <EditDoctor /> },
@@ -76,6 +81,7 @@ export default function Router() {
         { path: "addPatient", element: <AddPatient /> },
         { path: "showPatients", element: <PatientPage /> },
         { path: "editPatients/:id", element: <EditPatient /> },
+        { path: "editAppt/:id", element: <EditAppointments /> },
       ],
     },
     {

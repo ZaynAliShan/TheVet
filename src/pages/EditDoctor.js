@@ -39,6 +39,16 @@ export default function EditDoctor() {
       });
   };
   useEffect(() => {
+    var token = localStorage.getItem("token");
+    if (token) {
+      if (token != "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
     getDoctor(id);
   }, []);
   const onChange = (e) => {
@@ -50,7 +60,9 @@ export default function EditDoctor() {
     console.log(doctor);
     console.log(phoneNumber);
 
-    const response = await fetch(`http://localhost:5000/api/doctor/updateDoctor/${id}`, {
+    const response = await fetch(
+      `http://localhost:5000/api/doctor/updateDoctor/${id}`,
+      {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -58,24 +70,21 @@ export default function EditDoctor() {
         body: JSON.stringify({
           name: doctor.name,
           email: doctor.email,
-          phone:phoneNumber,
+          phone: phoneNumber,
           gender: doctor.gender,
           licenceNumber: doctor.licenceNumber,
           experience: doctor.experience,
         }),
-      });
-      const json = await response.json();
-    
-      setErrorR(json.errors);
-     
-      if(json.success)
-  
-      {
-        setError(false);
-        navigate("/dashboard/doctor");
-    }
-    else {
-      
+      }
+    );
+    const json = await response.json();
+
+    setErrorR(json.errors);
+
+    if (json.success) {
+      setError(false);
+      navigate("/dashboard/doctor");
+    } else {
       setError(true);
     }
   };

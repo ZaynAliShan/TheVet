@@ -26,6 +26,8 @@ const Login = (props) => {
       credentials.email === "admin@gmail.com" &&
       credentials.password === "admin"
     ) {
+      localStorage.clear();
+      localStorage.setItem("token", "admin");
       navigate("/dashboard");
     } else {
       const response = await fetch("http://localhost:5000/api/auth/login", {

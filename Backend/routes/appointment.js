@@ -8,33 +8,33 @@ var fetchuser = require("../middleware/fetchuser");
 const mongoose = require("mongoose");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const { ObjectId } = require('mongodb');
-
+const { ObjectId } = require("mongodb");
 
 const addSchedule = async (time, date, doctorId) => {
-  const schedule = await Schedule.findOne({ date: date, time: time, doctor: doctorId });
+  const schedule = await Schedule.findOne({
+    date: date,
+    time: time,
+    doctor: doctorId,
+  });
   if (!schedule) {
     const scheduleObj = { date: date, time: time, doctor: doctorId };
     const newSchedule = new Schedule(scheduleObj);
     await newSchedule.save();
     return newSchedule;
-  }
-  else {
+  } else {
     return false;
   }
-}
+};
 
-router.get('/all', async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     let patientList = [];
 
     const patients = await Patient.find({});
 
-
     for (const patient of patients) {
-
       const appointments = await Appointment.find({
-        '_id': { $in: patient.appointments }
+        _id: { $in: patient.appointments },
       });
       for (const appointment of appointments) {
         const patientObj = {};
@@ -57,11 +57,19 @@ router.post("/add", async (req, res) => {
       attendentGender: req.body.attendentGender,
       caseStatus: req.body.caseStatus,
     };
-    const newSchedule = await addSchedule(req.body.time, req.body.date, req.body.doctorId);
+    const newSchedule = await addSchedule(
+      req.body.time,
+      req.body.date,
+      req.body.doctorId
+    );
     if (newSchedule === false) {
-      return res.status(404).json({ error: 'this slot with doctorId ' + req.body.doctorId + 'is already booked..' });
+      return res.status(404).json({
+        error:
+          "this slot with doctorId " +
+          req.body.doctorId +
+          "is already booked..",
+      });
     }
-
 
     appointmentData.schedule = newSchedule._id;
     const newApp = new Appointment(appointmentData);
@@ -115,7 +123,6 @@ router.delete("/:id", async (req, res) => {
     const appointmentObject = await Appointment.findOne({ _id: req.params.id });
     const scheduleId = appointmentObject.schedule;
 
-
     if (appointmentObject != null) {
       const patientObject = await Patient.findOne({
         appointments: { $in: req.params.id },
@@ -126,7 +133,9 @@ router.delete("/:id", async (req, res) => {
         { $pull: { appointments: req.params.id } }
       );
       // Remove the appointment  from the doctor table
-      const doctorObject = await Doctor.findOne({ appointments: { $in: req.params.id }, });
+      const doctorObject = await Doctor.findOne({
+        appointments: { $in: req.params.id },
+      });
       await Doctor.updateOne(
         { _id: doctorObject._id },
         { $pull: { appointments: req.params.id } }
@@ -134,8 +143,7 @@ router.delete("/:id", async (req, res) => {
       await Schedule.findByIdAndDelete(scheduleId);
       await Appointment.deleteOne({ _id: req.params.id });
       res.status(200).json({ Message: "user is deleted " + patientObject });
-    }
-    else {
+    } else {
       res.status(404).json("appointment object is not found");
     }
   } catch (error) {
@@ -171,22 +179,21 @@ router.post(
         breed: req.body.breed,
         gender: req.body.gender,
         age: req.body.age,
-
       });
       const user = await Users.findOne({ _id: req.body.id });
       const objectId = mongoose.Types.ObjectId(pt.id);
-      await Users.updateOne({ _id: user._id }, { $push: { patients: objectId } });
+      await Users.updateOne(
+        { _id: user._id },
+        { $push: { patients: objectId } }
+      );
       success = true;
       res.json({ success });
     } catch (error) {
       success = false;
       return res.status(500).json({ success, errors: errors.array() });
     }
-
-
   }
 );
-
 
 router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
   try {
@@ -240,6 +247,8 @@ router.get("/getUserAppointments/:id", async (req, res) => {
     }
 
     i = 0;
+
+
     var allAppointments = [];
     while (i < userApppointments.length) {
       allAppointments.push({
@@ -279,29 +288,28 @@ router.get("/getUserAppointments/:id", async (req, res) => {
   }
 });
 
-router.post('/:id', async (req, res) => {
-
+router.post("/:id", async (req, res) => {
   try {
     const oldAppointment = await Appointment.findOne({ _id: req.params.id });
     const oldSchedule = await Schedule.findById(oldAppointment.schedule);
     const appointmentData = {
       attendent: req.body.attendent,
       attendentGender: req.body.attendentGender,
-      checkupType: req.body.checkupType,
+     
       caseStatus: req.body.caseStatus,
-      admitted: req.body.admitted,
+     
       schedule: null,
     };
 
-    console.log(oldSchedule.date.toISOString() === new Date(req.body.date).toISOString());
+
     if (oldSchedule.date.toISOString() === new Date(req.body.date).toISOString() && oldSchedule.time === req.body.time && oldSchedule.doctor.equals(new ObjectId(req.body.doctorId))) {
-      
+   
       appointmentData.schedule = oldAppointment.schedule;
       const newApp = new Appointment(appointmentData);
       newApp._id = req.params.id;
       await Appointment.updateOne({ _id: req.params.id }, newApp);
       await Patient.updateOne(
-        { appointments : {$in :oldAppointment._id} },
+        { appointments: { $in: oldAppointment._id } },
         { $pull: { appointments: newApp._id } }
       );
       await Patient.updateOne(
@@ -311,6 +319,7 @@ router.post('/:id', async (req, res) => {
       res.status(201).json(newApp);
     }
     else {
+     
       
       //deleting appointment from doctor appointment array 
       await Doctor.updateOne(
@@ -320,9 +329,18 @@ router.post('/:id', async (req, res) => {
       //deleting schedule from schedules
       await Schedule.findByIdAndDelete(oldAppointment.schedule);
       //finding new schedule based on date and doctor provided
-      const newSchedule = await addSchedule(req.body.time, req.body.date, req.body.doctorId);
+      const newSchedule = await addSchedule(
+        req.body.time,
+        req.body.date,
+        req.body.doctorId
+      );
       if (newSchedule === false) {
-        return res.status(404).json({ error: 'this slot with doctorId ' + req.body.doctorId + 'is already booked..' });
+        return res.status(404).json({
+          error:
+            "this slot with doctorId " +
+            req.body.doctorId +
+            "is already booked..",
+        });
       }
       appointmentData.schedule = newSchedule._id;
       const newApp = new Appointment(appointmentData);
@@ -334,25 +352,168 @@ router.post('/:id', async (req, res) => {
       );
       if (doctorUpdateResult.nModified === 0) {
         await Schedule.findByIdAndDelete(newSchedule._id);
-        return res.status(500).json({ error: 'Failed to update appointment to doctor' });
+        return res
+          .status(500)
+          .json({ error: "Failed to update appointment to doctor" });
       }
       await Patient.updateOne(
-        { appointments : {$in :oldAppointment._id} },
+        { appointments: { $in: oldAppointment._id } },
         { $pull: { appointments: newApp._id } }
       );
       await Patient.updateOne(
         { _id: req.body.patientId },
         { $push: { appointments: newApp._id } }
       );
-        
+
       res.status(201).json(newApp);
-
     }
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+router.post("/cancelAppointment/:id", async (req, res) => {
+  try {
+    const app = await Appointment.updateOne(
+      { _id: req.params.id },
+      {
+        $set: { caseStatus: "cancelled" },
+      }
+    );
+    res.status(200).json(app);
+  } catch (error) {
+    res.status(404).json({ Message: error.Message });
+  }
+});
+
+router.get("/getAdminAppointments", async (req, res) => {
+  try {
+    let users = await Users.find({});
+    let i = 0;
+    let userPatients = [];
+    while (i < users.length) {
+      let j = 0;
+      while (j < users[i].patients.length) {
+        userPatients.push({
+          AppointmentUserId: users[i]._id,
+          AppointmentUser: users[i].name,
+          AppointmentUserEmail: users[i].email,
+          AppointmentPatient: await Patient.findById(users[i].patients[j]),
+        });
+        j = j + 1;
+      }
+      i = i + 1;
+    }
+    i = 0;
+    let userApppointments = [];
+
+    while (i < userPatients.length) {
+      let j = 0;
+      while (j < userPatients[i].AppointmentPatient.appointments.length) {
+        userApppointments.push({
+          UserId: userPatients[i].AppointmentUserId,
+          User: userPatients[i].AppointmentUser,
+          UserEmail: userPatients[i].AppointmentUserEmail,
+          patientId: userPatients[i].AppointmentPatient._id,
+          patientName: userPatients[i].AppointmentPatient.name,
+          appointment: await Appointment.findById(
+            userPatients[i].AppointmentPatient.appointments[j]
+          ),
+        });
+        j++;
+      }
+      i++;
+    }
+
+    i = 0;
+    var allAppointments = [];
+    while (i < userApppointments.length) {
+      allAppointments.push({
+        UserId: userApppointments[i].UserId,
+        User: userApppointments[i].User,
+        UserEmail: userApppointments[i].UserEmail,
+        patientId: userApppointments[i].patientId,
+        patientName: userApppointments[i].patientName,
+        AppointmentId: userApppointments[i].appointment._id,
+        AppointmentAttendent: userApppointments[i].appointment.attendent,
+        AppointmentCaseStatus: userApppointments[i].appointment.caseStatus,
+        AppointmentSchedule: await Schedule.findById(
+          userApppointments[i].appointment.schedule
+        ),
+      });
+      i = i + 1;
+    }
+
+    var finalAppointment = [];
+    i = 0;
+    while (i < allAppointments.length) {
+      finalAppointment.push({
+        UserId: allAppointments[i].UserId,
+        User: allAppointments[i].User,
+        UserEmail: allAppointments[i].UserEmail,
+        patientId: allAppointments[i].patientId,
+        patientName: allAppointments[i].patientName,
+        AppointmentId: allAppointments[i].AppointmentId,
+        AppointmentAttendent: allAppointments[i].AppointmentAttendent,
+        AppointmentCaseStatus: allAppointments[i].AppointmentCaseStatus,
+        AppointmentScheduleId: allAppointments[i].AppointmentSchedule._id,
+        AppointmentScheduleDate: allAppointments[i].AppointmentSchedule.date,
+        AppointmentScheduleTime: allAppointments[i].AppointmentSchedule.time,
+        AppointmentDoctor: await Doctor.findById(
+          allAppointments[i].AppointmentSchedule.doctor
+        ),
+      });
+      i = i + 1;
+    }
+    res.status(200).json(finalAppointment);
+  } catch (error) {
+    return res.status(500).send("Internal Server Error!!!");
+  }
+});
+
+router.get("/ApptById/:id", fetchuser, async (req, res) => {
+  const id = req.params.id;
+ 
+  try {
+  
+
+   const user = await Users.findOne({ _id: req.user.id });
+
+   const patients = await Patient.find({
+     _id: { $in: user.patients },
+   });
+
+
+    const doc = await Doctor.find({ status: "Active" });
+
+   
+    const patient= await Patient.findOne({appointments: id})
+ 
+    const appt = await Appointment.findById(id);
+
+    const schedule=await Schedule.findById(appt.schedule);
+
+    const dt = schedule.date.toISOString().split("T")[0];
+
+    const appointment={
+      attendent:appt.attendent,
+      attendentGender:appt.attendentGender,
+      caseStatus:appt.caseStatus,
+      // email,
+      patientId:patient._id,
+      patientName:patient.name,
+      doctorId:schedule.doctor,
+      date:dt,
+      time:schedule.time,
+      patients:patients,
+    
+    }
+    
+    res.json(appointment);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 module.exports = router;

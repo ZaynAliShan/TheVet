@@ -97,6 +97,16 @@ export default function EditPatient() {
   useEffect(() => {
     var token = localStorage.getItem("checking");
     if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
+
+    if (token) {
       const decodedToken = jwtDecode(token);
       // const { id } = decodedToken;
       setUserId(decodedToken.user.id);
@@ -245,11 +255,12 @@ export default function EditPatient() {
                           name="breed"
                           required
                         >
-                          {breeds&&breeds.map((b) => (
-                            <option key={b} value={b}>
-                              {b}
-                            </option>
-                          ))}
+                          {breeds &&
+                            breeds.map((b) => (
+                              <option key={b} value={b}>
+                                {b}
+                              </option>
+                            ))}
                         </select>
                       </div>
                     </div>

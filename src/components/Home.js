@@ -85,7 +85,7 @@ export default function Home() {
                         fillMode="none"
                       >
                         <Link
-                          to="/login"
+                          to="/userDashboard/makeAppointment"
                           className="btn hero-btn"
                           data-animation="fadeInLeft"
                           data-delay="0.5s"
@@ -131,7 +131,10 @@ export default function Home() {
                     </Link>
                   </div>
                   <div class="about-btn1 mb-30">
-                    <Link to="/login" class="btn about-btn2">
+                    <Link
+                      to="/userDashboard/makeAppointment"
+                      class="btn about-btn2"
+                    >
                       Appointment <i class="ti-arrow-right"></i>
                     </Link>
                   </div>
@@ -170,26 +173,29 @@ export default function Home() {
                 <div class="testimonial-caption ">
                   <div class="testimonial-top-cap">
                     {/* <img src="assets/img/gallery/testimonial.png"alt="" /> */}
-                    <p style={{textAlign:"justify"}}>
-                      “In addition to offering Doctors availabilty and scheduling appoinments with doctors facilities
-                      ,our website also features a cutting-edge AI bot
-                      that can provide quick and accurate diagnoses for your
-                      pets based on their symptoms. This innovative tool
-                      harnesses the power of artificial intelligence to help you
-                      quickly determine the underlying cause of your pet's
-                      symptoms and provide recommendations for treatment.
-                      Whether you're a seasoned pet owner or a first-time pet
-                      parent, our AI bot is an invaluable resource for ensuring
-                      the best possible health for your furry friend.”
+                    <p style={{ textAlign: "justify" }}>
+                      “In addition to offering Doctors availabilty and
+                      scheduling appoinments with doctors facilities ,our
+                      website also features a cutting-edge AI bot that can
+                      provide quick and accurate diagnoses for your pets based
+                      on their symptoms. This innovative tool harnesses the
+                      power of artificial intelligence to help you quickly
+                      determine the underlying cause of your pet's symptoms and
+                      provide recommendations for treatment. Whether you're a
+                      seasoned pet owner or a first-time pet parent, our AI bot
+                      is an invaluable resource for ensuring the best possible
+                      health for your furry friend.”
                     </p>
                   </div>
                   {/* <!-- founder --> */}
-                  <div class="about-btn1 mb-30"  style={{display: "flex",alignItems:"flex-start"}}>
+                  <div
+                    class="about-btn1 mb-30"
+                    style={{ display: "flex", alignItems: "flex-start" }}
+                  >
                     <Link to="/home" class="btn about-btn">
                       AI BOT .<i class="ti-arrow-right"></i>
                     </Link>
                   </div>
-                 
                 </div>
               </div>
             </div>
@@ -198,7 +204,7 @@ export default function Home() {
           {/* <!--Right Contents  --> */}
           <div class="starups-img"></div>
         </div>
-        
+
         {/* <!--? Blog start --> */}
         <div class="home_blog-area section-padding30">
           <div class="container">
@@ -298,9 +304,12 @@ export default function Home() {
         {/* <!-- Blog End --> */}
       </main>
       {/* <!-- Scroll Up --> */}
-    <div id="back-top" >
-        <a title="Go to Top" href="#"> <i className="fas fa-level-up-alt"></i></a>
-    </div>
+      <div id="back-top">
+        <a title="Go to Top" href="#">
+          {" "}
+          <i className="fas fa-level-up-alt"></i>
+        </a>
+      </div>
     </div>
   );
 }

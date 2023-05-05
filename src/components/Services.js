@@ -159,7 +159,10 @@ function Services() {
                         "Even if your pet dose'nt have stained teeth, bacteria
                         can still be present below the gum line."
                       </p>
-                      <Link to="/appointment" className="dep-btn">
+                      <Link
+                        to="/userDashboard/makeAppointment"
+                        className="dep-btn"
+                      >
                         Appointment<i className="ti-arrow-right"></i>
                       </Link>
                     </div>
@@ -190,7 +193,10 @@ function Services() {
                         made great strides in recent times, which has enabled us
                         to provide our pets with longer and healthier lives."
                       </p>
-                      <Link to="/appointment" className="dep-btn">
+                      <Link
+                        to="/userDashboard/makeAppointment"
+                        className="dep-btn"
+                      >
                         Appointment<i className="ti-arrow-right"></i>
                       </Link>
                     </div>
@@ -225,7 +231,10 @@ function Services() {
                         can recommend ways to relieve or manage the allergy so
                         that your pet can lead a more normal life."
                       </p>
-                      <Link to="/appointment" className="dep-btn">
+                      <Link
+                        to="/userDashboard/makeAppointment"
+                        className="dep-btn"
+                      >
                         Appointment<i className="ti-arrow-right"></i>
                       </Link>
                     </div>
@@ -254,7 +263,10 @@ function Services() {
                         bring your new pet home, are a good way to help ensure
                         that any health problems will be diagnosed early."
                       </p>
-                      <Link to="/appointment" className="dep-btn">
+                      <Link
+                        to="/userDashboard/makeAppointment"
+                        className="dep-btn"
+                      >
                         Appointment<i className="ti-arrow-right"></i>
                       </Link>
                     </div>
@@ -284,7 +296,10 @@ function Services() {
                         in a good position to help your pet enjoy a long and
                         healthy life with you."
                       </p>
-                      <Link to="/appointment" className="dep-btn">
+                      <Link
+                        to="/userDashboard/makeAppointment"
+                        className="dep-btn"
+                      >
                         Appointment<i className="ti-arrow-right"></i>
                       </Link>
                     </div>
@@ -316,7 +331,10 @@ function Services() {
                         life. This is why regular pet wellness checkups are so
                         important."
                       </p>
-                      <Link to="/appointment" className="dep-btn">
+                      <Link
+                        to="/userDashboard/makeAppointment"
+                        className="dep-btn"
+                      >
                         Appointment<i className="ti-arrow-right"></i>
                       </Link>
                     </div>

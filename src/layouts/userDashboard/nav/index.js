@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 // @mui
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -47,7 +47,7 @@ Nav.propTypes = {
 export default function Nav({ openNav, onCloseNav }) {
   const [account, setAccount] = useState({});
   const { pathname } = useLocation();
-
+  let navigate = useNavigate();
   const isDesktop = useResponsive("up", "lg");
 
   useEffect(() => {
@@ -55,6 +55,15 @@ export default function Nav({ openNav, onCloseNav }) {
       onCloseNav();
     }
     var token = localStorage.getItem("token");
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
     if (token) {
       fetch("http://localhost:5000/api/auth/getuser", {
         method: "POST",
