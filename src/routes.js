@@ -35,6 +35,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import AddPatient from "./components/AddPatient";
 import EditAppointments from "./pages/EditAppointment";
+import AddDataPage from "./pages/AddDataPage";
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +55,7 @@ export default function Router() {
         { path: "about", element: [<Navbar />, <About />, <Footer />] },
         { path: "contact", element: [<Navbar />, <Contact />, <Footer />] },
         { path: "signup", element: [<Navbar />, <SignInSide />, <Footer />] },
+        { path: "addData", element: [<Navbar />, <AddDataPage />, <Footer />] },
       ],
     },
     {

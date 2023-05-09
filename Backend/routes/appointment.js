@@ -320,6 +320,7 @@ router.post("/:id", async (req, res) => {
     }
     else {
      
+      
       //deleting appointment from doctor appointment array 
       await Doctor.updateOne(
         { _id: oldSchedule.doctor },
