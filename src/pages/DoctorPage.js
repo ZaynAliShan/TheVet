@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+//import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 // @mui
 import {
   Card,
@@ -84,6 +85,18 @@ function DoctorPage() {
     getAllDoctors();
     handleClose();
   };
+  const makeActive = async () => {
+    const response = await fetch(
+      `http://localhost:5000/api/doctor/makeActive/${seletectedDoctorId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    getAllDoctors();
+  };
 
   useEffect(() => {
     var token = localStorage.getItem("token");
@@ -156,12 +169,34 @@ function DoctorPage() {
                           </Label>
                         </TableCell>
                         <TableCell align="right">
-                          <IconButton>
+                          <IconButton
+                            onClick={() => {
+                              setSeletectedDoctorId(doctor._id);
+                              makeActive();
+                            }}
+                          >
+                            <EditIcon></EditIcon>
+                          </IconButton>
+                          <IconButton
+                            disabled={
+                              doctor.status == "Inactive" ? true : false
+                            }
+                          >
                             <Link to={`/dashboard/editDoctors/${doctor._id}`}>
-                              <EditIcon style={{ color: "grey" }}></EditIcon>
+                              <EditIcon
+                                style={{
+                                  color:
+                                    doctor.status == "Inactive"
+                                      ? "#c0c0c0"
+                                      : "grey",
+                                }}
+                              ></EditIcon>
                             </Link>
                           </IconButton>
                           <IconButton
+                            disabled={
+                              doctor.status == "Inactive" ? true : false
+                            }
                             onClick={() => {
                               setSeletectedDoctorId(doctor._id);
                               handleOpen();

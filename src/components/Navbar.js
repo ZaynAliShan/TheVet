@@ -35,6 +35,16 @@ export default function Navbar(props) {
                 <Link
                   className="nav-link"
                   aria-current="page"
+                  to="/doctorDashboard"
+                  style={{ color: "white" }}
+                >
+                  DOCTOR_DASHBOARD
+                </Link>
+              </li>
+              <li className="nav-item d-flex align-items-center">
+                <Link
+                  className="nav-link"
+                  aria-current="page"
                   to="/home"
                   style={{ color: "white" }}
                 >
@@ -87,18 +97,27 @@ export default function Navbar(props) {
                 className="nav-item d-flex align-items-center"
                 style={{ listStyle: "none" }}
               >
-                <Link to="/login"><button type="button" style={{border: "none",
-    padding: "9px 9px 9px 9px",
-    
-    borderRadius: "6px",
-   
-    color: "#fff",
-    
-    fontSize: "11px",
- 
-    backgroundImage: "linear-gradient(to left, #559af3, #6314f3, #559af3)"}}className="btn btn-primary">
+                <Link to="/login">
+                  <button
+                    type="button"
+                    style={{
+                      border: "none",
+                      padding: "9px 9px 9px 9px",
+
+                      borderRadius: "6px",
+
+                      color: "#fff",
+
+                      fontSize: "11px",
+
+                      backgroundImage:
+                        "linear-gradient(to left, #559af3, #6314f3, #559af3)",
+                    }}
+                    className="btn btn-primary"
+                  >
                     LOGIN
-                  </button></Link>
+                  </button>
+                </Link>
               </li>
               {/* <li className="nav-item">
                 <Link to="/appointment">

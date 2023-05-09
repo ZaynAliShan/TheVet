@@ -41,7 +41,9 @@ router.post(
           error: "Sorry a Doc with this email already exists",
         });
       }
-      let lis = await Doctor.findOne({ licenceNumber: req.body.licenceNumber });
+      let lis = await Doctor.findOne({
+        licenceNumber: req.body.licenceNumber,
+      });
 
       if (lis) {
         // console.log("Sorry a Doc with this licenceNumber already exists");
@@ -93,6 +95,20 @@ router.post("/makeInctive/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: { status: "Inactive" },
+      }
+    );
+    res.status(200).json(doc);
+  } catch (error) {
+    res.status(404).json({ Message: error.Message });
+  }
+});
+
+router.post("/makeActive/:id", async (req, res) => {
+  try {
+    const doc = await Doctor.updateOne(
+      { _id: req.params.id },
+      {
+        $set: { status: "Active" },
       }
     );
     res.status(200).json(doc);

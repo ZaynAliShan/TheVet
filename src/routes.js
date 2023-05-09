@@ -2,11 +2,13 @@ import { Navigate, useRoutes } from "react-router-dom";
 // layouts
 import DashboardLayout from "./layouts/dashboard";
 import UserDashboardLayout from "./layouts/userDashboard";
+import DoctorDashboardLayout from "./layouts/doctorDashboard";
 import SimpleLayout from "./layouts/simple";
 //
 import BlogPage from "./pages/BlogPage";
 import UserPage from "./pages/UserPage";
 import UserAppointmentsPage from "./pages/UserAppointmentsPage";
+import DoctorAppointmentsPage from "./pages/DoctorAppointmentsPage";
 import AdminAppointmentsPage from "./pages/AdminAppointmentPage";
 import PatientPage from "./pages/PatientPage";
 import EditPatient from "./pages/EditPatient";
@@ -80,6 +82,17 @@ export default function Router() {
         { path: "showPatients", element: <PatientPage /> },
         { path: "editPatients/:id", element: <EditPatient /> },
         { path: "editAppt/:id", element: <EditAppointments /> },
+      ],
+    },
+    {
+      path: "/doctorDashboard",
+      element: <DoctorDashboardLayout />,
+      children: [
+        {
+          element: <Navigate to="/doctorDashboard/myAppointment" />,
+          index: true,
+        },
+        { path: "myAppointment", element: <DoctorAppointmentsPage /> },
       ],
     },
     {

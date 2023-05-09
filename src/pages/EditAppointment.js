@@ -12,9 +12,8 @@ import {
   addAppointment,
   getPatientsByUserId,
   getSchedule,
-  updateAppointment
+  updateAppointment,
 } from "../services/api";
-
 
 const hours = [
   "8:00 AM",
@@ -31,31 +30,27 @@ const hours = [
 ];
 
 export default function EditAppointments() {
-
-
-    const { id } = useParams();
+  const { id } = useParams();
   const currentDate = new Date().toISOString().split("T")[0];
 
   const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate()+7);
+  maxDate.setDate(maxDate.getDate() + 7);
 
-const futureDate = maxDate.toISOString().split("T")[0];
+  const futureDate = maxDate.toISOString().split("T")[0];
   // const maxDate = new Date().toISOString().split("T")[0];
- 
 
   const [appointment, setAppointment] = useState({
-    id:"",
+    id: "",
     attendent: "",
     attendentGender: "",
     caseStatus: "",
     email: "",
     patientId: "",
-    patientName:"",
+    patientName: "",
     doctorId: "",
     date: "",
     time: "",
-    patients:[],
-   
+    patients: [],
   });
   const [userId, setUserId] = useState(null);
   const genderOptions = ["Male", "Female"];
@@ -83,19 +78,24 @@ const futureDate = maxDate.toISOString().split("T")[0];
 
   let navigate = useNavigate();
 
- 
   const getPatient = async () => {
-   await  getAllPatients();
-    
+    await getAllPatients();
   };
   useEffect(() => {
-
-   
-   getPatient();
+    getPatient();
     getAllDoctors();
     getAppt(id);
-   
+
     var token = localStorage.getItem("checking");
+    if (token) {
+      if (token == "admin") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
     if (token) {
       const decodedToken = jwtDecode(token);
       const { id } = decodedToken;
@@ -104,27 +104,23 @@ const futureDate = maxDate.toISOString().split("T")[0];
     // getAllAvailableSchedule();
   }, []);
 
-
-  const getAppt= async (id) => {
+  const getAppt = async (id) => {
     await fetch(`http://localhost:5000/api/appointment/ApptById/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("token"),
       },
-     
     })
       .then((response) => response.json())
       .then((data) => {
-        
         setAppointment(data);
-       
+
         setPatientList(data.patients);
         setInitialValue(data.time);
         setInitialDoc(data.doctorId);
         setInitialdate(data.date);
         setInitialTime(data.time);
-
 
         // setPhoneNumber(data.phone);
       });
@@ -132,13 +128,13 @@ const futureDate = maxDate.toISOString().split("T")[0];
 
   const getAllPatients = async () => {
     const list = await getPatientsByUserId(userId);
-   
+
     setPatientList(list.data);
   };
 
   const getAllDoctors = async () => {
     const list = await getDoctors();
-   
+
     setDoctorList(list.data);
     // getAllAvailableSchedule();
   };
@@ -146,7 +142,6 @@ const futureDate = maxDate.toISOString().split("T")[0];
   const getAllAvailableSchedule = async () => {
     if (appointment.doctorId && appointment.date) {
       var list = await getSchedule(appointment.doctorId, appointment.date);
-     
 
       if (list.data.length === 0) {
         setTimeList(hours);
@@ -159,8 +154,10 @@ const futureDate = maxDate.toISOString().split("T")[0];
           }
           return true;
         });
-        if (appointment.doctorId===initialdoc && appointment.date===initialdate)
-        {
+        if (
+          appointment.doctorId === initialdoc &&
+          appointment.date === initialdate
+        ) {
           timeavailable.push(initialtime);
         }
         setTimeList(timeavailable);
@@ -175,44 +172,30 @@ const futureDate = maxDate.toISOString().split("T")[0];
   const onChangeDoctor = (e) => {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
     // setAppointment({ ...appointment, ['time']:"" });
-     setInitialValue("");
-     getAllAvailableSchedule();
-    
-  
+    setInitialValue("");
+    getAllAvailableSchedule();
   };
-  
+
   const onChangeTime = (e) => {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
     // setAppointment({ ...appointment, ['time']:"" });
     setInitialValue(e.target.value);
-  
-    
-    
-  
   };
   const onChangeDate = (e) => {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
     // setAppointment({ ...appointment, ['time']:"" });
     setInitialValue("");
     getAllAvailableSchedule();
-    
-    
-  
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(appointment);
 
-    
-    const res=await updateAppointment(appointment,id);
+    const res = await updateAppointment(appointment, id);
 
-    navigate("/userDashboard/userApppointments")
+    navigate("/userDashboard/userApppointments");
     // console.log(res);
-      
-
-    
   };
 
   return (
@@ -245,8 +228,7 @@ const futureDate = maxDate.toISOString().split("T")[0];
                           name="attendent"
                           id="attendant"
                           placeholder="Attendent"
-                          value={appointment?.
-                            attendent}
+                          value={appointment?.attendent}
                           required
                         />
                       </div>
@@ -330,12 +312,14 @@ const futureDate = maxDate.toISOString().split("T")[0];
                             height: "29px",
                             paddingLeft: "20px",
                           }}
-                        //   onClick={getAllPatients}
+                          //   onClick={getAllPatients}
                           key={appointment?.patientId}
                           value={appointment?.patientId}
                           required
                         >
-                          <option value=""  disabled selected>Select Patient Name</option>
+                          <option value="" disabled selected>
+                            Select Patient Name
+                          </option>
                           {patientList.map((patient) => (
                             <option key={patient._id} value={patient._id}>
                               {patient.name}
@@ -357,8 +341,7 @@ const futureDate = maxDate.toISOString().split("T")[0];
                           }}
                           key={appointment?.doctorId}
                           value={appointment?.doctorId}
-                        
-                        //   onClick={getAllDoctors}
+                          //   onClick={getAllDoctors}
                           required
                         >
                           <option value="" disabled selected>
@@ -380,15 +363,14 @@ const futureDate = maxDate.toISOString().split("T")[0];
                           id="date"
                           className="expand"
                           name="date"
-                        //   min={currentDate}
-                        //   max={futureDate}
-                         
-                        //   value={appointment?.date}
-                        //   required
+                          //   min={currentDate}
+                          //   max={futureDate}
+
+                          //   value={appointment?.date}
+                          //   required
                           defaultValue={appointment?.date}
                           onChange={onChangeDate}
                           required
-                          
                         />
                       </div>
                     </div>
@@ -405,7 +387,7 @@ const futureDate = maxDate.toISOString().split("T")[0];
                             paddingLeft: "20px",
                           }}
                           value={initialValue}
-                        //   defaultValue={appointment?.time}
+                          //   defaultValue={appointment?.time}
                           onClick={getAllAvailableSchedule}
                           required
                         >
@@ -425,8 +407,6 @@ const futureDate = maxDate.toISOString().split("T")[0];
                         Submit Now <i className="ti-arrow-right"></i>{" "}
                       </button>
                     </div>
-
-                   
                   </div>
                 </form>
               </div>
