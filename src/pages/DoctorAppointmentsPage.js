@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-
-import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 // @mui
@@ -36,7 +35,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import {getPatients} from '../services/api'
 const style = {
   position: "absolute",
   top: "50%",
@@ -50,7 +49,18 @@ const style = {
 };
 
 function DoctorAppointmentsPage() {
-  //   const [AppointmentsList, SetAppointmentsList] = useState([]);
+     const [PatientsList, SetPatientsList] = useState([]);
+     const getPatientsList = async () => {
+      let response = await getPatients();
+      SetPatientsList(response.data);
+      console.log( response.data);
+      
+      console.log("hellosdkjfhks");
+
+    };
+    useEffect(() => {
+      getPatientsList();
+    }, []);
   //   const [open, setOpen] = React.useState(false);
   //   const handleOpen = () => setOpen(true);
   //   const handleClose = () => setOpen(false);
@@ -124,6 +134,49 @@ function DoctorAppointmentsPage() {
             DOCTOR Appointments
           </Typography>
         </Stack>
+        <Card>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Patient ID</TableCell>
+                    <TableCell align="right">Patient Name</TableCell>
+                    <TableCell align="right">patient Type</TableCell>
+                    <TableCell align="right">gender</TableCell>
+                    <TableCell align="right">breed</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                {PatientsList.map((patient) => {
+                    return (
+                      <TableRow hover key={patient._id}>
+                        <TableCell>{patient._id}</TableCell>
+                        <TableCell align="right">{patient.name}</TableCell>
+                        <TableCell align="right">{patient.animalType}</TableCell>
+                        <TableCell align="right">{patient.gender}</TableCell>
+                        <TableCell align="right">{patient.breed}</TableCell>
+                        <TableCell align="right">
+                          <IconButton>
+                            <Link
+                              to={`/doctorDashboard/AddDataPage/${patient._id}`}
+                            ><Button style={{ color: "white" , background: "RGB(61, 99, 133)"}}>
+                                Add data
+                              <AddIcon style={{ color: "white" }}></AddIcon>
+                            </Button>
+                              
+                            </Link>
+                          </IconButton>
+                          </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+        </Card>
       </Container>
     </>
   );

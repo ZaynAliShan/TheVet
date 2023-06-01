@@ -95,6 +95,7 @@ export default function Router() {
           index: true,
         },
         { path: "myAppointment", element: <DoctorAppointmentsPage /> },
+        { path: "AddDataPage/:id", element: <AddDataPage /> }
       ],
     },
     {
