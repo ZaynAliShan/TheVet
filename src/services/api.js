@@ -95,7 +95,16 @@ export const deleteAllAppointments = async (ids) => {
         console.log("error in get by userID patients " , error);
     }
   };
+  export const  getAnimalCount = async () =>{
+    try{
+        console.log("Hello here in the api");
 
+        return axios.get(`${URL}/api/patient/getAnimalCount`);
+    }
+    catch(error){
+        console.log("Error in getting animal Stats " , error);
+    }
+  };
 //   export const getSchedule = async () =>{
 //     try{
 //         return await axios.get(`${URL}/api/patient/getSchedule`);

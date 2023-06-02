@@ -2,11 +2,39 @@ const Patient = require("../models/Patients.js");
 const Schedule = require("../models/Schedules.js");
 const Users = require("../models/Users");
 const Doctor = require("../models/Doctors.js");
+const AnimalCount = require("../models/AnimalCount.js");
 const express = require("express");
 var fetchuser = require("../middleware/fetchuser");
 const Patients = require("../models/Patients.js");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+
+
+
+
+
+
+const app = express();
+const PORT = 3000; // Replace with your desired port number
+
+// Example implementation using Express.js
+app.get('/animalUpdates', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Listen for database updates and send the updated data to connected clients
+  database.on('update', updatedData => {
+    res.write(`event: animalUpdate\n`);
+    res.write(`data: ${JSON.stringify(updatedData)}\n\n`);
+  });
+
+  // Send a heartbeat to keep the connection alive
+  setInterval(() => {
+    res.write(': heartbeat\n\n');
+  }, 10000);
+});
 
 router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
   try {
@@ -96,6 +124,8 @@ router.get("/getSchedule", async (req, res) => {
   }
 });
 
+
+
 router.put('/updatePatient/:id', [
   check("name", "Please Enter a valid name").isLength({ min: 3 }),
   check("animalType", "AnimalType cannot be empty.").exists().withMessage("AnimalType cannot be empty"),
@@ -131,5 +161,21 @@ try{
   }
 });
 
+router.get("/getAnimalCount", async (req, res) => {
+  try {
+    console.log("hello");
+    const animalStats = await AnimalCount.find({});
+    console.log(animalStats);
+    res.status(200).json(animalStats);
+  } catch (error) {
+    console.log("error here");
+    res.status(404).json({ Message: error.Message });
+  }
+});
+
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
 module.exports = router;

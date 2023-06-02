@@ -4,6 +4,9 @@
 import { useTheme } from "@mui/material/styles";
 import { Grid, Container, Typography } from "@mui/material";
 import Iconify from "../components/iconify";
+import {
+ getAnimalCount
+} from "../services/api";
 // components
 // import Iconify from '../components/iconify';
 // sections
@@ -24,25 +27,70 @@ import AppCurrentVisits from "../sections/@dashboard/app/AppCurrentVisits";
 import AppTasks from "../sections/@dashboard/app/AppTasks";
 import AppTrafficBySite from "../sections/@dashboard/app/AppTrafficBySite";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+// import AnimalCount from "../../Backend/models/AnimalCount";
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
-
+  const [animalList, setAnimalList] = useState([]);
   const navigate = useNavigate();
+  const getAnimalCountdata = async () => {
+    console.log("Hello in counter");
+    const list = await getAnimalCount() ;
+   console.log(list);
+   const convertedData = list.data.map(item => ({
+      label: item.animalType,
+      value: item.count
+    }));
 
+    console.log("Converted data ",convertedData);
+   setAnimalList(convertedData);
+  
+ 
+
+  };
   useEffect(() => {
     var token = localStorage.getItem("token");
-    if (token) {
+
+    const getAnimalCountdata = async () => {
+    const list = await getAnimalCount() ;
+     const convertedData = list.data.map(item => ({
+        label: item.animalType,
+        value: item.count
+      }));
+     setAnimalList(convertedData);  
+    };
+
+
+    getAnimalCountdata();
+    const interval = setInterval(getAnimalCountdata, 5000);
+   
+  
+    // Cleanup the event source connection when the component unmounts
+
+    if (token) 
+    {
       if (token != "admin") {
         navigate("/login");
-        return;
+        // return;
+        return () => {
+          // Clean up the interval when the component unmounts
+          clearInterval(interval);
+        };
       }
-    } else {
+
+    } 
+    else
+    {
       navigate("/login");
-      return;
+      // return;
+      return () => {
+        // Clean up the interval when the component unmounts
+        clearInterval(interval);
+      };
+
     }
   }, []);
 
@@ -83,12 +131,7 @@ export default function DashboardAppPage() {
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
               title="Cases Chart"
-              chartData={[
-                { label: "General Checkups", value: 910 },
-                { label: "Surgeries", value: 1005 },
-                { label: "Lab Tests", value: 1300 },
-                { label: "Cardiology", value: 459 },
-              ]}
+              chartData={animalList}
               chartColors={[
                 theme.palette.primary.main,
                 theme.palette.success.main,
