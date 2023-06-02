@@ -112,4 +112,14 @@ export const addData = async (data)=>{
     }
 }
 
+export const getDoctorPatients = async(id)=>{
+    try{
+        return await axios.get(`${URL}/api/patient/getDoctorPatients/${id}`);
+    }
+    catch(error)
+    {
+        console.log("error in getDoctorPatients ", error);
+    }
+}
+
   

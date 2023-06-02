@@ -91,7 +91,7 @@ router.post("/add", async (req, res) => {
 
     const doctorUpdateResult = await Doctor.updateOne(
       { _id: req.body.doctorId },
-      { $push: { appointments: newApp._id } }
+      { $push: { appointments: newApp._id , patients : req.body.patientId } }
     );
     // console.log("Here at line 91");
 

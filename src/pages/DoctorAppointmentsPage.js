@@ -35,7 +35,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {getPatients} from '../services/api'
+import {getPatients, getDoctorPatients} from '../services/api'
 const style = {
   position: "absolute",
   top: "50%",
@@ -51,6 +51,7 @@ const style = {
 function DoctorAppointmentsPage() {
      const [PatientsList, SetPatientsList] = useState([]);
      const getPatientsList = async () => {
+      //let response = await getDoctorPatients("64798398435ef2528d5a4e05");
       let response = await getPatients();
       SetPatientsList(response.data);
       console.log( response.data);

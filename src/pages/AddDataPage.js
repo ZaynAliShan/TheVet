@@ -50,7 +50,7 @@ const MyForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(selectedQuestions[0]=="" && textarea=="")
+    if(selectedQuestions[0]==="" && textarea==="")
     {
       alert("select check boxes or write something in text area");
     }
