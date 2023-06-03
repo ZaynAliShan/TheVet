@@ -134,6 +134,7 @@ export default function EditDoctor() {
                           id="email"
                           onChange={onChange}
                           placeholder="Email"
+                          readOnly
                           value={doctor?.email}
                         />
                       </div>
@@ -185,6 +186,7 @@ export default function EditDoctor() {
                             type="text"
                             onChange={onChange}
                             name="licenceNumber"
+                            readOnly
                             placeholder="LiscenceNumber"
                             value={doctor?.licenceNumber}
                             required

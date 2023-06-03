@@ -7,6 +7,10 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
@@ -15,31 +19,69 @@ const signup_img = require("../assets/img/signup_img.jpg");
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [role, setRole] = useState("user");
   let navigate = useNavigate();
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({ status: false, message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (role == "user") {
+      if (
+        credentials.email === "admin@gmail.com" &&
+        credentials.password === "admin"
+      ) {
+        localStorage.clear();
+        localStorage.setItem("token", "admin");
+        localStorage.setItem("role", "admin");
+        navigate("/dashboard");
+      } else {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        });
+        const json = await response.json();
+        console.log("=============================");
+        console.log(json);
+        console.log("=============================");
+        console.log(json.status);
+        console.log(json.error);
 
-    if (
-      credentials.email === "admin@gmail.com" &&
-      credentials.password === "admin"
-    ) {
-      localStorage.clear();
-      localStorage.setItem("token", "admin");
-      navigate("/dashboard");
-    } else {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: credentials.email,
-          password: credentials.password,
-        }),
-      });
+        if (json.status) {
+          // Save the auth token and redirect
+          const check = json.authToken;
+          localStorage.setItem("token", check);
+          localStorage.setItem("role", "user");
+          localStorage.setItem("checking", JSON.stringify(check));
+
+          setError(false);
+          navigate("/userDashboard");
+        } else {
+          //alert("Invalid credentials Login");
+          setError({ status: true, message: json.error });
+        }
+      }
+    } else if (role == "doctor") {
+      alert("DOCTOR" + credentials.email + credentials.password);
+      const response = await fetch(
+        "http://localhost:5000/api/auth/doctorLogin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials.email,
+            password: credentials.password,
+          }),
+        }
+      );
       const json = await response.json();
 
       console.log(json.authToken);
@@ -48,10 +90,11 @@ const Login = (props) => {
         // Save the auth token and redirect
         const check = json.authToken;
         localStorage.setItem("token", check);
+        localStorage.setItem("role", "doctor");
         localStorage.setItem("checking", JSON.stringify(check));
 
         setError(false);
-        navigate("/userDashboard");
+        navigate("/doctorDashboard");
       } else {
         //alert("Invalid credentials Login");
         setError(true);
@@ -185,7 +228,29 @@ const Login = (props) => {
                       }}
                     />
                   </div>
-                  {error && (
+                  <FormLabel id="login-radio-buttons-group-label">
+                    Role
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="login-radio-buttons-group-label"
+                    defaultValue="user"
+                    name="radio-buttons-group"
+                    onChange={(event) => {
+                      setRole(event.target.value);
+                    }}
+                  >
+                    <FormControlLabel
+                      value="user"
+                      control={<Radio />}
+                      label="User / Admin"
+                    />
+                    <FormControlLabel
+                      value="doctor"
+                      control={<Radio />}
+                      label="Doctor"
+                    />
+                  </RadioGroup>
+                  {error.status && (
                     <div className="mb-3">
                       <label
                         htmlFor="errorMessage"
@@ -196,14 +261,10 @@ const Login = (props) => {
                           fontWeight: "bold",
                         }}
                       >
-                        Invalid Credentials!!! Please Use Correct Credentials
+                        {error.message}
                       </label>
                     </div>
                   )}
-                  {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
                   <Button
                     type="submit"
                     fullWidth
@@ -213,18 +274,7 @@ const Login = (props) => {
                   >
                     <h3 style={{ color: "#fff" }}>Login</h3>
                   </Button>
-                  {/* <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Already have an account? Sign in"}
-                  </Link>
-                </Grid>
-              </Grid> */}
+
                   <Typography align="center" component="h1" variant="h6">
                     <Link className="nav-link" to="/signup">
                       New User? Click to Register

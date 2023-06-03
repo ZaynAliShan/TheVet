@@ -1,52 +1,61 @@
 // schema for our Doctor table
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const { Schema } = mongoose
+const { Schema } = mongoose;
 
 const DoctorSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
-
-  phone: { 
-    type: String,
-    required: true
-  },
-  gender: { 
-    type: String,
-    required: true
-  },
-  licenceNumber: { 
+  phone: {
     type: String,
     required: true,
-    unique : true
   },
-  experience: { 
+  gender: {
     type: String,
-    required: true
+    required: true,
   },
-  status: { // the date our user got registered
+  licenceNumber: {
     type: String,
-    default: "Active"
+    required: true,
+    unique: true,
   },
-  // one doctor can have many appointments so array will contain all 
+  experience: {
+    type: String,
+    required: true,
+  },
+  status: {
+    // the date our user got registered
+    type: String,
+    default: "Active",
+  },
+  // one doctor can have many appointments so array will contain all
   // reference ids to the appointment objects associated with single doctor
-  appointments: [{
-    type : Schema.Types.ObjectId,
-    ref : 'appointments'
-  }],
-  schedules : [{
-    type : Schema.Types.ObjectId,
-    ref : 'schedules'}]
+  appointments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "appointments",
+    },
+  ],
+  schedules: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "schedules",
+    },
+  ],
 });
 
-const Doctors = mongoose.model('doctors', DoctorSchema);
+const Doctors = mongoose.model("doctors", DoctorSchema);
 
-module.exports =  Doctors;
+module.exports = Doctors;

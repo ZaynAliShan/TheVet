@@ -1,5 +1,7 @@
 const Patient = require("../models/Patients.js");
 const Appointment = require("../models/Appointments");
+const bcrypt = require("bcryptjs");
+var jwt = require("jsonwebtoken");
 const Users = require("../models/Users");
 const Schedule = require("../models/Schedules.js");
 const Doctor = require("../models/Doctors.js");
@@ -7,6 +9,8 @@ const express = require("express");
 var fetchuser = require("../middleware/fetchuser");
 const mongoose = require("mongoose");
 const router = express.Router();
+// Secret to sign
+const JWT_Secret = "API$withExpressAreFun&XOXO";
 const { body, validationResult } = require("express-validator");
 
 router.post(
@@ -22,6 +26,9 @@ router.post(
       .exists()
       .isFloat({ min: 1, max: 50 })
       .withMessage("Experince must be between 1 and 50"),
+    body("password", "Password must be of aleast 5 Characters.").isLength({
+      min: 5,
+    }),
   ],
 
   async (req, res) => {
@@ -53,9 +60,13 @@ router.post(
         });
       }
 
-      doctor = await Doctor.create({
+      const salt = await bcrypt.genSalt(10);
+      const secPass = await bcrypt.hash(req.body.password, salt);
+
+      let doctor = await Doctor.create({
         name: req.body.name,
         email: req.body.email,
+        password: secPass,
         phone: req.body.phone,
         gender: req.body.gender,
         licenceNumber: req.body.licenceNumber,

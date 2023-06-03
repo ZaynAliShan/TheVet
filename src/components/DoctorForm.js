@@ -8,7 +8,7 @@ export default function DoctorForm() {
   const [doctor, setDoctor] = useState({
     name: "",
     email: "",
-
+    password: "",
     gender: "",
     licenceNumber: "",
     experience: "",
@@ -48,11 +48,8 @@ export default function DoctorForm() {
   };
 
   const handleSubmit = async (e) => {
+    console.log(doctor.password);
     e.preventDefault();
-
-    console.log(phoneNumber);
-    console.log(doctor.gender);
-    console.log(doctor);
     const response = await fetch("http://localhost:5000/api/doctor/add", {
       method: "POST",
       headers: {
@@ -61,6 +58,7 @@ export default function DoctorForm() {
       body: JSON.stringify({
         name: doctor.name,
         email: doctor.email,
+        password: doctor.password,
         phone: phoneNumber,
         gender: doctor.gender,
         licenceNumber: doctor.licenceNumber,
@@ -116,20 +114,6 @@ export default function DoctorForm() {
                     </div>
 
                     <div className="col-lg-6 col-md-6">
-                      <div className="form-box subject-icon mb-30">
-                        <input
-                          style={{ autocapitalize: "off" }}
-                          type="Email"
-                          name="email"
-                          id="email"
-                          onChange={onChange}
-                          placeholder="Email"
-                          autoComplete="email"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="col-lg-6 col-md-6">
                       <div className="form-box user-icon mb-30">
                         <PhoneInput
                           id="phone"
@@ -144,6 +128,35 @@ export default function DoctorForm() {
                         )}
                       </div>
                     </div>
+
+                    <div className="col-lg-6 col-md-6">
+                      <div className="form-box subject-icon mb-30">
+                        <input
+                          style={{ autocapitalize: "off" }}
+                          type="Email"
+                          name="email"
+                          id="email"
+                          onChange={onChange}
+                          placeholder="Email"
+                          autoComplete="email"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6 col-md-6">
+                      <div className="form-box subject-icon mb-30">
+                        <input
+                          style={{ autocapitalize: "off" }}
+                          type="password"
+                          name="password"
+                          id="password"
+                          onChange={onChange}
+                          placeholder="Password"
+                          required
+                        />
+                      </div>
+                    </div>
+
                     <div className="col-lg-12">
                       <div className="form-box user-icon mb-30">
                         <select

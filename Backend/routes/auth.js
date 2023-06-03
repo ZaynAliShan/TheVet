@@ -3,9 +3,11 @@ const express = require("express");
 const router = express.Router();
 // create and instance of model
 const Users = require("../models/Users");
+const Doctor = require("../models/Doctors.js");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var fetchuser = require("../middleware/fetchuser");
+const sendEmail = require("../utils/sendEmail");
 
 // Secret to sign
 const JWT_Secret = "API$withExpressAreFun&XOXO";
@@ -29,7 +31,7 @@ router.post(
     // Email Validayion for uniqueness
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ success, errors: errors.array() });
+      return res.status(400).json({ success, error: errors.array()[0].msg });
     }
 
     try {
@@ -57,15 +59,45 @@ router.post(
       };
       const authToken = jwt.sign(data, JWT_Secret);
       console.log(authToken);
+      ///////////////////////////////////////////////
+
+      const url = `http://localhost:3000/api/auth/${user.id}/verify/${authToken}`;
+      await sendEmail(user.email, url);
+
+      //////////////////////////////////////////////
+
       //res.json(user);
       success = true;
-      res.json({ success, authToken });
+      //res.json({ success, authToken });
+      res.status(200).send({
+        message: "An Email sent to your account please verify",
+        authToken,
+        success,
+      });
     } catch (error) {
-      console.log(error);
-      res.status(500).send("Some Error Has Occured");
+      res.status(500).send({ success: false, error: "Some Error Has Occured" });
     }
   }
 );
+
+router.get("/:id/verify/:authToken", async (req, res) => {
+  try {
+    const user = await Users.findOne({ _id: req.params.id });
+    if (!user) {
+      return res.status(400).send({ message: "Invalid Link" });
+    }
+    const data = jwt.verify(req.params.authToken, JWT_Secret);
+    if (data.user.id == req.params.id) {
+      await Users.updateOne(
+        { _id: data.user.id },
+        { $set: { verified: true } }
+      );
+      res.status(200).send({ message: "Email verified Successfully!!!" });
+    }
+  } catch (error) {
+    res.status(401).send({ error: "Please Authenticate using a valid token." });
+  }
+});
 
 // ROUTE 2 : Authenticating User with POST: /api/auth/login with validation
 router.post(
@@ -89,10 +121,68 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ error: "Please use correct credentials!!!" });
+          .json({ status: false, error: "Please use correct credentials!!!" });
       }
 
       const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        return res
+          .status(400)
+          .json({ status: false, error: "Please use correct credentials!!!" });
+      }
+
+      const data = {
+        user: {
+          id: user.id,
+          role: "user",
+        },
+      };
+      const authToken = jwt.sign(data, JWT_Secret);
+      if (!user.verified) {
+        const url = `http://localhost:3000/api/auth/${user.id}/verify/${authToken}`;
+        await sendEmail(user.email, url);
+        return res.status(400).json({
+          status: false,
+          error: "An Email Already sent to your account please Verify First!!!",
+        });
+      }
+      res.json({ status: true, authToken });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        status: false,
+        error: "Internal Server Error!!!",
+      });
+    }
+  }
+);
+
+// DOCToR LOGIN ======================
+router.post(
+  "/doctorLogin",
+  [
+    body("email", "Please Enter a Valid Email!!!").isEmail(),
+    body("password", "Password cannot be empty.").exists(),
+  ],
+  async (req, res) => {
+    // let success = false;
+    // Validaion for valid fields
+    let error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json({ error: error.array() });
+    }
+
+    const { email, password } = req.body;
+    try {
+      const doc = await Doctor.findOne({ email });
+
+      if (!doc) {
+        return res
+          .status(400)
+          .json({ error: "Please use correct credentials!!!" });
+      }
+
+      const passwordCompare = await bcrypt.compare(password, doc.password);
       if (!passwordCompare) {
         return res
           .status(400)
@@ -101,7 +191,8 @@ router.post(
 
       const data = {
         user: {
-          id: user.id,
+          id: doc.id,
+          role: "doctor",
         },
       };
       const authToken = jwt.sign(data, JWT_Secret);

@@ -24,6 +24,7 @@ import Navbar from "./components/Navbar";
 import Doctors from "./components/Doctors";
 import Services from "./components/Services";
 import Appointments from "./components/Appointments";
+import EmailVerify from "./components/EmailVerify";
 import UserAppointmentsForm from "./components/userAppointmentsForm";
 //import Blog from "./components/Blog";
 //import FAQ from "./components/FAQs";
@@ -52,6 +53,10 @@ export default function Router() {
           element: [<Navbar />, <Appointments />, <Footer />],
         },
         { path: "services", element: [<Navbar />, <Services />, <Footer />] },
+        {
+          path: "api/auth/:id/verify/:authToken",
+          element: [<Navbar />, <EmailVerify />, <Footer />],
+        },
         { path: "about", element: [<Navbar />, <About />, <Footer />] },
         { path: "contact", element: [<Navbar />, <Contact />, <Footer />] },
         { path: "signup", element: [<Navbar />, <SignInSide />, <Footer />] },

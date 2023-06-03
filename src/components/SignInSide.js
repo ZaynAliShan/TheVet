@@ -8,10 +8,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 
 const signup_img = require("../assets/img/signup_img.jpg");
 
@@ -58,12 +56,19 @@ export default function SignInSide() {
   });
 
   const [error, setError] = useState({ status: false, message: "" });
-  const navigate = useNavigate();
+  const [msg, setMsg] = useState({ status: false, message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { name, email, password } = credentials;
+    if (email == "admin@gmail.com") {
+      setError({ status: true, message: "Email Already Exists!!!" });
+      setMsg({
+        status: false,
+        message: "",
+      });
+      return;
+    }
     const response = await fetch("http://localhost:5000/api/auth/signup", {
       method: "POST",
       headers: {
@@ -72,16 +77,25 @@ export default function SignInSide() {
       body: JSON.stringify({ name, email, password }),
     });
     const json = await response.json();
-    console.log(json);
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
+      alert("SUCCESS!!!");
       setError({ status: false, message: "" });
       alert("You have been signed up successfully!");
-      navigate("/login");
+      console.log(json);
+      setMsg({
+        status: true,
+        message: "An Email is sent to your account please verify!!",
+      });
     } else {
-      alert(json.error);
-      setError({ status: true, message: json.errors[0].msg });
+      alert("ERROR");
+      console.log(json);
+      setMsg({
+        status: false,
+        message: "",
+      });
+      setError({ status: true, message: json.error });
     }
   };
 
@@ -224,6 +238,21 @@ export default function SignInSide() {
                       </label>
                     </div>
                   )}
+                  {msg.status && (
+                    <div className="mb-3">
+                      <label
+                        htmlFor="emailMessage"
+                        className="form-label"
+                        style={{
+                          fontSize: "16px",
+                          color: "green",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {msg.message}
+                      </label>
+                    </div>
+                  )}
                   {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
@@ -249,8 +278,10 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid> */}
-                  <Typography align="center" component="h1" variant="h6" >
-                    <Link className="nav-link" to="/login">Already Have an Account? Click to Login</Link>
+                  <Typography align="center" component="h1" variant="h6">
+                    <Link className="nav-link" to="/login">
+                      Already Have an Account? Click to Login
+                    </Link>
                   </Typography>
                   <Copyright sx={{ mt: 5 }} />
                 </Box>
