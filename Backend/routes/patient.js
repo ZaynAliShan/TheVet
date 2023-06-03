@@ -161,6 +161,17 @@ try{
   }
 });
 
+router.get('/getDoctorPatients/:id' , async (req,res)=>{
+  try{
+      const doctorObj = await Doctor.findById(req.params.id)
+      doctorPatientsIdsList = doctorObj.patients;
+      const doctorPatientsOjects = await Patient.find({ _id : {$in : doctorPatientsIdsList}});
+      res.status(200).json(doctorPatientsOjects);
+  }
+  catch(error)
+  {
+    res.status(404).json({ Message: error.Message });
+  }
 router.get("/getAnimalCount", async (req, res) => {
   try {
     console.log("hello");
@@ -178,4 +189,5 @@ router.get("/getAnimalCount", async (req, res) => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
+})
 module.exports = router;

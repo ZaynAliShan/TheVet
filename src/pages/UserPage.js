@@ -207,7 +207,7 @@ export default function UserPage() {
           </Typography>
           <Button variant="contained" onClick={()=>onClickAddAppointment({
   
-  attendent: "gull rana",
+  attendent: "gull",
   attendentGender: "female",
   checkupType: "neccheck",
   caseStatus: "success",

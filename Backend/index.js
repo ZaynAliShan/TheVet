@@ -41,6 +41,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/appointment", require("./routes/appointment"));
 app.use("/api/patient", require("./routes/patient"));
 app.use("/api/doctor", require("./routes/doctor"));
+app.use("/api/data", require("./routes/data"));
 //app.use("/api/patient", require("./routes/patient"));
 
 app.listen(port, () => {

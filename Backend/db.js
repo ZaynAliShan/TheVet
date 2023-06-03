@@ -3,31 +3,31 @@
 // const mongoose = require('mongoose');
 const mongoURI = "mongodb://localhost:27017/TheVet"
 
-// // make function async and it waits for the promise to resolve wherever we put await
+// make function async and it waits for the promise to resolve wherever we put await
 
-// const connect_to_mongodb = () => {
-//   mongoose.connect(mongoURI, ()=> { // when mongo connects this call back function gets fired
-//     console.log("Mongo Connection Established!")
-//   })
-// }
+const connect_to_mongodb = () => {
+  mongoose.connect(mongoURI, ()=> { // when mongo connects this call back function gets fired
+    console.log("Mongo Connection Established!")
+  })
+}
 
-// // now we want to export our this modeule to the index.js where we will perform connection
-// module.exports = connect_to_mongodb;
+// now we want to export our this modeule to the index.js where we will perform connection
+module.exports = connect_to_mongodb;
 
 const mongoose = require('mongoose');
 
-const connect_to_mongodb = () => {
-  mongoose
-    .connect(mongoURI, {
+// const connect_to_mongodb = () => {
+//   mongoose
+//     .connect(mongoURI, {
 
-    })
-    .then(() => {
-      console.log('Database connection successful');
-    })
-    .catch((error) => {
-      console.error('Database connection error:', error);
-      process.exit(1);
-    });
-};
+//     })
+//     .then(() => {
+//       console.log('Database connection successful');
+//     })
+//     .catch((error) => {
+//       console.error('Database connection error:', error);
+//       process.exit(1);
+//     });
+// };
 
-module.exports = connect_to_mongodb;
+//module.exports = connect_to_mongodb;
