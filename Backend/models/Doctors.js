@@ -54,6 +54,12 @@ const DoctorSchema = new Schema({
       ref: "schedules",
     },
   ],
+  patients: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "patients",
+    },
+  ],
 });
 
 const Doctors = mongoose.model("doctors", DoctorSchema);

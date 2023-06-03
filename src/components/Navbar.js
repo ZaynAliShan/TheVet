@@ -31,7 +31,7 @@ export default function Navbar(props) {
           </button>
           <div className="collapse navbar-collapse mybar" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item d-flex align-items-center">
+              {/* <li className="nav-item d-flex align-items-center">
                 <Link
                   className="nav-link"
                   aria-current="page"
@@ -40,7 +40,7 @@ export default function Navbar(props) {
                 >
                   DOCTOR_DASHBOARD
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item d-flex align-items-center">
                 <Link
                   className="nav-link"

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-
+import { useParams } from "react-router-dom";
+import {addData} from "../services/api";
+import { useNavigate } from "react-router-dom";
 const MyForm = () => {
   const questions = [
     'Do you like ice cream?',
@@ -24,23 +26,44 @@ const MyForm = () => {
     'Do you enjoy watching documentaries?'
   ];
 
-  const [checkboxes, setCheckboxes] = useState(Array(questions.length).fill(false));
-  const [textarea, setTextarea] = useState('');
+  let navigate = useNavigate();
+  const { id } = useParams();
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
 
-  const handleCheckboxChange = (index) => (e) => {
-    const newCheckboxes = [...checkboxes];
-    newCheckboxes[index] = e.target.checked;
-    setCheckboxes(newCheckboxes);
+  const [textarea, setTextarea] = useState('');
+  
+
+  const handleCheckboxChange = (question) => (e) => {
+    if (e.target.checked) {
+      setSelectedQuestions((prevQuestions) => [...prevQuestions, question]);
+    } else {
+      setSelectedQuestions((prevQuestions) =>
+      //for every element in prequest array it will check condition selectedQuestion !== question
+        prevQuestions.filter((selectedQuestion) => selectedQuestion !== question)
+      );
+    }
   };
 
   const handleTextareaChange = (e) => {
     setTextarea(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ checkboxes, textarea });
-    // Process the form data here, e.g., send it to an API
+    if(selectedQuestions[0]==="" && textarea==="")
+    {
+      alert("select check boxes or write something in text area");
+    }
+    else{
+      
+      const questionArray = selectedQuestions;
+      questionArray.push(textarea);
+      const data = {questionArray, id };
+      await addData(data);
+      
+    }
+    
+    navigate("/doctorDashboard/myAppointment");
   };
 
   const formStyles = {
@@ -86,20 +109,24 @@ const MyForm = () => {
   };
 
   return (
+    
     <form onSubmit={handleSubmit} style={formStyles}>
       <h2 style={headingStyles}>Doctor: Enter Data Form</h2>
-      <h3>Sympotyms</h3>
+      <h3>Sympotyms </h3>
       <div style={checkboxContainerStyles}>
-        {checkboxes.map((isChecked, index) => (
-          <label key={index} style={labelStyles}>
-            <input
-              type="checkbox"
-              checked={isChecked}
-              onChange={handleCheckboxChange(index)}
-            />
-            {` ${questions[index]}`}
-          </label>
-        ))}
+      {questions.map((question, index) => {
+          const isChecked = selectedQuestions.includes(question);
+          return (
+            <label key={index} style={labelStyles}>
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange(question)}
+              />
+              {` ${question}`}
+            </label>
+          );
+        })}
       </div>
       <div>
         <label style={labelStyles}>

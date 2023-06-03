@@ -3,6 +3,7 @@ const Appointment = require("../models/Appointments");
 const Users = require("../models/Users");
 const Schedule = require("../models/Schedules.js");
 const Doctor = require("../models/Doctors.js");
+const AnimalCount = require("../models/AnimalCount.js");
 const express = require("express");
 var fetchuser = require("../middleware/fetchuser");
 const mongoose = require("mongoose");
@@ -91,7 +92,7 @@ router.post("/add", async (req, res) => {
 
     const doctorUpdateResult = await Doctor.updateOne(
       { _id: req.body.doctorId },
-      { $push: { appointments: newApp._id } }
+      { $push: { appointments: newApp._id , patients : req.body.patientId } }
     );
     // console.log("Here at line 91");
 
@@ -186,8 +187,31 @@ router.post(
         { _id: user._id },
         { $push: { patients: objectId } }
       );
+
+      console.log("Add patient ended.");
+      const document= await AnimalCount.findOne({ animalType: req.body.animalType });
+      if (document) {
+        // If the document exists, increment the count by 1
+        document.count += 1;
+        await document.save();
+      } else {
+        // If the document doesn't exist, create a new document
+        console.log("in the else");
+
+        pt = await AnimalCount.create({
+          animalType:req.body.animalType,
+          count: 1,
+        });
+      
+      }
+  
+      // Save the updated or new document
+     
+      
       success = true;
       res.json({ success });
+
+
     } catch (error) {
       success = false;
       return res.status(500).json({ success, errors: errors.array() });

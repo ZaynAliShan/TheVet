@@ -18,9 +18,7 @@ export const addAppointment = async (data)=>{
         return await axios.post(`${URL}/api/appointment/add`,data);
     }
     catch(error){
-        const success=false;
        return  error;
-        console.log("error in add appointment " , error);
     }
 }
 
@@ -95,7 +93,16 @@ export const deleteAllAppointments = async (ids) => {
         console.log("error in get by userID patients " , error);
     }
   };
+  export const  getAnimalCount = async () =>{
+    try{
+        console.log("Hello here in the api");
 
+        return axios.get(`${URL}/api/patient/getAnimalCount`);
+    }
+    catch(error){
+        console.log("Error in getting animal Stats " , error);
+    }
+  };
 //   export const getSchedule = async () =>{
 //     try{
 //         return await axios.get(`${URL}/api/patient/getSchedule`);
@@ -105,6 +112,23 @@ export const deleteAllAppointments = async (ids) => {
 //     }
 //   };
 
-  
+export const addData = async (data)=>{
+    try{
+        return await axios.post(`${URL}/api/data/add`,data);
+    }
+    catch(error){
+        console.log("error in add data ", error);
+    }
+}
+
+export const getDoctorPatients = async(id)=>{
+    try{
+        return await axios.get(`${URL}/api/patient/getDoctorPatients/${id}`);
+    }
+    catch(error)
+    {
+        console.log("error in getDoctorPatients ", error);
+    }
+}
 
   
