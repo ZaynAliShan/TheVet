@@ -62,7 +62,7 @@ router.post(
       ///////////////////////////////////////////////
 
       const url = `http://localhost:3000/api/auth/${user.id}/verify/${authToken}`;
-      await sendEmail(user.email, url);
+      await sendEmail(user.name, user.email, url);
 
       //////////////////////////////////////////////
 
@@ -140,7 +140,7 @@ router.post(
       const authToken = jwt.sign(data, JWT_Secret);
       if (!user.verified) {
         const url = `http://localhost:3000/api/auth/${user.id}/verify/${authToken}`;
-        await sendEmail(user.email, url);
+        await sendEmail(user.name, user.email, url);
         return res.status(400).json({
           status: false,
           error: "An Email Already sent to your account please Verify First!!!",
