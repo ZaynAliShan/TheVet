@@ -86,13 +86,23 @@ export const getSchedule = async (id, date) => {
     console.log("error in get by userID patients ", error);
   }
 };
+//   export const  getAnimalCount = async () =>{
+//     try{
+//         console.log("Hello here in the api");
+//         return axios.get(`${URL}/api/patient/getAnimalCount`);
+
+//         // return axios.get(`${URL}/api/patient/getAnimalCount`);
+//     }
+//     catch(error){
+//         console.log("Error in getting animal Stats " , error);
+//     }
+//   };
+
 export const getAnimalCount = async () => {
   try {
-    console.log("Hello here in the api");
-
-    return axios.get(`${URL}/api/patient/getAnimalCount`);
+    return axios.get(`${URL}/api/patient/ac`);
   } catch (error) {
-    console.log("Error in getting animal Stats ", error);
+    console.log("error in getall patients ", error);
   }
 };
 //   export const getSchedule = async () =>{
