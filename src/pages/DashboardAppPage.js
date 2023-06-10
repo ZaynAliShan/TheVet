@@ -56,6 +56,8 @@ export default function DashboardAppPage() {
 
     const getAnimalCountdata = async () => {
     const list = await getAnimalCount() ;
+
+    console.log(list.data);
      const convertedData = list.data.map(item => ({
         label: item.animalType,
         value: item.count

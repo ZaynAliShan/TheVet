@@ -18,23 +18,23 @@ const app = express();
 const PORT = 3000; // Replace with your desired port number
 
 // Example implementation using Express.js
-app.get('/animalUpdates', (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+// app.get('/animalUpdates', (req, res) => {
+//   res.setHeader('Content-Type', 'text/event-stream');
+//   res.setHeader('Cache-Control', 'no-cache');
+//   res.setHeader('Connection', 'keep-alive');
+//   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  // Listen for database updates and send the updated data to connected clients
-  database.on('update', updatedData => {
-    res.write(`event: animalUpdate\n`);
-    res.write(`data: ${JSON.stringify(updatedData)}\n\n`);
-  });
+//   // Listen for database updates and send the updated data to connected clients
+//   database.on('update', updatedData => {
+//     res.write(`event: animalUpdate\n`);
+//     res.write(`data: ${JSON.stringify(updatedData)}\n\n`);
+//   });
 
-  // Send a heartbeat to keep the connection alive
-  setInterval(() => {
-    res.write(': heartbeat\n\n');
-  }, 10000);
-});
+//   // Send a heartbeat to keep the connection alive
+//   setInterval(() => {
+//     res.write(': heartbeat\n\n');
+//   }, 10000);
+// });
 
 router.delete("/deletePatient/:id", fetchuser, async (req, res) => {
   try {
@@ -172,7 +172,7 @@ router.get('/getDoctorPatients/:id' , async (req,res)=>{
   {
     res.status(404).json({ Message: error.Message });
   }
-router.get("/getAnimalCount", async (req, res) => {
+router.get('/getAnimalCount', async (req, res) => {
   try {
     console.log("hello");
     const animalStats = await AnimalCount.find({});
