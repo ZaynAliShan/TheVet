@@ -172,17 +172,8 @@ router.get('/getDoctorPatients/:id' , async (req,res)=>{
   {
     res.status(404).json({ Message: error.Message });
   }
-router.get('/getAnimalCount', async (req, res) => {
-  try {
-    console.log("hello");
-    const animalStats = await AnimalCount.find({});
-    console.log(animalStats);
-    res.status(200).json(animalStats);
-  } catch (error) {
-    console.log("error here");
-    res.status(404).json({ Message: error.Message });
-  }
-});
+  
+
 
 
 // app.listen(PORT, () => {
@@ -190,4 +181,16 @@ router.get('/getAnimalCount', async (req, res) => {
 // });
 
 })
+
+router.get("/ac", async (req, res) => {
+  try {
+    // console.log("hello");
+    const animalStats = await AnimalCount.find({});
+    // console.log(animalStats);
+    res.status(200).json(animalStats);
+  } catch (error) {
+    console.log("error here");
+    res.status(404).json({ Message: error.Message });
+  }
+});
 module.exports = router;

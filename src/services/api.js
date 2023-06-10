@@ -108,7 +108,7 @@ export const deleteAllAppointments = async (ids) => {
 
   export const getAnimalCount = async () =>{
     try{
-        return axios.get(`${URL}/api/patient/getAnimalCount`);
+        return axios.get(`${URL}/api/patient/ac`);
     }
     catch(error){
         console.log("error in getall patients " , error);
