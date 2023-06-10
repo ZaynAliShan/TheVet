@@ -167,7 +167,7 @@ router.put(
 router.get("/getDoctorPatients/:id", async (req, res) => {
   try {
     const doctorObj = await Doctor.findById(req.params.id);
-    doctorPatientsIdsList = doctorObj.patients;
+    const doctorPatientsIdsList = doctorObj.patients;
     const doctorPatientsOjects = await Patient.find({
       _id: { $in: doctorPatientsIdsList },
     });
