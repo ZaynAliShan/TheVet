@@ -60,7 +60,7 @@ export default function Router() {
         { path: "about", element: [<Navbar />, <About />, <Footer />] },
         { path: "contact", element: [<Navbar />, <Contact />, <Footer />] },
         { path: "signup", element: [<Navbar />, <SignInSide />, <Footer />] },
-        { path: "addData", element: [<Navbar />, <AddData />, <Footer/>]},
+        { path: "addData", element: [<Navbar />, <AddData />, <Footer />] },
       ],
     },
     {

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import { Link } from "react-router-dom";
 //import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 // @mui
@@ -52,8 +53,11 @@ const style = {
 function DoctorPage() {
   const [DoctorsList, SetDoctorsList] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [openActive, setOpenActive] = React.useState(false);
   const handleOpen = () => setOpen(true);
+  const handleOpenActive = () => setOpenActive(true);
   const handleClose = () => setOpen(false);
+  const handleCloseActive = () => setOpenActive(false);
 
   const navigate = useNavigate();
 
@@ -96,6 +100,7 @@ function DoctorPage() {
       }
     );
     getAllDoctors();
+    handleCloseActive();
   };
 
   useEffect(() => {
@@ -170,12 +175,13 @@ function DoctorPage() {
                         </TableCell>
                         <TableCell align="right">
                           <IconButton
+                            disabled={doctor.status == "Active" ? true : false}
                             onClick={() => {
                               setSeletectedDoctorId(doctor._id);
-                              makeActive();
+                              handleOpenActive();
                             }}
                           >
-                            <EditIcon></EditIcon>
+                            <LocalHospitalOutlinedIcon></LocalHospitalOutlinedIcon>
                           </IconButton>
                           <IconButton
                             disabled={
@@ -232,14 +238,44 @@ function DoctorPage() {
         <Fade in={open}>
           <Box sx={style}>
             <Typography id="transition-modal-title" variant="h6" component="h2">
-              Delete Doctor!!!
+              Inactive Doctor!!!
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Are you sure. This Doctor is Inactive?
+              Are you sure. You want to make this Doctor Inactive?
             </Typography>
             <Box display="flex" justifyContent="space-between">
               <Button onClick={handleDelete}>Make Inactive</Button>
               <Button onClick={handleClose}>Cancel</Button>
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
+
+      {/* ///////////////////////////// */}
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openActive}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={openActive}>
+          <Box sx={style}>
+            <Typography id="transition-modal-title" variant="h6" component="h2">
+              Active Doctor!!!
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              Are you sure. You want to make this doctor Active?
+            </Typography>
+            <Box display="flex" justifyContent="space-between">
+              <Button onClick={makeActive}>Make Active</Button>
+              <Button onClick={handleCloseActive}>Cancel</Button>
             </Box>
           </Box>
         </Fade>

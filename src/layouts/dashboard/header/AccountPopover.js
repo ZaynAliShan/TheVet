@@ -94,20 +94,12 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            The VET
+            TheVET
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-            thevet@gmail.com
+            thevet123456@gmail.com
           </Typography>
         </Box>
-
-        <Divider sx={{ borderStyle: "dashed" }} />
-
-        <Stack sx={{ p: 1 }}>
-          <MenuItem key="1" onClick={handleClose}>
-            Profile
-          </MenuItem>
-        </Stack>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

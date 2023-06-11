@@ -217,6 +217,18 @@ router.post("/getuser", fetchuser, async (req, res) => {
   }
 });
 
+router.post("/getDoctor", fetchuser, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await Doctor.findById(userId).select("-password"); // this line of code will get all the details and will leave password field alone (will not fetch password)
+
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal Server Error!!!");
+  }
+});
+
 // now let's allow our router to be exported from here
 module.exports = router;
 
