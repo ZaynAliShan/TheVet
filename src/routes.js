@@ -36,7 +36,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import AddPatient from "./components/AddPatient";
 import EditAppointments from "./pages/EditAppointment";
-import AddDataPage from "./pages/AddDataPage";
+import AddData from "./components/AddData";
 
 // ----------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ export default function Router() {
         { path: "about", element: [<Navbar />, <About />, <Footer />] },
         { path: "contact", element: [<Navbar />, <Contact />, <Footer />] },
         { path: "signup", element: [<Navbar />, <SignInSide />, <Footer />] },
-        { path: "addData", element: [<Navbar />, <AddDataPage />, <Footer />] },
+        { path: "addData", element: [<Navbar />, <AddData />, <Footer/>]},
       ],
     },
     {
@@ -100,7 +100,7 @@ export default function Router() {
           index: true,
         },
         { path: "myAppointment", element: <DoctorAppointmentsPage /> },
-        { path: "AddDataPage/:id", element: <AddDataPage /> },
+        { path: "AddDataPage/:id", element: <AddData /> },
       ],
     },
     {

@@ -36,26 +36,60 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const [animalList, setAnimalList] = useState([]);
   const navigate = useNavigate();
-  const getAnimalCountdata = async () => {
-    console.log("Hello in counter");
-    const list = await getAnimalCount() ;
-   console.log(list);
-   const convertedData = list.data.map(item => ({
-      label: item.animalType,
-      value: item.count
-    }));
+  // const getAnimalCountdata = async () => {
+  //   console.log("Hello in counter");
+  //   const list = await getAnimalCount() ;
 
-    console.log("Converted data ",convertedData);
-   setAnimalList(convertedData);
+
+  //   await fetch(`http://localhost:5000/api/patient/getAnimalCount`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("here the data ",data);
+       
+  //     });
+
+
+
+  //  console.log(list);
+  //  const convertedData = list.data.map(item => ({
+  //     label: item.animalType,
+  //     value: item.count
+  //   }));
+
+  //   console.log("Converted data ",convertedData);
+  //  setAnimalList(convertedData);
   
  
 
-  };
+  // };
   useEffect(() => {
     var token = localStorage.getItem("token");
 
     const getAnimalCountdata = async () => {
+
+      // await fetch(`http://localhost:5000/api/patient/ac`, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log("here the data ",data);
+
+         
+      //   });
+  
     const list = await getAnimalCount() ;
+// const list=[];
+   
+
+    // console.log(list.data);
      const convertedData = list.data.map(item => ({
         label: item.animalType,
         value: item.count
@@ -85,7 +119,7 @@ export default function DashboardAppPage() {
     else
     {
       navigate("/login");
-      // return;
+      return;
       return () => {
         // Clean up the interval when the component unmounts
         clearInterval(interval);
@@ -108,7 +142,7 @@ export default function DashboardAppPage() {
 
           {/* To do tasks */}
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppTasks
               title="Tasks"
               list={[
@@ -126,7 +160,7 @@ export default function DashboardAppPage() {
                 { id: "8", label: "Be Hydrated" },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
@@ -143,7 +177,7 @@ export default function DashboardAppPage() {
 
           {/* Clinical Profit and Loss */}
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
               title="Clinical Profit"
               subheader="Over Some Past Years"
@@ -178,7 +212,7 @@ export default function DashboardAppPage() {
                 },
               ]}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </>

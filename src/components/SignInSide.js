@@ -80,13 +80,11 @@ export default function SignInSide() {
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
-      alert("SUCCESS!!!");
       setError({ status: false, message: "" });
-      alert("You have been signed up successfully!");
       console.log(json);
       setMsg({
         status: true,
-        message: "An Email is sent to your account please verify!!",
+        message: "An Email is sent to your account please verify.",
       });
     } else {
       alert("ERROR");
@@ -105,6 +103,25 @@ export default function SignInSide() {
 
   return (
     <>
+        <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div className="container d-flex justify-content-center align-items-center">
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+         </Avatar>
+         <Typography component="h1" variant="h2">
+           Sign Up
+        </Typography>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
@@ -120,7 +137,7 @@ export default function SignInSide() {
                 t.palette.mode === "light"
                   ? t.palette.grey[50]
                   : t.palette.grey[900],
-              backgroundSize: "cover",
+              backgroundSize: "contain",
               backgroundPosition: "center",
             }}
           />
@@ -132,6 +149,7 @@ export default function SignInSide() {
             component={Paper}
             elevation={6}
             square
+            sx={{ height: "650px" , marginTop:"68px"}} // Adjust to your needs
           >
             <Box
               sx={{
@@ -142,154 +160,165 @@ export default function SignInSide() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h3">
+              </Avatar> */}
+              {/* <Typography component="h1" variant="h3">
                 Sign Up
-              </Typography>
-              <div className="container pb-200 fs-5">
-                <Box
-                  component="form"
-                  noValidate
-                  onSubmit={handleSubmit}
-                  sx={{ mt: 3 }}
-                >
-                  <div className="mb-3">
-                    <label
-                      htmlFor="name"
-                      className="form-label"
-                      style={{ fontSize: "16px" }}
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      name="name"
-                      onChange={onChange}
-                      onaria-describedby="emailHelp"
-                      style={{
-                        fontSize: "14px",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label
-                      htmlFor="email"
-                      className="form-label"
-                      style={{ fontSize: "16px" }}
-                    >
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      name="email"
-                      onChange={onChange}
-                      onaria-describedby="emailHelp"
-                      autoComplete="email"
-                      style={{
-                        fontSize: "14px",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label
-                      htmlFor="password"
-                      className="form-label"
-                      style={{ fontSize: "16px" }}
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      name="password"
-                      onChange={onChange}
-                      onaria-describedby="emailHelp"
-                      autoComplete="current-password"
-                      style={{
-                        fontSize: "14px",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  </div>
-                  {error.status && (
-                    <div className="mb-3">
-                      <label
-                        htmlFor="errorMessage"
-                        className="form-label"
-                        style={{
-                          fontSize: "16px",
-                          color: "red",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {error.message}
-                      </label>
-                    </div>
-                  )}
-                  {msg.status && (
-                    <div className="mb-3">
-                      <label
-                        htmlFor="emailMessage"
-                        className="form-label"
-                        style={{
-                          fontSize: "16px",
-                          color: "green",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {msg.message}
-                      </label>
-                    </div>
-                  )}
-                  {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    size="large"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    <h3 style={{ color: "#fff" }}>Sign Up</h3>
-                  </Button>
-                  {/* <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Already have an account? Sign in"}
-                  </Link>
-                </Grid>
-              </Grid> */}
-                  <Typography align="center" component="h1" variant="h6">
-                    <Link className="nav-link" to="/login">
-                      Already Have an Account? Click to Login
-                    </Link>
-                  </Typography>
-                  <Copyright sx={{ mt: 5 }} />
-                </Box>
-              </div>
+              </Typography> */}
+<div className="container pb-200" style={{ fontSize: "18px" }}>
+  <Box
+    component="form"
+    noValidate
+    onSubmit={handleSubmit}
+    sx={{ mt: 3 }}
+  >
+    <div className="mb-4">
+      <label
+        htmlFor="name"
+        className="form-label"
+        style={{ fontSize: "18px" }}
+      >
+        Name
+      </label>
+      <input
+        type="text"
+        className="form-control"
+        id="name"
+        name="name"
+        onChange={onChange}
+        aria-describedby="emailHelp"
+        style={{
+          fontSize: "16px",
+          width: "100%",
+          height: "auto",
+          padding: "10px"
+        }}
+      />
+    </div>
+    <div className="mb-4">
+      <label
+        htmlFor="email"
+        className="form-label"
+        style={{ fontSize: "18px" }}
+      >
+        Email Address
+      </label>
+      <input
+        type="email"
+        className="form-control"
+        id="email"
+        name="email"
+        onChange={onChange}
+        aria-describedby="emailHelp"
+        autoComplete="email"
+        style={{
+          fontSize: "16px",
+          width: "100%",
+          height: "auto",
+          padding: "10px"
+        }}
+      />
+    </div>
+    <div className="mb-4">
+      <label
+        htmlFor="password"
+        className="form-label"
+        style={{ fontSize: "18px" }}
+      >
+        Password
+      </label>
+      <input
+        type="password"
+        className="form-control"
+        id="password"
+        name="password"
+        onChange={onChange}
+        aria-describedby="emailHelp"
+        autoComplete="current-password"
+        style={{
+          fontSize: "16px",
+          width: "100%",
+          height: "auto",
+          padding: "10px"
+        }}
+      />
+    </div>
+    {error.status && (
+      <div className="mb-3">
+        <label
+          htmlFor="errorMessage"
+          className="form-label"
+          style={{
+            fontSize: "18px",
+            color: "red",
+            fontWeight: "bold",
+          }}
+        >
+          {error.message}
+        </label>
+      </div>
+    )}
+    {msg.status && (
+      <div className="mb-3">
+        <label
+          htmlFor="emailMessage"
+          className="form-label"
+          style={{
+            fontSize: "18px",
+            color: "green",
+            fontWeight: "bold",
+          }}
+        >
+          {msg.message}
+        </label>
+      </div>
+    )}
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      size="large"
+      sx={{ mt: 3, mb: 2 }}
+    >
+      <h3 style={{ color: "#fff", fontSize: "20px" }}>Sign Up</h3>
+    </Button>
+    <Typography align="center" component="h1" variant="h6">
+      <Link className="nav-link" to="/login" style={{ fontSize: "18px" }}>
+        Already Have an Account? Click to Login
+      </Link>
+    </Typography>
+    <Copyright sx={{ mt: 5 }} />
+  </Box>
+</div>
+
             </Box>
           </Grid>
         </Grid>
       </ThemeProvider>
+      <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     </>
   );
 }

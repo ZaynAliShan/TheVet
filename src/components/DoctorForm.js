@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import contact_form from "../assets/img/gallery/contact_form.png";
+import doc_form_pic from "../assets/img/gallery/bg-doc.jpg";
 import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -235,7 +235,7 @@ export default function DoctorForm() {
         </div>
         {/* <!-- contact left Img--> */}
         <div className="from-left d-none d-lg-block">
-          <img src={contact_form} alt="contact_image" />
+          <img src={doc_form_pic} alt="contact_image" />
         </div>
       </div>
       {/* <!-- Contact form End --> */}

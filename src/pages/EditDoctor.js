@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import contact_form from "../assets/img/gallery/contact_form.png";
+import contact_form from "../assets/img/gallery/bg-doc.jpg";
 import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import { useParams } from "react-router-dom";

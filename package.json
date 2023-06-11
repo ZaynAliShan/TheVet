@@ -28,7 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "libphonenumber-js": "^1.10.26",
-    "mongoose": "^7.1.0",
+    "mongoose": "^7.2.3",
     "mui-image": "^1.0.7",
     "nodemailer": "^6.9.3",
     "react": "^18.2.0",
@@ -41,8 +41,11 @@
     "react-phone-number-input": "^3.2.19",
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "simplebar-react": "^3.2.0",
+    "slick-carousel": "^1.8.1",
     "style-loader": "^3.3.2",
+    "swiper": "^9.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

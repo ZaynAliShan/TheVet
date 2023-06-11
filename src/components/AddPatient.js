@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import contact_form from "../assets/img/gallery/contact_form.png";
+import contact_form from "../assets/img/gallery/bg-doc.jpg";
 const animals = ["Cats", "Dogs", "Rabbits", "Hens"];
 const Breeds = {
   Cats: [
