@@ -127,7 +127,7 @@ function ContactUs() {
         onClick={submitForm}
         className="button button-contactForm boxed-btn"
       >
-        Send
+        Send Message
       </button>
     </div>
   </form>
