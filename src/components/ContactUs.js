@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
 import './ContactUs.css'
 
-import Hero from './Hero'
-import Navbar from './Navbar';
-
-
-
-
 const initState = {
     message:"",
     name:"",
