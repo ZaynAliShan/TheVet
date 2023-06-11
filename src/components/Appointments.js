@@ -1,6 +1,6 @@
 import React from "react";
 
-import contact_form from "../assets/img/gallery/contact_form.png";
+import bg_doc from "../assets/img/gallery/bg_doc.jpg";
 
 export default function Appointments() {
   return (
@@ -80,7 +80,7 @@ export default function Appointments() {
           </div>
           {/* <!-- contact left Img--> */}
           <div className="from-left d-none d-lg-block section-padding2">
-            <img src={contact_form} alt="contact_image" />
+            <img src={bg_doc} alt="contact_image" />
           </div>
         </div>
         {/* <!-- Contact form End --> */}

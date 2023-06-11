@@ -19,18 +19,6 @@ import { StyledChart } from "./components/chart";
 function App() {
   return (
     <>
-      {/* 
-        <Navbar />
-        <Routes>
-          <Route exact path="/doctors" element={Doctors} />
-        </Routes> */}
-      {/* <Services />
-          <Appointments />
-          <SignInSide/>
-          <Blog/>
-          <FAQ/>
-          <Footer/> */}
-
       <ThemeProvider>
         <ScrollToTop />
         <StyledChart />
