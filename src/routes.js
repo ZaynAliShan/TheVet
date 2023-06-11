@@ -5,8 +5,6 @@ import UserDashboardLayout from "./layouts/userDashboard";
 import DoctorDashboardLayout from "./layouts/doctorDashboard";
 import SimpleLayout from "./layouts/simple";
 //
-import BlogPage from "./pages/BlogPage";
-import UserPage from "./pages/UserPage";
 import UserAppointmentsPage from "./pages/UserAppointmentsPage";
 import DoctorAppointmentsPage from "./pages/DoctorAppointmentsPage";
 import AdminAppointmentsPage from "./pages/AdminAppointmentPage";
