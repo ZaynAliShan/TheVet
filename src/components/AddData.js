@@ -50,20 +50,24 @@ const MyForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(selectedQuestions[0]==="" && textarea==="")
+    if(selectedQuestions.length===0 && textarea==="")
     {
       alert("select check boxes or write something in text area");
     }
     else{
-      
+      console.log(selectedQuestions.length)
       const questionArray = selectedQuestions;
-      questionArray.push(textarea);
+      if(textarea!="")
+      {
+        questionArray.push(textarea);
+      }
       const data = {questionArray, id };
       await addData(data);
+      navigate("/doctorDashboard/myAppointment");
       
     }
     
-    navigate("/doctorDashboard/myAppointment");
+    
   };
 
   const formStyles = {

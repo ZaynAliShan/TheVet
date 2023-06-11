@@ -50,13 +50,11 @@ const style = {
 
 function DoctorAppointmentsPage(id) {
      const [PatientsList, SetPatientsList] = useState([]);
-     const getPatientsList = async () => {
+     const getPatientsList = async (id) => {
       let response = await getDoctorPatients(id);
       //let response = await getPatients();
       SetPatientsList(response.data);
-      console.log( response.data);
       
-      console.log("hellosdkjfhks");
 
     };
     useEffect(() => {
@@ -65,9 +63,9 @@ function DoctorAppointmentsPage(id) {
       if (token) {
         const decodedToken = jwtDecode(token);
          id  = decodedToken.user.id;
-         console.log(id);
+         getPatientsList(id);
       }
-      getPatientsList(id);
+      
     }, []);
   //   const [open, setOpen] = React.useState(false);
   //   const handleOpen = () => setOpen(true);
@@ -148,7 +146,6 @@ function DoctorAppointmentsPage(id) {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Patient ID</TableCell>
                     <TableCell align="right">Patient Name</TableCell>
                     <TableCell align="right">patient Type</TableCell>
                     <TableCell align="right">gender</TableCell>
@@ -160,7 +157,6 @@ function DoctorAppointmentsPage(id) {
                 {PatientsList.map((patient) => {
                     return (
                       <TableRow hover key={patient._id}>
-                        <TableCell>{patient._id}</TableCell>
                         <TableCell align="right">{patient.name}</TableCell>
                         <TableCell align="right">{patient.animalType}</TableCell>
                         <TableCell align="right">{patient.gender}</TableCell>

@@ -10,6 +10,12 @@ router.post("/add", async (req,res)=>{
     try {
         //verify if patient exist
         const patient = await Patient.findById(req.body.id);
+        const prevData = await Data.findOne({patient : req.body.id});
+        if(prevData)
+        {
+            await Data.findByIdAndDelete(prevData._id);
+        }
+    
         if(patient)
         {
             const data = {
