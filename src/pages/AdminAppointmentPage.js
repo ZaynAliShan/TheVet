@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 // @mui
 import {
@@ -26,7 +23,6 @@ import {
 } from "@mui/material";
 // components
 import Label from "../components/label";
-import Iconify from "../components/iconify";
 import Scrollbar from "../components/scrollbar";
 
 import Backdrop from "@mui/material/Backdrop";

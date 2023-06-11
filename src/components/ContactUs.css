@@ -1,0 +1,11 @@
+.form-control::placeholder {
+  color: #a0a0a0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form-control:focus::placeholder {
+  color: #a0a0a0;
+  font-size: 14px;
+  font-weight: bold;
+}

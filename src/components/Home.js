@@ -137,7 +137,7 @@ export default function Home() {
       </main>
       {/* <!-- Scroll Up --> */}
       <div id="back-top">
-        <a title="Go to Top" href="#">
+        <a title="Go to Top" href="Top BTN">
           {" "}
           <i className="fas fa-level-up-alt"></i>
         </a>
