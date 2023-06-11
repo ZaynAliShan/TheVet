@@ -41,7 +41,7 @@ function About() {
                   </p>
                   <div className="about-btn1 mb-30">
                     <a href="/doctors" className="btn about-btn">
-                      Find Doctors .<i className="ti-arrow-right"></i>
+                      Find Doctors<i className="ti-arrow-right"></i>
                     </a>
                   </div>
                   <div className="about-btn1 mb-30">

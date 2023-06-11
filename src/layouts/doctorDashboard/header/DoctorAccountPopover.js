@@ -40,7 +40,7 @@ export default function AccountPopover() {
     name: "DOCTOR_NAME",
     email: "DOCTOR_EMAIL",
   });
-  //let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -50,35 +50,39 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
-  // const handleLogout = () => {
-  //   setOpen(null);
-  //   localStorage.clear();
-  //   navigate("/login");
-  // };
+  const handleLogout = () => {
+    setOpen(null);
+    localStorage.clear();
+    navigate("/login");
+  };
 
-  // useEffect(() => {
-  //   var token = localStorage.getItem("token");
-  //   if (token) {
-  //     if (token == "admin") {
-  //       navigate("/login");
-  //       return;
-  //     }
-  //   } else {
-  //     navigate("/login");
-  //     return;
-  //   }
-  //   if (token) {
-  //     fetch("http://localhost:5000/api/auth/getuser", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "auth-token": token,
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => setAccount(data));
-  //   }
-  // }, []);
+  useEffect(() => {
+    var token = localStorage.getItem("token");
+    var role = localStorage.getItem("role");
+    if (role) {
+      if (role != "doctor") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
+    if (token) {
+      fetch("http://localhost:5000/api/auth/getDoctor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setAccount(data));
+    } else {
+      navigate("/login");
+      return;
+    }
+  }, []);
 
   return (
     <>
@@ -99,7 +103,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar alt="photoURL" />
       </IconButton>
 
       <Popover
@@ -134,9 +138,9 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: "dashed" }} />
 
-        {/* <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
-        </MenuItem> */}
+        </MenuItem>
       </Popover>
     </>
   );

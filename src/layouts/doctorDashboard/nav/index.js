@@ -52,34 +52,33 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
   let navigate = useNavigate();
   const isDesktop = useResponsive("up", "lg");
-
-  // useEffect(() => {
-  //   if (openNav) {
-  //     onCloseNav();
-  //   }
-  //   var token = localStorage.getItem("token");
-  //   if (token) {
-  //     if (token == "admin") {
-  //       navigate("/login");
-  //       return;
-  //     }
-  //   } else {
-  //     navigate("/login");
-  //     return;
-  //   }
-  //   if (token) {
-  //     fetch("http://localhost:5000/api/auth/getuser", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "auth-token": token,
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => setAccount(data));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [pathname]);
+  useEffect(() => {
+    var token = localStorage.getItem("token");
+    var role = localStorage.getItem("role");
+    if (role) {
+      if (role != "doctor") {
+        navigate("/login");
+        return;
+      }
+    } else {
+      navigate("/login");
+      return;
+    }
+    if (token) {
+      fetch("http://localhost:5000/api/auth/getDoctor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setAccount(data));
+    } else {
+      navigate("/login");
+      return;
+    }
+  }, []);
 
   const renderContent = (
     <Scrollbar
@@ -107,7 +106,7 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
 
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                {account.role}
+                Doctor
               </Typography>
             </Box>
           </StyledAccount>

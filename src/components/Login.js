@@ -14,14 +14,13 @@ import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import { styled } from '@mui/system';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { styled } from "@mui/system";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import TextField from "@mui/material/TextField";
 
-
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-  textTransform: 'none',
+  textTransform: "none",
   fontSize: 14,
   padding: theme.spacing(1),
 }));
@@ -30,7 +29,6 @@ const StyledFormLabel = styled(FormLabel)(({ theme }) => ({
   marginBottom: theme.spacing(1),
   fontSize: 16,
 }));
-
 
 const signup_img = require("../assets/img/signup_img.jpg");
 
@@ -80,12 +78,10 @@ const Login = (props) => {
           setError(false);
           navigate("/userDashboard");
         } else {
-          //alert("Invalid credentials Login");
           setError({ status: true, message: json.error });
         }
       }
     } else if (role == "doctor") {
-      alert("DOCTOR" + credentials.email + credentials.password);
       const response = await fetch(
         "http://localhost:5000/api/auth/doctorLogin",
         {
@@ -113,7 +109,6 @@ const Login = (props) => {
         setError(false);
         navigate("/doctorDashboard");
       } else {
-        //alert("Invalid credentials Login");
         setError(true);
       }
     }
@@ -149,30 +144,30 @@ const Login = (props) => {
 
   return (
     <>
-        <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <div className="container d-flex justify-content-center align-items-center">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div className="container d-flex justify-content-center align-items-center">
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
-         </Avatar>
-         <Typography component="h1" variant="h2">
-           Log In
+        </Avatar>
+        <Typography component="h1" variant="h2">
+          Log In
         </Typography>
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
           <Grid
-            style={{ backgroundImage: `url(${signup_img})`}}
+            style={{ backgroundImage: `url(${signup_img})` }}
             item
             xs={12}
             sm={4}
@@ -195,7 +190,7 @@ const Login = (props) => {
             component={Paper}
             elevation={6}
             square
-            sx={{ 
+            sx={{
               height: { xs: "auto", sm: "650px" }, // Adjust to your needs
               marginTop: { xs: 0, sm: "68px" }, // Adjust to your needs
             }}
@@ -222,48 +217,48 @@ const Login = (props) => {
                   onSubmit={handleSubmit}
                   sx={{ mt: 3 }}
                 >
-                <div className="mb-3">
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    onChange={onChange}
-                    InputLabelProps={{
-                      style: { fontSize: "16px", color: "#616161" },
-                    }}
-                    InputProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                    sx={{ width: "75%", fontSize: "20px" }}
-                  />
-                </div>
-                <div className="mb-3">
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={onChange}
-                    InputLabelProps={{
-                      style: { fontSize: "16px", color: "#616161" },
-                    }}
-                    InputProps={{
-                      style: { fontSize: "14px" },
-                    }}
-                    sx={{ width: "75%", fontSize: "20px" }}
-                  />
-                </div> 
+                  <div className="mb-3">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      onChange={onChange}
+                      InputLabelProps={{
+                        style: { fontSize: "16px", color: "#616161" },
+                      }}
+                      InputProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                      sx={{ width: "75%", fontSize: "20px" }}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={onChange}
+                      InputLabelProps={{
+                        style: { fontSize: "16px", color: "#616161" },
+                      }}
+                      InputProps={{
+                        style: { fontSize: "14px" },
+                      }}
+                      sx={{ width: "75%", fontSize: "20px" }}
+                    />
+                  </div>
                   <ToggleButtonGroup
                     color="primary"
                     value={role}
@@ -318,28 +313,28 @@ const Login = (props) => {
         </Grid>
       </ThemeProvider>
       <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </>
   );
 };

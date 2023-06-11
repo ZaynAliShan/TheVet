@@ -2,9 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
 import contact_form from "../assets/img/gallery/bg-doc.jpg";
-import { Link } from "react-router-dom";
 
 import { useParams } from "react-router-dom";
 import {
