@@ -48,11 +48,11 @@ const style = {
   p: 4,
 };
 
-function DoctorAppointmentsPage() {
+function DoctorAppointmentsPage(id) {
      const [PatientsList, SetPatientsList] = useState([]);
      const getPatientsList = async () => {
-      //let response = await getDoctorPatients("64798398435ef2528d5a4e05");
-      let response = await getPatients();
+      let response = await getDoctorPatients(id);
+      //let response = await getPatients();
       SetPatientsList(response.data);
       console.log( response.data);
       
@@ -60,7 +60,14 @@ function DoctorAppointmentsPage() {
 
     };
     useEffect(() => {
-      getPatientsList();
+      var token = localStorage.getItem("checking");
+      var id;
+      if (token) {
+        const decodedToken = jwtDecode(token);
+         id  = decodedToken.user.id;
+         console.log(id);
+      }
+      getPatientsList(id);
     }, []);
   //   const [open, setOpen] = React.useState(false);
   //   const handleOpen = () => setOpen(true);
