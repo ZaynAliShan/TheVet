@@ -15,13 +15,13 @@ export default function Doctors() {
         <div>
             <main>
                 {/* <!--? Hero Start --> */}
-                <div className="slider-area2">
+                <div className="slider-area2" style={{ backgroundImage: "url('../assets/img/gallery/AI.jpg')", backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                     <div className="slider-height2 d-flex align-items-center">
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-12">
                                     <div className="hero-cap hero-cap2 text-center">
-                                        <h2>Doctors</h2>
+                                        <h2 style={{ color: "#0F61EF" }}>Doctors</h2>
                                     </div>
                                 </div>
                             </div>
