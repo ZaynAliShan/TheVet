@@ -81,15 +81,6 @@ export default function Navbar(props) {
               <li className="nav-item d-flex align-items-center">
                 <Link
                   className="nav-link"
-                  to="/addData"
-                  style={{ color: "white" }}
-                >
-                  Add Data
-                </Link>
-              </li>
-              <li className="nav-item d-flex align-items-center">
-                <Link
-                  className="nav-link"
                   to="/contact"
                   style={{ color: "white" }}
                 >

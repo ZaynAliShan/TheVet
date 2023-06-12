@@ -24,6 +24,7 @@ router.post("/add", async (req,res)=>{
             }
             const newData = new Data(data);
             await newData.save();
+            res.status(200).json(newData);
         }
         else
         {
